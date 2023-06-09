@@ -10,7 +10,7 @@
   img : ./img/Badge_Unity.png
   content : <ul class="aboutme_badge_desc badge-left2">
               <li>ㅡ Windows / WebGL / 안드로이드 / iOS에서 <span class="HL">다양한 개발 경험</span>이 있습니다.</li>
-              <li>ㅡ 각종 라이브러리를 다룰 수 있고, 다른 서비스와 연동하여 개발 할 수 있습니다.</li>
+              <li>ㅡ 모바일 SDK와 연동가능한 Plugin을 구현할 수 있습니다.</li>
               <li>ㅡ GitHub에 직접 구현한 <span class="HL">오픈소스 라이브러리</span>를 공개하고 관리하고 있습니다.</li>
             </ul>
 

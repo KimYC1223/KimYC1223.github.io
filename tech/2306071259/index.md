@@ -1,0 +1,186 @@
+---
+layout: post
+type: tech
+date: 2023-06-07 12:59
+category: Blog
+title: Unity의 가비지 컬렉션
+subtitle: Unity의 점진적 G.C.에 대한 자료 조사
+writer: KimYC1223
+post-header: true
+image: /img/title.gif
+header-img: /tech/2306071259/img/bg.png
+hash-tag: [Unity]
+draft : false
+---
+
+# 🔸 Unity Incremental GC
+
+Unity 2019.1.0f1에서부터 적용된 점진적 G.C.에 대해 알아보는 시간을 가지도록 한다.
+
+예전 버전 Unity에서는 **Boehm-Demers-Weiser GC**를 사용하고 있는데,
+
+ **Boehm-Demers-Weiser GC**의 경우, Stop-the-World 방식이기 때문에 프레임 드랍이 생길 수 있다.
+
+ 이를 해결하기 위해 Unity 2019.1.0f1부터 제시된 GC가 Incremental GC(점진적 GC)이다.
+
+ | 기존 Unity GC | Incremental GC |
+ |:-------------:|:--------------:|
+ | ![](/tech/2306071259/img/img_0.png) | ![](/tech/2306071259/img/img_1.png) |
+
+Incremental GC의 경우, GC 작업을 여러 개의 슬라이스로 분할하고,
+
+GC 작업을 위해 프로그램 실행을 한 번에 오랫동안 중단하지 않고 여러번에 걸쳐 짧게 중단한다.
+
+(이렇게 하면 GC에 소요되는 총 시간이 줄어드는 것은 아니지만, GC 스파이크 문제는 해결이 가능하다.)
+
+> 
+> 
+> <span style="font-size:20px; padding-top:20px; display:block;font-weight:bold;">📌 여기서 잠깐 ! VSync란?</span>
+>
+> ---
+>
+> 위 표에서 보여준 예시에 따르면, 하단의 노란색영역이 존재함을 볼 수 있다. 
+> 
+> 범례를 보면 이 노란색 영역은 Vsync라는 것을 볼 수 있는데, Vsync란 무엇일까?
+>
+> Vsync는 **Vertical Synchronization** 으로서, CPU 작업과 GPU 작업간의 동기화를 시켜주는 옵션이다.
+>
+> 일반적으로 GPU 작업이 CPU 작업보다 더 오래걸리기 때문에, 동기화 해주기 위해서
+>
+> CPU에 'Wait For Target FPS (타겟 FPS 대기)'를 걸어서 CPU의 작업이 완료될 때 까지 기다리게 하는 것이다.
+>
+> Wait For Target FPS 부분이 있기에 FPS는 60FPS 정도로 유지 되는 것이며, 말 그대로 대기 시간이므로, 
+> 
+> 얼마나 프레임에 여유가 있는지 나타내는 척도가 되기도 한다.
+>
+> 따라서 VSync의 장단점은 다음과 같다.
+>
+> * Tearing을 방지한다.
+> * 60프레임을 가정할 경우 16.7ms이내에 연산을 마치게 되면 그 때 까지 연산을 멈춰서 CPU, GPU를 쉬게 해준다.
+> * 지정된 프레임 이상의 작업을 하지 않기 때문에, GPU 사용율이 줄고 전력 소모와 발열이 줄어든다.
+> * 화면이 수직 동기 버퍼를 거쳐 나가는 과정에서 지연시간이 생겨, 결과적으로 입력과 출력 사이에 딜리에가 생기게되어 인풋랙이 생긴다.
+>
+> ![](/tech/2306071259/img/img_2.png)
+>
+> Tearing 현상은 그래픽 카드와 모니터의 FPS가 다르기때문에 발생하는 현상으로,
+>
+> 화면이 찢어져 그려지는듯하게 렌더링 되는 현상을 말한다.
+
+# 🔸 Incremental Pause
+
+<img src="/tech/2306071259/img/img_3.png" width="500px">
+
+Unity의 Incremental GC는 GC를 여러 단계에 거쳐 작업하는데, GC 작업 중 프로그램이 메모리를 변경할 수 있다는 문제가 있다.
+
+예를 들어, 다음과 같은 상황을 생각해보자
+
+![](/tech/2306071259/img/img_4.png)
+
+<span style="color:gray"><span style="color:#bc5d59">■</span> GC가 방문함 / <span style="color:#666666">■</span> GC가 방문하지 않음</span>
+
+GC가 Root 목록을 순회하면서, D까지 방문학도 GC 스텝이 종료되었다고 한다.
+
+이때 이변이 없다면 다음 스텝때 GC는 나머지인 F를 방문하게 되고, 그 결과 방문하지 않은 C, E객체는 쓰래기로 수집되게 될 것이다.
+
+하지만 GC가 쉬는 동안 프로그램이 B가 C를 참조하도록 한다면, 다음 스텝에서 C가 해제되어 문제가 될 수 있게 된다.
+
+![](/tech/2306071259/img/img_5.png)
+
+<span style="color:gray"><span style="color:#bc5d59">■</span> GC가 방문함 / <span style="color:#a20025">■</span> 수거 예정</span>
+
+이런 불상사를 막기 위해서는 GC 작업 수행 중, 오브젝트간 레퍼런스가 변경될 때 마다 새로 GC 작업을 시작하는 것인데, 이는 매우 비효율적이다.
+
+Unity를 비롯한 여러 언어의 Incremental GC는 이를 Write Barrier로 해결한다.
+
+# 🔸 Write Barrier
+
+Write Barrier가 무엇인지 확인해보니, 다음과 같은 설명을 찾을 수 있었다.
+
+> **A write barrier in a garbage collector is a fragment of code emitted by the compiler immediately before every store operation.**
+> 
+> GC의 write barrier는 모든 저장 작업의 직전에 컴파일러에서 내보내는 코드 조각입니다.
+
+Write barrier는 컴파일러가 컴파일 단계에서 추가하는 코드로서, 메모리의 변경이 있을 경우 실행되도록 한 코드 조각이다.
+
+아래는 write barrier의 한 예인데, 다른 예를 찾지 못해 Go 언어로 작성된 예를 찾아 가져왔다.
+
+``` go
+package main
+
+var sink *int
+
+func main() {
+    foo := []int{1,2,3}
+    sink = &foo[1]
+}
+```
+
+이를 컴파일한 코드에서 `sink = &foo[1]`에 해당하는 부분은 다음과 같다.
+
+```
+CMPL     runtime.writeBarrier(SB), $0
+JNE      main_pc82
+MOVQ     CX, "".sink(SB)
+
+main_pc82:
+    LEAQ    "".sink(SB), DI
+    CALL    runtime.gcWriteBarrierCX(SB)
+```
+
+단순히 포인터를 가리키게 하는것이 아니라, 먼저 Write barrier가 활성화 되어 있는지, 즉 GC가 동작하고 있는지 확인한다.
+
+GC가 동작하고 있지 않을 경우, 즉 `runtime.writeBarrier(SB)`가 0일 경우엔 `sink = &foo[1]`을 실행한다.
+
+다만 GC가 동작하고 있을 경우, `runtime.writeBarrier(SB)`가 1일 경우엔 `main_pc82`로 점프하게 되며
+
+`sink = &foo[1]`를 실행한 뒤 GC에게 이 사실을 알리기위해 `runtime.gcWriteBarrierCX(SB)`를 실행하게 된다.
+
+코드 조각이 추가됨으로 인해 오버헤드가 생길수 있지만,
+
+대부분의 경우 `runtime.writeBarrier(SB)`가 0이므로 큰 문제가 되지 않으며 write barrier를 사용함으로써 얻는 시간적 이득이 더 크다고 한다.
+
+그렇다면 **저 추가된 코드 조각**에서는 무엇을 하는가? 가 중요한데,
+
+**메모리의 변경이 있음을 감지한 GC는 해당 메모리와 참조 관계에 있는 모든 메모리의 방문 기록을 지운다.**
+
+![](/tech/2306071259/img/img_4.png)
+
+<span style="color:gray"><span style="color:#bc5d59">■</span> GC가 방문함 / <span style="color:#666666">■</span> GC가 방문하지 않음</span>
+
+조금 전 예시로 살펴보자. 아까와 같이 GC가 이번스텝에서 D까지만 방문하고 멈췄다고 하자.
+
+![](/tech/2306071259/img/img_6.png)
+
+<span style="color:gray"><span style="color:#bc5d59">■</span> GC가 방문함 / <span style="color:#666666">■</span> GC가 방문하지 않음</span>
+
+마찬가지로 변화가 없다면 다음 GC 스텝에서 C와 E가 해제 되겠지만, 프로그램이 중간에 B가 C를 참조하도록 변경했다고 하자.
+
+이럴 경우, Write barrier에 의해 C를 참조하고자 하는 B, 그리고 B를 참조하는 A까지 모두 방문 기록을 지워버린다.
+
+![](/tech/2306071259/img/img_7.png)
+
+<span style="color:gray"><span style="color:#bc5d59">■</span> GC가 방문함 / <span style="color:#a20025">■</span> 수거 예정</span>
+
+다음 스텝이 되면, F를 마저 방문하고, 방문하지 않은 메모리가 있는지 확인 하는 과정에서 A-B-C를 찾아 추가로 방문하게 된다.
+
+모든 작업이 끝나면, 방문하지 않은 메모리 데이터인 E를 메모리에서 제거하게 된다.
+
+# 🔸 In Unity
+
+Unity에서는 이를 사용하기 위해 다음과 같은 메서드를 제공한다.
+
+| 메서드 | 설명 |
+|:------:|:----|
+| `GarbageCollector.CollectIncremental(ulong nanosecond)` | 매개 변수로 지정된 기간동안 Incremental GC를 수행한다. |
+| `GarbageCollector.GCMode = GarbageCollector.Mode.Enable` | Incremental GC를 사용하도록 설정한다. | 
+| `GarbageCollector.GCMode = GarbageCollector.Mode.Disable` | Incremental GC를 사용하지 않도록 설정한다. | 
+
+
+### 📚 참조 문서
+
+* [[Unity Docs] 점진적 가비지 컬렉션](https://docs.unity3d.com/kr/2022.1/Manual/performance-incremental-garbage-collection.html)
+* [기능 프리뷰 : 점진적 가비지 컬렉션](https://blog.unity.com/kr/technology/feature-preview-incremental-garbage-collection)
+* [유니티 - 점진적 가비지 컬렉션(Incremental GC)](https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=cdw0424&logNo=221573941915)
+* [Wiki ) Write Barrier](https://en.wikipedia.org/wiki/Write_barrier)
+* [Ruby Garbage Collection Deep Dive : Incremental Garbage Collection](https://jemma.dev/blog/gc-incremental)
+

@@ -1,5 +1,19 @@
-- name : 혼합 현실 협업 솔루션
+- name : NHN Gamebase
   img : ./img/mp_01.png
+  url : /profile/
+  desc : Gamebase Unity SDK & Plugin 개발
+  task :
+    - Gamebase Unity SDK 및 Setting tool 개발
+    - Android / iOS Plugin 개발
+    - Gamebase CI/CD 시스템 구축
+  keyword :
+    - SDK
+    - Unity
+    - Android
+    - iOS
+
+- name : 혼합 현실 협업 솔루션
+  img : ./img/mp_02.png
   url : /profile/
   desc : Mixed Reality 기반 산업용 협업 지원 시스템 핵심 기술 개발
   task :
@@ -8,21 +22,9 @@
   keyword :
     - Mixed Reality
     - Holo Lens
-  period: 2018.07 ~ 2020.06
-  desc-details:
-    MS사의 HoloLens와 HoloLens2를 사용하여 실제 산업 현장에서 사용 할 수있는 Mixed Reality 협업 시스템을 구축했음.<br>
-    <br>
-    처음 작업한 큰 규모의 프로젝트로서, UWP에서 빌드및 디버깅을 진행하였고,
-    .NET 프레임워크에서 OpenCV 라이브러리 임포트, 실시간 화상/음성 통화 구현등 다양한 기능을 직접 구현하였음.<br>
-    MR환경에서 사용자가 도움을 받으며 업무를 진행 할 수 있도록 MR전용 인터페이스를 구현
-    간단한 영상처리를 통해 객체나 QR을 인식하거나, 실제 주변 공간 기반의 충돌 체크 기능을 통해 가상 오브젝트 배치 기능을 구현하였습니다.
-
-  function :
-
-  platform : HoloLens, HoloLens2 (UWP)
 
 - name : 스마트 발전소 D.T.
-  img : ./img/mp_02.png
+  img : ./img/mp_03.png
   url : /profile/
   desc : 새만금 재생 에너지 발전소 관리를 위한 디지털 트윈 개발
   task :
@@ -33,7 +35,7 @@
     - WegGL
 
 - name : Smart Deployment
-  img : ./img/mp_03.png
+  img : ./img/mp_04.png
   url : /profile/
   desc : CAD 데이터를 통한 강화학습 공사 시뮬레이터
   task :
@@ -43,7 +45,7 @@
     - '3D Mesh'
 
 - name : Path Generator
-  img : ./img/mp_04.gif
+  img : ./img/mp_05.gif
   url : /profile/
   desc : '3D공간을 등속력으로 움직 일 수 있는 라이브러리 구현'
   task :
@@ -53,7 +55,7 @@
     - Open Source
 
 - name : Flow Visualizer
-  img : ./img/mp_05.gif
+  img : ./img/mp_06.gif
   url : /profile/
   desc : 유체나 물류의 흐름(양/속력/방향)을 한 눈에 파악할 수 있도록 만드는 라이브러리 구현
   task :
@@ -62,13 +64,3 @@
   keyword :
     - Open Source
     - Visualizer
-
-- name : BlackIce 시뮬레이터
-  img : ./img/mp_06.png
-  url : /profile/
-  desc : 기상서버 데이터 기반 블랙 아이스 시뮬레이터 개발
-  task :
-    - 서버의 기상 로그를 받아오는 통신 기능 구현
-    - 시간대별로 3D 환경에서 표현하는 시뮬레이션 기능 구현
-  keyword :
-    - Simulator
