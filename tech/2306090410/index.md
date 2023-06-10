@@ -116,7 +116,7 @@ Unity 에디터는 C# 컴파일러를 사용해 Unity 프로젝트에서 C# 소�
 
 자료를 조사하다가 아주 잘 정리된 글을 발견하여, 인용한다.
 
-> 📌 **참고 자료 : [디자인 패턴 (Design Parrern)이란?](https://readystory.tistory.com/114)** TStroy 블로그
+> 📌 **참고 : [디자인 패턴 (Design Parrern)이란?](https://readystory.tistory.com/114)** TStroy 블로그
 
 <div style="background-color:#F5F5F5; padding: 30px 40px; line-height:32px">
 <span style="font-size:24px; font-weight:bold;"><i>객체지향 소프트웨어를 '잘' 설계한다는 것은 쉬운 일이 아닙니다.</i></span><br>
