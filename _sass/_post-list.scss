@@ -105,7 +105,7 @@
     p.catalogue2-sub {
       font-size: 17px;
       line-height: 1.75;
-      padding-bottom: 4px;
+      padding-bottom: 2px;
 
       @media (max-width: $break-medium) {
         font-size: 16px;
@@ -120,7 +120,7 @@
       font-size: 18px;
       color: $grey-1;
       line-height: 1.75;
-      padding-bottom: 24px;
+      padding-bottom: 12px;
 
       @media (max-width: $break-medium) {
         font-size: 16px;
@@ -132,7 +132,7 @@
     }
 
     p.catalogue2-body {
-      color: $grey-1;
+      color: $default-shade;
     }
   }
 
@@ -148,7 +148,7 @@ table.catalogue2 {
 
 .catalogue2-item:hover .catalogue2-info {
   cursor: pointer;
-  opacity: .6;
+  opacity: .8;
 }
 
 .img-wrap {
@@ -198,21 +198,10 @@ table.catalogue2 {
 
 @media (min-width: $break-small) {
   .centents-wrap {
-    display:inline-block;
     width: calc(100% - 200px);
-    height: 230px;
-    margin-bottom: 15px;
     border-radius: 5px;
     overflow: hidden;
-    display: inline-block;
     margin-left: 15px;
-  }
-}
-
-@media (max-width: $break-medium) {
-  .centents-wrap {
-    height: 230px;
-    margin-bottom: 0px;
   }
 }
 

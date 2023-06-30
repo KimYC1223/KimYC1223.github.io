@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 {% include head.html %}
 
@@ -18,13 +18,10 @@
 {% include about-banner.html %}
 {% endif %}
 
-{% if page.url == '/recruit/' %}
-{% include recruit-banner.html %}
-{% endif %}
-
 {% if page.post-header == true %}
 {% include post-header.html %}
 {% endif %}
+
 {% if page.project-header == true %}
 {% include project-header.html %}
 {% endif %}

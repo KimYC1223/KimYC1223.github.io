@@ -32,6 +32,7 @@ plugins:
   - jekyll-feed
   - jemoji
   - jekyll-sitemap
+plugins_dir: ./_plugins
 
 collections:
   _posts:
@@ -43,6 +44,9 @@ kramdown:
   input: GFM
   syntax_highlighter_opts:
     css_class   : 'syntax'
+
+paginate : 3
+paginate_path: "/tech/page:num/"
 
 # Exclude from processing.
 # The following items will not be processed, by default.

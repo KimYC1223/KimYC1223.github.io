@@ -1,7 +1,7 @@
 <td class="catalogue-item card">
   <a href="{{ page.url | prepend: site.baseurl }}" >
     <div class="img-wrap2">
-      <img src="tech/{{page.date | date: '%y%m%d%H%M'}}/{{ page.image }}" class="catalogue-img"/>
+      <img src="/assets/blog/{{page.date | date: '%Y-%m-%d'}}-TechPost/{{ page.image }}" class="catalogue-img"/>
     </div>
     <div class="catalogue-info transition">
       <h1 class="catalogue-title">
@@ -11,7 +11,7 @@
         {{ page.subtitle }}
       </p>
       <p class="catalogue-date">
-        {{ page.date }}
+        {{ page.date | date : '%Y.%m.%d' }}
       </p>
     </div>
   </a>

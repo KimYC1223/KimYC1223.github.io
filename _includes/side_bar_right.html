@@ -1,5 +1,5 @@
 <div class="side_bar_right">
-  {% assign sorted = site.pages | where: 'type', 'tech' %}
+  {% assign sorted = site.posts | where: 'type', 'tech' %}
   <div class="side_bar_title" id="side_bar_home"><i class="fas fa-code"></i> 영찬의 개발 블로그</div>
   <div class="side_bar_category_div">
     <div class="side_bar_super_list" id="side_bar_profile">
@@ -14,56 +14,42 @@
     <div class="side_bar_sub_list" id="side_bar_vrmr">
       <span>Mixed Reality</span>
       <div class="side_bar_post_count">
-        {% assign post_a1 = sorted | where: 'hash-tag', 'MixedReality' %}
+        {% assign post_a1 = sorted | where: 'tags', 'MixedReality' %}
         ...  {{ post_a1.size }}
       </div>
     </div>
     <div class="side_bar_sub_list" id="side_bar_Unity">
       <span>Unity</span>
       <div class="side_bar_post_count">
-        {% assign post_a1 = sorted | where: 'hash-tag', 'Unity' %}
+        {% assign post_a1 = sorted | where: 'tags', 'Unity' %}
         ...  {{ post_a1.size }}
       </div>
     </div>
     <div class="side_bar_sub_list" id="side_bar_Web">
       <span>Web</span>
       <div class="side_bar_post_count">
-        {% assign post_a1 = sorted | where: 'hash-tag', 'Web' %}
+        {% assign post_a1 = sorted | where: 'tags', 'Web' %}
         ...  {{ post_a1.size }}
       </div>
     </div>
     <div class="side_bar_sub_list" id="side_bar_Python">
       <span>Python</span>
       <div class="side_bar_post_count">
-        {% assign post_a1 = sorted | where: 'hash-tag', 'Python' %}
-        ...  {{ post_a1.size }}
-      </div>
-    </div>
-    <div class="side_bar_sub_list" id="side_bar_ai">
-      <span>Artificial Intelligence</span>
-      <div class="side_bar_post_count">
-        {% assign post_a1 = sorted | where: 'hash-tag', 'AI' %}
+        {% assign post_a1 = sorted | where: 'tags', 'Python' %}
         ...  {{ post_a1.size }}
       </div>
     </div>
     <div class="side_bar_sub_list" id="side_bar_toy">
       <span>Toy Project</span>
       <div class="side_bar_post_count">
-        {% assign post_a1 = sorted | where: 'hash-tag', 'ToyProject' %}
-        ...  {{ post_a1.size }}
-      </div>
-    </div>
-    <div class="side_bar_sub_list" id="side_bar_Algorithm">
-      <span>Algorithm</span>
-      <div class="side_bar_post_count">
-        {% assign post_a1 = sorted | where: 'hash-tag', 'Algorithm' %}
+        {% assign post_a1 = sorted | where: 'tags', 'ToyProject' %}
         ...  {{ post_a1.size }}
       </div>
     </div>
     <div class="side_bar_sub_list" id="side_bar_JobPreparation">
       <span>Job Preparation</span>
       <div class="side_bar_post_count">
-        {% assign post_a1 = sorted | where: 'hash-tag', 'JobPreparation' %}
+        {% assign post_a1 = sorted | where: 'tags', 'JobPreparation' %}
         ...  {{ post_a1.size }}
       </div>
     </div>
@@ -73,6 +59,9 @@
     <!--<div class="side_bar_super_list" id="side_bar_project">
       프로젝트
     </div>-->
+    <div class="side_bar_super_list" id="side_bar_NGC">
+      머저리 게임 크루
+    </div>
   </div>
 </div>
 
@@ -104,43 +93,38 @@
   })
   */
 
+  side_bar_NGC = document.getElementById('side_bar_NGC')
+  side_bar_NGC.addEventListener('click', () => {
+    location.href = "http://nerdgamecrew.link/SatisFactory"
+  })
+
   side_bar_vrmr = document.getElementById('side_bar_vrmr')
   side_bar_vrmr.addEventListener('click', () => {
-    location.href = "/tech/?tag=MixedReality"
+    location.href = "/tags/?tag=MixedReality"
   })
 
   side_bar_Unity = document.getElementById('side_bar_Unity')
   side_bar_Unity.addEventListener('click', () => {
-    location.href = "/tech/?tag=Unity"
+    location.href = "/tags/?tag=Unity"
   })
 
   side_bar_JobPreparation = document.getElementById('side_bar_JobPreparation')
   side_bar_JobPreparation.addEventListener('click', () => {
-    location.href = "/tech/?tag=JobPreparation"
+    location.href = "/tags/?tag=JobPreparation"
   })
 
   side_bar_Web = document.getElementById('side_bar_Web')
   side_bar_Web.addEventListener('click', () => {
-    location.href = "/tech/?tag=Web"
-  })
-
-  side_bar_Python = document.getElementById('side_bar_Python')
-  side_bar_Python.addEventListener('click', () => {
-    location.href = "/tech/?tag=Python"
-  })
-
-  side_bar_ai = document.getElementById('side_bar_ai')
-  side_bar_ai.addEventListener('click', () => {
-    location.href = "/tech/?tag=AI"
+    location.href = "/tags/?tag=Web"
   })
 
   side_bar_toy = document.getElementById('side_bar_toy')
   side_bar_toy.addEventListener('click', () => {
-    location.href = "/tech/?tag=ToyProject"
+    location.href = "/tags/?tag=ToyProject"
   })
 
-  side_bar_Algorithm = document.getElementById('side_bar_Algorithm')
-  side_bar_Algorithm.addEventListener('click', () => {
-    location.href = "/tech/?tag=Algorithm"
+  side_bar_Python = document.getElementById('side_bar_Python')
+  side_bar_Python.addEventListener('click', () => {
+    location.href = "/tags/?tag=Python"
   })
 </script>

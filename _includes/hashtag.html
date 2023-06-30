@@ -1,4 +1,6 @@
 <script>
+    let SelectedTag = "";
+
     function filterByTagName(tagName) {
         $('.hidden').removeClass('hidden');
         var check_count = 0;
@@ -11,13 +13,13 @@
         });
         $(".tag").removeClass('selected');
         $(".tag[data-tag=" + tagName + "]").addClass('selected');
-        if(check_count == 0)  { $("#emptyDiv").removeClass('hiddenEmptyDiv'); console.log('empty') }
-        else { $("#emptyDiv").addClass('hiddenEmptyDiv'); console.log('not empty') }
+        $(".tag_a[data-tag=" + tagName + "]").attr("href", "/tech")
+        if(check_count == 0)  { $("#emptyDiv").removeClass('hiddenEmptyDiv');}
+        else { $("#emptyDiv").addClass('hiddenEmptyDiv');}
     }
 
     function updateQueryString(tagName) {
-        const path = location.protocol + "//" + location.host + location.pathname + "?tag=" + tagName;
-        window.history.replaceState({ path: path }, '', path);
+        window.location = '/tags/?tag=' + tagName;
     }
 
     function searchParam(key) {
@@ -37,28 +39,20 @@
     }
 
     function makeTagList(){
-        let $tags = $(".tag");
-        const tags = [];
-        for(let i = 0; i < $tags.length; i++){
-            var v = $tags[i];
-            const repTagText = $(v).text().replace(/\s/gi, "");
-            if(tags.indexOf(repTagText) < 0) {
-                tags.push(repTagText);
-                $("#tag-list")[0].innerHTML += '<span class="tag" data-tag="' + repTagText +'">' + repTagText + '</span>';
-            }
+        let tagStrs = getAllTagList();
+        for(let i = 0; i < tagStrs.length; i++){
+            var v = tagStrs[i];
+            $("#tag-list")[0].innerHTML += '<span class="tag" data-tag="' + v +'">' + v + '</span>';
         }
         $('#tag-list span').sort(sortTag).appendTo('#tag-list');
     }
 
     function getAllTagList() {
-        const $tags = Array.prototype.slice.call($('#tag-list span'))
-        const result = [];
-        for(let i in $tags){
-            var v = $tags[i];
-            const repTagText = $(v).text().replace(/\s/gi, "");
-            result.push(repTagText)
-        }
-        return result;
+        let tagArray = [];
+        {% for item in site.data.tags %}
+            tagArray.push('{{item}}');
+        {% endfor %}
+        return tagArray;
     }
 
     function linkTag(){
@@ -81,14 +75,18 @@
         linkTag();
         $("[data-tag]").click(function(e) {
             const currentTag = e.target.dataset.tag;
-            filterByTagName(currentTag);
-            updateQueryString(currentTag);
+            if(SelectedTag != currentTag) {
+                updateQueryString(currentTag);
+            } else {
+                window.location = '/tech'
+            }
         })
     }
 
     $(document).ready(function() {
         tagFilter();
         var str = searchParam('tag');
+        SelectedTag = str;
         if(str == null || str == '') return
         const currentTag = str;
         filterByTagName(currentTag);

@@ -5,7 +5,7 @@
       <div class="content">
         <table class="catalogue">
           <tr>
-            {% assign sorted = site.pages | sort: 'date' | reverse | where: 'type', 'tech' %}
+            {% assign sorted = site.posts | sort: 'date' | reverse | where: 'type', 'tech' %}
             {% for page in sorted limit:4 %}
             {% include post-card.html %}
             {% endfor %}
@@ -24,7 +24,7 @@
               <tr class="home_post_table_head">
                 <td>제목</td><td>작성일</td>
               </tr>
-              {% assign sorted = site.pages | sort: 'date' | reverse | where: 'type', 'tech' | where: 'hash-tag', 'MixedReality' %}
+              {% assign sorted = site.posts | sort: 'date' | reverse | where: 'type', 'tech' | where: 'tags', 'MixedReality' %}
               {% if sorted.size == 0 %}
                   <td colspan="2" rowspan="4"><span class="home_post_table_no_post">글 없음</span></td>
               {% else %}
@@ -43,7 +43,7 @@
               <tr class="home_post_table_head">
                 <td>제목</td><td>작성일</td>
               </tr>
-              {% assign sorted = site.pages | sort: 'date' | reverse | where: 'type', 'tech' | where: 'hash-tag', 'Unity' %}
+              {% assign sorted = site.posts | sort: 'date' | reverse | where: 'type', 'tech' | where: 'tags', 'Unity' %}
               {% if sorted.size == 0 %}
                   <td colspan="2" rowspan="4"><span class="home_post_table_no_post">글 없음</span></td>
               {% else %}
@@ -62,7 +62,7 @@
               <tr class="home_post_table_head">
                 <td>제목</td><td>작성일</td>
               </tr>
-              {% assign sorted = site.pages | sort: 'date' | reverse | where: 'type', 'tech' | where: 'hash-tag', 'Web' %}
+              {% assign sorted = site.posts | sort: 'date' | reverse | where: 'type', 'tech' | where: 'tags', 'Web' %}
               {% if sorted.size == 0 %}
                   <td colspan="2" rowspan="4"><span class="home_post_table_no_post">글 없음</span></td>
               {% else %}
@@ -81,26 +81,7 @@
               <tr class="home_post_table_head">
                 <td>제목</td><td>작성일</td>
               </tr>
-              {% assign sorted = site.pages | sort: 'date' | reverse | where: 'type', 'tech' | where: 'hash-tag', 'Python' %}
-              {% if sorted.size == 0 %}
-                  <td colspan="2" rowspan="4"><span class="home_post_table_no_post">글 없음</span></td>
-              {% else %}
-                {% for page in sorted limit:4 %}
-                <tr> <td><a href="{{ page.url | prepend: site.baseurl }}">{{page.title}}</a></td><td>{{page.date | date: "%Y-%m-%d"}}</td> </tr>
-                {% endfor %}
-              {% endif %}
-            </table>
-          </div>
-        </div>
-
-        <div class="home_post_table_category">
-          <div class="home_post_table_title">  인공 지능 <english>Arificial Intelligence</english></div>
-          <div class="home_post_table_contents">
-            <table>
-              <tr class="home_post_table_head">
-                <td>제목</td><td>작성일</td>
-              </tr>
-              {% assign sorted = site.pages | sort: 'date' | reverse | where: 'type', 'tech' | where: 'hash-tag', 'AI' %}
+              {% assign sorted = site.posts | sort: 'date' | reverse | where: 'type', 'tech' | where: 'tags', 'Python' %}
               {% if sorted.size == 0 %}
                   <td colspan="2" rowspan="4"><span class="home_post_table_no_post">글 없음</span></td>
               {% else %}
@@ -119,7 +100,7 @@
               <tr class="home_post_table_head">
                 <td>제목</td><td>작성일</td>
               </tr>
-              {% assign sorted = site.pages | sort: 'date' | reverse | where: 'type', 'tech' | where: 'hash-tag', 'ToyProject' %}
+              {% assign sorted = site.posts | sort: 'date' | reverse | where: 'type', 'tech' | where: 'tags', 'ToyProject' %}
               {% if sorted.size == 0 %}
                   <td colspan="2" rowspan="4"><span class="home_post_table_no_post">글 없음</span></td>
               {% else %}
@@ -132,32 +113,13 @@
         </div>
 
         <div class="home_post_table_category">
-          <div class="home_post_table_title">  알고리즘 <english>Algorithm</english></div>
+          <div class="home_post_table_title"> 취업 인터뷰 대비 <english>JobPreparation</english></div>
           <div class="home_post_table_contents">
             <table>
               <tr class="home_post_table_head">
                 <td>제목</td><td>작성일</td>
               </tr>
-              {% assign sorted = site.pages | sort: 'date' | reverse | where: 'type', 'tech' | where: 'hash-tag', 'Algorithm' %}
-              {% if sorted.size == 0 %}
-                  <td colspan="2" rowspan="4"><span class="home_post_table_no_post">글 없음</span></td>
-              {% else %}
-              {% for page in sorted limit:4 %}
-              <tr> <td><a href="{{ page.url | prepend: site.baseurl }}">{{page.title}}</a></td><td>{{page.date | date: "%Y-%m-%d"}}</td> </tr>
-              {% endfor %}
-              {% endif %}
-            </table>
-          </div>
-        </div>
-
-        <div class="home_post_table_category">
-          <div class="home_post_table_title"> 취업 <english>JobPreparation</english></div>
-          <div class="home_post_table_contents">
-            <table>
-              <tr class="home_post_table_head">
-                <td>제목</td><td>작성일</td>
-              </tr>
-              {% assign sorted = site.pages | sort: 'date' | reverse | where: 'type', 'tech' | where: 'hash-tag', 'JobPreparation' %}
+              {% assign sorted = site.posts | sort: 'date' | reverse | where: 'type', 'tech' | where: 'tags', 'JobPreparation' %}
               {% if sorted.size == 0 %}
                   <td colspan="2" rowspan="4"><span class="home_post_table_no_post">글 없음</span></td>
               {% else %}

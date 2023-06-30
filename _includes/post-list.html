@@ -1,11 +1,11 @@
 <li class="catalogue2-item list"
-    {% if page.hash-tag %}
-        {% for tag in page.hash-tag %}
+    {% if page.tags %}
+        {% for tag in page.tags %}
             data-{{ tag }}
         {% endfor %}
     {% endif %}>
     <div class="img-wrap">
-      <img src="/tech/{{page.date | date: '%y%m%d%H%M'}}/{{ page.image }}" class="catalogue2-img"/>
+      <img src="/assets/blog/{{page.date | date: '%Y-%m-%d'}}-TechPost/{{ page.image }}" class="catalogue2-img"/>
     </div>
     <div class="centents-wrap">
       <a href="{{ page.url | prepend: site.baseurl }}" >
@@ -24,10 +24,10 @@
                   {{ page.subtitle }}
               </p>
               <p class="catalogue2-date">
-                  {{ page.date }}
+                  {{ page.date | date : '%Y.%m.%d.' }}
               </p>
               <p class="catalogue2-body">
-                  {{ page.content | strip_html | truncate: 85 }}
+                  {{ page.content | strip_html | truncate: 65 }}
               </p>
           </div>
       </a>

@@ -21,11 +21,10 @@ layout: main
             {{ page.subtitle }}
         </h2>
         <h2 class="post-date">
-            {{ page.date }}
+            {{ page.date | date : '%Y.%m.%d' }}
         </h2>
     </div>
 
-    <!--draft 일 때-->
     <div class="post-content">
 
         {% if page.draft == true %}
@@ -38,13 +37,7 @@ layout: main
         {% else %}
     
           {{ content }}
-    
-          {% if page.hash-tag %}
-          <div class="post-tags">
-              {% include post-hashtag.html %}
-          </div>
-          {% endif %}
-    
+          <br><br>
         {% endif %}
     </div>
 

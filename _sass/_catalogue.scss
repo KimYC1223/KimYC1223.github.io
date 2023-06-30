@@ -155,7 +155,6 @@ table.catalogue {
 
 .img-wrap2 {
   width: 100%;
-  height: 200px;
   margin-bottom: 15px;
   border-radius: 5px;
   overflow: hidden;
@@ -163,7 +162,6 @@ table.catalogue {
   .catalogue-img {
     object-fit: cover;
     width: 100%;
-    height: 100%;
     -webkit-transform: scale(1);
     -webkit-transition: all 0.3s ease-in-out;
     background-color: $grey-9;

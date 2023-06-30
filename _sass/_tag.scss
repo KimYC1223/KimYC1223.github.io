@@ -14,25 +14,28 @@
 
 .tag {
   margin-right: 10px;
-  color: $grey-7;
+  color: white;
   font-size: 14px;
-  text-decoration: underline;
+  cursor:pointer;
   display: inline-block;
+  padding: 5px 10px;
+  background-color: $grey-5;
+  transition: 0.2s;
+  border-radius: 6px;
 
   &:hover {
-    opacity: 0.5;
+    background-color: $primary;
   }
 
   &.selected {
-    color: $primary;
-  }
-
-  &::before {
-    content: '#';
+    color: white;
+    background-color: $primary-dark;
   }
 
   @media (max-width: $break-small) {
     font-size: 13px;
+    padding: 2px 7px;
+    margin-right: 5px;
   }
 }
 
@@ -52,9 +55,5 @@
 
   .tag:hover {
     opacity: 0.5;
-  }
-
-  .tag-emoji {
-    //font-size: xx-large;
   }
 }
