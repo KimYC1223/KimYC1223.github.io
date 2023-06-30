@@ -11,48 +11,17 @@
         ( {{ sorted.size }} )
       </div>
     </div>
-    <div class="side_bar_sub_list" id="side_bar_vrmr">
-      <span>Mixed Reality</span>
+
+    {% for item in site.data.tags %}
+    <div class="side_bar_sub_list" id="side_bar_{{item}}">
+      <span>{{item}}</span>
       <div class="side_bar_post_count">
-        {% assign post_a1 = sorted | where: 'tags', 'MixedReality' %}
+        {% assign post_a1 = sorted | where: 'tags', item %}
         ...  {{ post_a1.size }}
       </div>
     </div>
-    <div class="side_bar_sub_list" id="side_bar_Unity">
-      <span>Unity</span>
-      <div class="side_bar_post_count">
-        {% assign post_a1 = sorted | where: 'tags', 'Unity' %}
-        ...  {{ post_a1.size }}
-      </div>
-    </div>
-    <div class="side_bar_sub_list" id="side_bar_Web">
-      <span>Web</span>
-      <div class="side_bar_post_count">
-        {% assign post_a1 = sorted | where: 'tags', 'Web' %}
-        ...  {{ post_a1.size }}
-      </div>
-    </div>
-    <div class="side_bar_sub_list" id="side_bar_Python">
-      <span>Python</span>
-      <div class="side_bar_post_count">
-        {% assign post_a1 = sorted | where: 'tags', 'Python' %}
-        ...  {{ post_a1.size }}
-      </div>
-    </div>
-    <div class="side_bar_sub_list" id="side_bar_toy">
-      <span>Toy Project</span>
-      <div class="side_bar_post_count">
-        {% assign post_a1 = sorted | where: 'tags', 'ToyProject' %}
-        ...  {{ post_a1.size }}
-      </div>
-    </div>
-    <div class="side_bar_sub_list" id="side_bar_JobPreparation">
-      <span>Job Preparation</span>
-      <div class="side_bar_post_count">
-        {% assign post_a1 = sorted | where: 'tags', 'JobPreparation' %}
-        ...  {{ post_a1.size }}
-      </div>
-    </div>
+    {% endfor %}
+
     <div class="side_bar_super_list" id="side_bar_life">
       소소한 이야기
     </div>
@@ -98,33 +67,11 @@
     location.href = "http://nerdgamecrew.link/SatisFactory"
   })
 
-  side_bar_vrmr = document.getElementById('side_bar_vrmr')
-  side_bar_vrmr.addEventListener('click', () => {
-    location.href = "/tags/?tag=MixedReality"
-  })
+  {% for item in site.data.tags %}
+    side_bar_{{item}} = document.getElementById('side_bar_{{item}}')
+    side_bar_{{item}}.addEventListener('click', () => {
+      location.href = "/tags/?tag={{item}}"
+    })
+  {% endfor %}
 
-  side_bar_Unity = document.getElementById('side_bar_Unity')
-  side_bar_Unity.addEventListener('click', () => {
-    location.href = "/tags/?tag=Unity"
-  })
-
-  side_bar_JobPreparation = document.getElementById('side_bar_JobPreparation')
-  side_bar_JobPreparation.addEventListener('click', () => {
-    location.href = "/tags/?tag=JobPreparation"
-  })
-
-  side_bar_Web = document.getElementById('side_bar_Web')
-  side_bar_Web.addEventListener('click', () => {
-    location.href = "/tags/?tag=Web"
-  })
-
-  side_bar_toy = document.getElementById('side_bar_toy')
-  side_bar_toy.addEventListener('click', () => {
-    location.href = "/tags/?tag=ToyProject"
-  })
-
-  side_bar_Python = document.getElementById('side_bar_Python')
-  side_bar_Python.addEventListener('click', () => {
-    location.href = "/tags/?tag=Python"
-  })
 </script>

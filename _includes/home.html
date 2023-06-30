@@ -75,13 +75,13 @@
         </div>
 
         <div class="home_post_table_category">
-          <div class="home_post_table_title"> 파이썬 <english>Python</english></div>
+          <div class="home_post_table_title"> C# <english>C Sharp</english></div>
           <div class="home_post_table_contents">
             <table>
               <tr class="home_post_table_head">
                 <td>제목</td><td>작성일</td>
               </tr>
-              {% assign sorted = site.posts | sort: 'date' | reverse | where: 'type', 'tech' | where: 'tags', 'Python' %}
+              {% assign sorted = site.posts | sort: 'date' | reverse | where: 'type', 'tech' | where: 'tags', 'C_Sharp' %}
               {% if sorted.size == 0 %}
                   <td colspan="2" rowspan="4"><span class="home_post_table_no_post">글 없음</span></td>
               {% else %}
