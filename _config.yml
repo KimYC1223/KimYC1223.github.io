@@ -47,6 +47,7 @@ kramdown:
 
 paginate : 3
 paginate_path: "/tech/page:num/"
+futrue: true
 
 # Exclude from processing.
 # The following items will not be processed, by default.
