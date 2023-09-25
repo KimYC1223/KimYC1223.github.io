@@ -45,9 +45,10 @@ kramdown:
   syntax_highlighter_opts:
     css_class   : 'syntax'
 
-paginate : 3
+paginate : 6
 paginate_path: "/tech/page:num/"
-futrue: true
+sort_reverse: true
+future: false
 
 # Exclude from processing.
 # The following items will not be processed, by default.
