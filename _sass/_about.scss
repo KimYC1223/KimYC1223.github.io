@@ -84,6 +84,72 @@ img {padding:0; margin: 0;}
   margin-bottom: 0;
 }
 
+.aboutme_bookmark_div {
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid $grey-7;
+  overflow: hidden;
+  padding : 0;  
+  background-color: #FAFAFA;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.aboutme_bookmark_div:hover{
+  background-color: #E9E9E9;
+}
+
+.aboutme_bookmark_thumbnail {
+  width: 200px;
+  padding : 0;  
+  float: left;
+
+  @media (max-width: 720px) {
+    width: 250px;
+  }
+}
+
+.aboutme_bookmark_thumbnail img {
+  width: 100%;
+  padding : 0;  
+}
+
+.aboutme_bookmark_description {
+  width: calc(100% - 215px);
+  float:right;
+  padding-top:15px;
+  padding-right: 10px;
+
+  @media (max-width: 720px) {
+    width: calc(100% - 280px);
+    padding-top:8px;
+  }
+}
+
+.aboutme_bookmark_title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom:5px;
+  color:$primary;
+  display: block;
+
+  @media (max-width: 720px) {
+    font-size: 24px;
+  }
+}
+
+.aboutme_bookmark_address {
+  font-size : 10px;
+  color:$grey-6;
+  margin-bottom:2px;
+  display: block;
+
+  @media (max-width: 720px) {
+    margin-bottom: 5px;
+  }
+}
+
 .aboutme_greeting {
   color:$grey-8;
   line-height: 25px;

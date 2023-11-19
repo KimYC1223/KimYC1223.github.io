@@ -1,5 +1,5 @@
 - name : NHN Gamebase
-  img : ./img/mp_01.png
+  img : ./img/mp_04.png
   url : /profile/
   desc : Gamebase Unity SDK & Plugin 개발
   task :
@@ -12,8 +12,45 @@
     - Android
     - iOS
 
-- name : 혼합 현실 협업 솔루션
+- name : Unity Build Machine
   img : ./img/mp_02.png
+  url : /profile/
+  desc : Unity 프로젝트 및 SDK용 빌드머신 구현
+  task :
+    - Windows, MacOS에서 사용할 수 있는 Jenkins빌드머신 구현
+    - Standalone, WebGL, AOS, IOS 플랫폼의 Mono, IL2CPP 빌드 자동화 및 백업 시스템 구현
+  keyword :
+    - Build Machine
+    - Jenkins
+
+
+- name : AR Mirror
+  img : ./img/mp_01.gif
+  url : /profile/
+  desc : 가상 피팅용 스마트 AR 미러 개발
+  task :
+    - AR Foundation 및 Mediapipe 기반의 AR 컨텐츠 개발
+    - Kiehl, LouisVuitton, NewBalance Kids 팝업 스토어에 컨텐츠 제공
+  keyword :
+    - iOS
+    - Windows
+    - AR
+
+- name : Fassker World
+  img : ./img/mp_03.png
+  url : /profile/
+  desc : 패션 SNS와 게임을 합친 메타버스 어플리케이션 개발
+  task :
+    - Fassker World Unity 클라이언트 개발
+    - Android / iOS 앱 릴리즈 및 업데이트
+    - Addressable을 통한 에셋 관리 시스템 운영
+  keyword :
+    - Android
+    - iOS
+    - Addressable을
+
+- name : 혼합 현실 협업 솔루션
+  img : ./img/mp_05.png
   url : /profile/
   desc : Mixed Reality 기반 산업용 협업 지원 시스템 핵심 기술 개발
   task :
@@ -24,7 +61,7 @@
     - Holo Lens
 
 - name : 스마트 발전소 D.T.
-  img : ./img/mp_03.png
+  img : ./img/mp_06.png
   url : /profile/
   desc : 새만금 재생 에너지 발전소 관리를 위한 디지털 트윈 개발
   task :
@@ -35,7 +72,7 @@
     - WegGL
 
 - name : Smart Deployment
-  img : ./img/mp_04.png
+  img : ./img/mp_07.png
   url : /profile/
   desc : CAD 데이터를 통한 강화학습 공사 시뮬레이터
   task :
@@ -45,7 +82,7 @@
     - '3D Mesh'
 
 - name : Path Generator
-  img : ./img/mp_05.gif
+  img : ./img/mp_08.gif
   url : /profile/
   desc : '3D공간을 등속력으로 움직 일 수 있는 라이브러리 구현'
   task :
@@ -55,7 +92,7 @@
     - Open Source
 
 - name : Flow Visualizer
-  img : ./img/mp_06.gif
+  img : ./img/mp_09.gif
   url : /profile/
   desc : 유체나 물류의 흐름(양/속력/방향)을 한 눈에 파악할 수 있도록 만드는 라이브러리 구현
   task :

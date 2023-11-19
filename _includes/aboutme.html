@@ -6,12 +6,12 @@
   </div>
   <div class="aboutme_title">
     <span class="aboutme_title_ko">김영찬</span> <span class="aboutme_title_en">Kim Young Chan</span>
-    <span class="aboutme_subtitle">Unity 엔진 & SDK 개발자</span>
+    <span class="aboutme_subtitle">Unity 클라이언트 & SDK 개발자</span>
   </div >
 
   <div class="aboutme_section">
     <div class="aboutme_greeting">
-      안녕하세요, 어제보다 더 성장할 나를 위해 노력하는 김영찬 입니다. 현재 NHN에서 Unity SDK를 개발하고 있습니다.
+      안녕하세요, 어제보다 더 성장할 나를 위해 노력하는 김영찬 입니다.
       <div class="aboutme_greeting_subdiv">
         <div class="aboutme_greeting_subtitle">SNS</div>
         <div class="text_badge" id="aboutme_badge_github">
@@ -34,12 +34,21 @@
           <span class="text_badge_head"><i class="fab fa-steam-symbol"></i></span>
           <span class = "text_badge_content">steam</span>
         </div>
-        <div class="text_badge" id="aboutme_badge_assetstore">
-          <span class="text_badge_head"><i class="fa-brands fa-unity"></i></span>
-          <span class = "text_badge_content">Assetstore publisher profile</span>
-        </div>
       </div>
     </div>
+
+    <div class="aboutme_bookmark_div" id="aboutme_bookmark_assetstore">
+      <div class="aboutme_bookmark_thumbnail">
+        <img src="./img/AssetStoreProfile.png">
+      </div>
+      <div class="aboutme_bookmark_description">
+        <span class="aboutme_bookmark_title">Unity Asset Store Publisher Profile</span>
+        <span class="aboutme_bookmark_address">https://assetstore.unity.com/publishers/73611</span>
+        <span class="aboutme_bookmark_subtitle">간단하지만 코딩하기 번거로운 패키지를 개발하고 업로드합니다.</span>
+      </div>
+    </div>
+
+    
 
     <script>
       aboutme_badge_github = document.getElementById('aboutme_badge_github')
@@ -67,8 +76,8 @@
         location.href = "https://steamcommunity.com/id/kimyc1223?l=korean"
       })
 
-      aboutme_badge_assetstore = document.getElementById('aboutme_badge_assetstore')
-      aboutme_badge_assetstore.addEventListener('click', () => {
+      aboutme_bookmark_assetstore = document.getElementById('aboutme_bookmark_assetstore')
+      aboutme_bookmark_assetstore.addEventListener('click', () => {
         location.href = "https://assetstore.unity.com/publishers/73611"
       })
     </script>
@@ -80,7 +89,7 @@
       <ul>
         <li>
           <table><tr><td><i class="fas fa-chevron-right"></i></td>
-          <td><span>컴퓨터 공학을 전공하고 Unity 엔진 SDK개발을 하고 있는 개발자입니다.</span></td></tr></table>
+          <td><span>컴퓨터 공학을 전공하고 Unity 클라이언트 및 SDK개발을 하고 있는 개발자입니다.</span></td></tr></table>
         </li>
         <li>
           <table><tr><td><i class="fas fa-chevron-right"></i></td>
@@ -276,6 +285,23 @@
               <span class="aboutme_extra_card_role">테크니션</span>
               <span class="aboutme_extra_card_period">2018.01 - 2018.06</span>
               <span class="aboutme_extra_card_desc">"추리게임 : 폴리스라인 안으로"의 기술 소품 및 백그라운드 서버담당</span>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="aboutme_extra_card">
+        <table>
+          <tr>
+            <td class="aboutme_extra_card_img_td">
+              <a href="https://cargold.notion.site/cargold/5c1b5c784cfd40bbba0f762fb2dcbee9"><img src="./img/CargoldMember.jpg"></a>
+            </td>
+            <td class="aboutme_extra_card_img_td2">
+              <span class="aboutme_extra_card_name">Cargold의 거실</span>
+              <span class="aboutme_extra_card_sub">게임 개발자 커뮤니티</span>
+              <span class="aboutme_extra_card_role">시즌 2 거실 멤버</span>
+              <span class="aboutme_extra_card_period">2023.11 - 진행중</span>
+              <span class="aboutme_extra_card_desc">카골드의 거실 Unity 개발자-프로그래밍 멤버 (시즌2 부터 참여 중)</span>
             </td>
           </tr>
         </table>
