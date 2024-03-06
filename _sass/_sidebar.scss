@@ -64,6 +64,16 @@
   color:$grey-6;
 }
 
+.side_bar_hitcount img{
+  display: inline-block;
+}
+
+.side_bar_hitcount {
+  width: 100%;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
 .side_bar_button {
   width: 100%;
   height: 24px;
