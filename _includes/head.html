@@ -10,6 +10,7 @@
   <meta name="naver-site-verification" content="e28db58146ca81c6de242e392a1d2dcda821d84b" />
 
   <!-- Google / Search Engine Tags -->
+  <meta name="google-site-verification" content="nsvtdgPWWPGWcye6qWeo_psQsEvNcNoi_XUJG_qukoM" />
   <meta itemprop="name" content="{% if page.home == true %}{{ site.title }}{% elsif page.main == true %}{{ page.title }} | {{ site.title }}{% else %}{{ page.title }}{% endif %}">
   <meta itemprop="description" content="{% if page.home == true %}{{ site.description }}{% else %}{{ site:title }}{% endif %}">
   <meta itemprop="image" content="{% if page.post-header == true or page.project-header == true %}/assets/blog/{{page.date | date: '%Y-%m-%d'}}-TechPost/{{ page.header-img }}{% elsif page.recruit == true %}{{ site.url }}{{'/meta/meta_recruit_image.png'}}{% else %}{{ site.url }}{{'/meta/meta_image.png'}}{% endif %}">
@@ -41,13 +42,4 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-71KHZP8KQ5"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-71KHZP8KQ5');
-
-  </script>
 </head>
