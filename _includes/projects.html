@@ -1,11 +1,55 @@
-{% assign projects = site.data.main_project_detail %}
+{% assign projects = site.data.recent_project_detail %}
 
 <div class="proejcts_MainDivWarpper">
     <div class="projects_MainDiv" id="projects_MainDiv">
         {% for project in projects  %}
         <div class="projects_Wrapper">
             <div class="projects_centerDiv">
-                {{ project.name }}
+                <video class="projects_video" autoplay src="{{project.url}}{{project.video}}" muted playsinline loop>
+                    <source src="{{project.url}}{{project.video}}" type="video/mp4">
+                </video>
+                <div class="projects_video_gradient"></div>
+                <div class="projects_video_dim"></div>
+
+                <div class="projects_recent_div">
+                    <table class="projects_recent_table_sero">
+                        <tr>
+                            <td><img class="projects_recent_icon" src="{{project.url}}{{project.icon}}"></td>
+                        </tr>
+                        <tr>
+                            <td><span class="projects_recent_title">{{ project.name }}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="projects_recent_engTitle">{{ project.engName }}</span></td>
+                        </tr>
+                    </table>
+                    <table class="projects_recent_table_garo">
+                        <tr>
+                            <td rowspan="2"><img class="projects_recent_icon" src="{{project.url}}{{project.icon}}"></td>
+                            <td rowspan="2" width="20px"></td>
+                            <td><span class="projects_recent_title">{{ project.name }}</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="projects_recent_engTitle">{{ project.engName }}</span></td>
+                        </tr>
+                    </table>
+
+                    <div class="projects_recent_desc">
+                        {{project.desc}}
+                    </div>
+
+                    <div class="projects_recent_subdesc">
+                        <table>
+                            {% for task in project.task  %}
+                            <tr>
+                                <td style="vertical-align: top;">🔹</td> 
+                                <td class="projects_recent_subdesc_text">{{task}}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
         {% endfor %}
@@ -19,6 +63,10 @@
 
     <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
     <script>
+        //=======================================================================================
+        //  프로젝트 추가 / 제거되면 이 값 수정정
+        //=======================================================================================
+        let projectNum = 3;
         
         $(document).ready(function () {
             //=======================================================================================
@@ -98,18 +146,18 @@
                 if(mHtml.is(":animated")) return;
                 var currentPosTop = mHtml.scrollTop()
                 if( currentPosTop >= (page -  0.995) * mHtml.height() )
-                    page = (page >= 6) ? 6 : page +1;
+                    page = (page >= projectNum) ? projectNum : page +1;
                 else if( currentPosTop <= (page - 1.005) * mHtml.height() )
-                    page = (page <= 1) ? 1 : page -1;
+                    page = (page <= 1) ? 1  : page -1;
                 moveScroll(page)
             }
             
             let mousewheelFunc = (e) => {
                 if(mHtml.is(":animated")) return;
                 if(e.originalEvent.deltaY > 0) 
-                    page = (page == 6) ? 1 : page + 1
+                    page = (page == projectNum) ? 1 : page + 1
                 else if(e.originalEvent.deltaY < 0)
-                    page = (page == 1) ? 6 : page - 1
+                    page = (page == 1) ? projectNum : page - 1
                 moveScroll(page)
             }
             

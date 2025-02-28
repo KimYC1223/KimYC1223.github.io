@@ -108,6 +108,10 @@ img {padding:0; margin: 0;}
   @media (max-width: 720px) {
     width: 250px;
   }
+
+  @media (max-width: 600px) {
+    width: 30%;
+  }
 }
 
 .aboutme_bookmark_thumbnail img {
@@ -125,6 +129,11 @@ img {padding:0; margin: 0;}
     width: calc(100% - 280px);
     padding-top:8px;
   }
+
+  @media (max-width: 600px) {
+    width: 65%;
+    padding-top:8px;
+  }
 }
 
 .aboutme_bookmark_title {
@@ -137,6 +146,10 @@ img {padding:0; margin: 0;}
   @media (max-width: 720px) {
     font-size: 24px;
   }
+
+  @media (max-width: 640px) {
+    font-size: 18px;
+  }
 }
 
 .aboutme_bookmark_address {
@@ -147,6 +160,16 @@ img {padding:0; margin: 0;}
 
   @media (max-width: 720px) {
     margin-bottom: 5px;
+  }
+
+  @media (max-width: 600px) {
+    display: none;
+  }
+}
+
+.aboutme_bookmark_subtitle {
+  @media (max-width: 600px) {
+    display: none;
   }
 }
 
@@ -337,15 +360,12 @@ img {padding:0; margin: 0;}
 }
 
 .aboutme_stack_cards {
-  width: 11.5%;
+  width: 18.5%;
   margin-left: 0.4%;
 
   position: relative;
   display: inline-block;
   text-align: center;
-  @media (max-width: $break-small) {
-    width:23.5%;
-  }
 }
 
 .aboutme_stack_cards img {

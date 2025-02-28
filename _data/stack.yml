@@ -2,8 +2,8 @@
   img : ./img/Badge_CS.png
   content : <ul class="aboutme_badge_desc badge-left">
               <li>ㅡ C#에서 지향하는 <span class="HL">객체지향 프로그래밍</span>에 맞춰 작업 할 수 있습니다.</li>
-              <li>ㅡ .NET프레임워크를 사용하여 Windows에서 GUI프로그램을 개발할 수 있습니다.</li>
-              <li>ㅡ OpenCV 라이브러리를 사용하여 CV 문제를 해결 할 수 있습니다.</li>
+              <li>ㅡ .NET 프레임워크를 사용하여 GUI프로그램을 개발할 수 있습니다.</li>
+              <li>ㅡ 다양한 디자인패턴을 적용한 프로젝트를 개발할 수 있습니다.</li>
             </ul>
 
 - name : Unity
@@ -12,14 +12,6 @@
               <li>ㅡ Windows / WebGL / 안드로이드 / iOS에서 <span class="HL">다양한 개발 경험</span>이 있습니다.</li>
               <li>ㅡ 모바일 SDK와 연동가능한 Plugin을 구현할 수 있습니다.</li>
               <li>ㅡ GitHub에 직접 구현한 <span class="HL">오픈소스 라이브러리</span>를 공개하고 관리하고 있습니다.</li>
-            </ul>
-
-- name : 3ds Max
-  img : ./img/Badge_3dsmax.png
-  content : <ul class="aboutme_badge_desc badge-left2">
-              <li>ㅡ 주어진 도면이나 물체를 보고 <span class="HL">3D 모델링</span>을 할 수 있습니다.</li>
-              <li>ㅡ 3D 환경 구성에 필요한 간단한 그래픽 작업을 할 수 있습니다.</li>
-              <li>ㅡ 쉐이더 / 머터리얼 / 쉐이더그래프를 이해하고 사용 할 수 있습니다.</li>
             </ul>
 
 - name : Git
@@ -54,20 +46,4 @@
               <li>ㅡ 개발하고자 하는 웹 페이지의 동작을 구현 할 수 있습니다.</li>
               <li>ㅡ AngularJS, React.JS를 활용하여 <span class="HL">동적인 웹페이지</span>를 구현 할 수 있습니다.</li>
               <li>ㅡ 개발문서를 읽고 원하는 기능을 개발할 수 있습니다.</li>
-            </ul>
-
-- name : Node.js
-  img : ./img/Badge_nodejs.png
-  content : <ul class="aboutme_badge_desc badge-right2">
-              <li>ㅡ NodeJS로 RestAPI <span class="HL">백엔드 서버</span>를 구축할 수 있습니다.</li>
-              <li>ㅡ 어플리케이션 DB 서버와 개발자 대시보드를 구현 할 수 있습니다.</li>
-              <li>ㅡ 웹소켓을 이용한 IP 프로토콜 서버를 구축 할 수 있습니다.</li>
-            </ul>
-
-- name : Python
-  img : ./img/Badge_Python.png
-  content : <ul class="aboutme_badge_desc badge-right">
-              <li>ㅡ PyQT, tkinter 라이브러를 활용해 GUI프로그램을 개발 할 수 있습니다.</li>
-              <li>ㅡ OpenCV 라이브러리를 이용해 CV문제를 해결 할 수 있습니다.</li>
-              <li>ㅡ Python 프로젝트를 분석하여 다른 프로그래밍 언어로 <span class="HL">컨버팅</span> 할 수 있습니다.</li>
             </ul>
