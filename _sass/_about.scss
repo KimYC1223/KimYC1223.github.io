@@ -502,6 +502,12 @@ img {padding:0; margin: 0;}
   padding-bottom: 50%;
 }
 
+.aboutme_project_card_img:nth-child(1) .aboutme_project_card_img:after,
+.aboutme_project_card_img:nth-child(2) .aboutme_project_card_img:after,
+.aboutme_project_card_img:nth-child(3) .aboutme_project_card_img:after {
+  padding-bottom: 100%;
+}
+
 .aboutme_project_card_img_dark,.aboutme_proejct_card_real_img {
   transition: 0.3s;
   position: absolute;

@@ -1,5 +1,44 @@
+- name : 드래곤 플라이트 리부트
+  img : ./img/mp_01.gif
+  url : /profile/
+  desc : 모바일 탄막 슈팅 액션 게임 개발
+  task :
+    - 드래곤 플라이트 IP를 활용한 슈팅게임 개발
+    - 인게임 스테이지 및 웨이브 등 전투 시스템 개발
+    - 보스 및 몬스터 패턴 라이프 사이클 시스템 개발
+  keyword :
+    - Unity
+    - Android
+    - iOS
+
+- name : 엄마 찾아 탕탕탕!
+  img : ./img/mp_02.gif
+  url : /profile/
+  desc : 캐주얼 액션 로그라이크 게임 개발
+  task :
+    - 몬스터 A.I. 및 인게임 전투 시스템 개발
+    - 투사체 및 몬스터 충돌 처리와 같은 대미지 시스템 개발
+    - Unity Profiler를 통한 프로젝트 최적화
+  keyword :
+    - Unity
+    - Android
+    - iOS
+
+- name : 캣잼 (CatJam)
+  img : ./img/mp_03.gif
+  url : /profile/
+  desc : 캐주얼 퍼즐 게임 개발
+  task :
+    - 기획 의도에 맞는 스테이지별 기믹 시스템 개발
+    - 인게임 부스트 아이템 기능 구현
+    - UGUI 기반의 UI 에셋 구현
+  keyword :
+    - Unity
+    - Android
+    - iOS
+
 - name : NHN Gamebase
-  img : ./img/mp_04.png
+  img : ./img/mp_07.png
   url : /profile/
   desc : Gamebase Unity SDK & Plugin 개발
   task :
@@ -13,7 +52,7 @@
     - iOS
 
 - name : Unity Build Machine
-  img : ./img/mp_02.png
+  img : ./img/mp_05.png
   url : /profile/
   desc : Unity 프로젝트 및 SDK용 빌드머신 구현
   task :
@@ -25,7 +64,7 @@
 
 
 - name : AR Mirror
-  img : ./img/mp_01.gif
+  img : ./img/mp_04.gif
   url : /profile/
   desc : 가상 피팅용 스마트 AR 미러 개발
   task :
@@ -37,7 +76,7 @@
     - AR
 
 - name : Fassker World
-  img : ./img/mp_03.png
+  img : ./img/mp_06.png
   url : /profile/
   desc : 패션 SNS와 게임을 합친 메타버스 어플리케이션 개발
   task :
@@ -50,7 +89,7 @@
     - Addressable을
 
 - name : 혼합 현실 협업 솔루션
-  img : ./img/mp_05.png
+  img : ./img/mp_08.png
   url : /profile/
   desc : Mixed Reality 기반 산업용 협업 지원 시스템 핵심 기술 개발
   task :
@@ -61,7 +100,7 @@
     - Holo Lens
 
 - name : 스마트 발전소 D.T.
-  img : ./img/mp_06.png
+  img : ./img/mp_09.png
   url : /profile/
   desc : 새만금 재생 에너지 발전소 관리를 위한 디지털 트윈 개발
   task :
@@ -72,7 +111,7 @@
     - WegGL
 
 - name : Smart Deployment
-  img : ./img/mp_07.png
+  img : ./img/mp_10.png
   url : /profile/
   desc : CAD 데이터를 통한 강화학습 공사 시뮬레이터
   task :
@@ -82,7 +121,7 @@
     - '3D Mesh'
 
 - name : Path Generator
-  img : ./img/mp_08.gif
+  img : ./img/mp_11.gif
   url : /profile/
   desc : '3D공간을 등속력으로 움직 일 수 있는 라이브러리 구현'
   task :
@@ -92,7 +131,7 @@
     - Open Source
 
 - name : Flow Visualizer
-  img : ./img/mp_09.gif
+  img : ./img/mp_12.gif
   url : /profile/
   desc : 유체나 물류의 흐름(양/속력/방향)을 한 눈에 파악할 수 있도록 만드는 라이브러리 구현
   task :
