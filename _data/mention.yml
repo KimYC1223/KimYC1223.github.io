@@ -1,4 +1,49 @@
 - writer: KimYC1223
+  date: 2024-12-05 12:00
+  title : 라인게임즈의 크리스마스
+  message: 라인게임즈의 마스코트 <a class="hyperlink" href="https://namu.wiki/w/%EB%B8%8C%EB%9D%BC%EC%9A%B4%28%EB%9D%BC%EC%9D%B8%ED%94%84%EB%A0%8C%EC%A6%88%29">브라운</a>과 <a class="hyperlink" href="https://namu.wiki/w/%EC%83%90%EB%A6%AC(%EB%9D%BC%EC%9D%B8%ED%94%84%EB%A0%8C%EC%A6%88)">샐리</a>가 겨울을 맞이할 준비를 했다!<br>메리크리스마스!
+  emoji : 🎅
+  media:
+    - type: photo
+      name: 2024120501
+    - type: photo
+      name: 2024120502
+
+- writer: KimYC1223
+  date: 2024-10-26 23:00
+  title : 중미산 천문대 데이트
+  message: 이번엔 선경이와 함께 <a class="hyperlink" href="https://naver.me/Fy2FHvlu">중미산 천문대</a> 데이트를 진행해보았다!<br>날씨가 좋았기에 별을 잘 볼 수 있었는데, 특히 내 아이폰으로 직접 <a class="hyperlink" href="https://ko.wikipedia.org/wiki/%ED%86%A0%EC%84%B1">토성</a>을 찍을 수 있는 경험은 너무나 좋았다.<br>이색 데이트 코스로 너무나 추천한다!
+  emoji : 🌀
+  media:
+    - type: photo
+      name: 2024102601
+    - type: photo
+      name: 2024102602
+    - type: photo
+      name: 2024102603
+    - type: photo
+      name: 2024102604
+    - type: photo
+      name: 2024102605
+
+- writer: KimYC1223
+  date: 2024-06-02 12:00
+  title : Nerd Game Crew 여행
+  message: 머저리 게임 크루원들과 강화도 여행을 떠나기로했다..!<br>크루원들과 함께 루지도 타고 바다 구경도하고 너무 재밌게 놀았다.<br> 다음에 또 가야지
+  emoji : 🚋
+  media:
+    - type: photo
+      name: 2024060201
+    - type: photo
+      name: 2024060202
+    - type: photo
+      name: 2024060203
+    - type: photo
+      name: 2024060204
+    - type: photo
+      name: 2024060205
+
+- writer: KimYC1223
   date: 2023-11-15 19:00
   title : Cargold님과 미팅, 그리고 거실 멤버로 영입
   message: 인디게임 개발자인 <a class="hyperlink" href="https://blog.thebackend.io/cargold-interview/">Cargold</a>님과 우연히 연이 닿아 미팅을 진행하게 되었다!<br>현재 개발중인 <a class="hyperlink" href="https://www.youtube.com/watch?v=Y_PPnvlUfts">Unity SDK 카라리</a>에 대해 설명해 주셨는데,<br>혼자 개발했다는 퀄리티가 믿기지 않을 정도로 대단해 나도 자극을 많이 받았던 시간이었던것 같다.<br>많은 얘기를 나누다가, 현업 게임 개발자분들과 같이 대화할 수 있는 플랫폼인<br>카라리의 거실 멤버로 초대를 해주셔서 기쁘게 참석하게 되었다!<br>앞으로 열심히 활동해봐야지!
@@ -302,12 +347,6 @@
   message: <b>2020.03 - 2022.02 컴퓨터 과학과 석사</b> 졸업했습니다!<br>많이 부족했지만 도움 주신 분들 너무나 감사합니다!
   emoji : 🎓
   media:
-    - type: photo
-      name: 2022022501
-    - type: photo
-      name: 2022022502
-    - type: photo
-      name: 2022022503
     - type: photo
       name: 2022022504
 
