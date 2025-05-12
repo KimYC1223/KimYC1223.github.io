@@ -1,9 +1,11 @@
 - writer: KimYC1223
   date: 2025-05-10 10:00
   title : 스튜디오 킹덤 입사 선물
-  message: 새로 출근하게될 <a class="hyperlink" href="https://www.devsisters.com/studios/studio-kingdom">스튜디오 킹덤</a>에서 출근직전 주말에 입사선물로 꽃다발을 전달해주었다!<br>새로 가는곳에서 적응을 잘 할수 있을지 걱정도 되지만 열심히 다녀볼 생각이다!
+  message: 새로 출근하게될 <a class="hyperlink" href="https://www.devsisters.com/studios/studio-kingdom">스튜디오 킹덤</a>에서 출근직전 주말에 입사선물로 꽃다발과 여러 굿즈를 전달해주었다!<br>새로 가는곳에서 적응을 잘 할수 있을지 걱정도 되지만 열심히 다녀볼 생각이다!
   emoji : 🌼
   media:
+    - type: photo
+      name: 2025051003
     - type: photo
       name: 2025051001
     - type: photo
