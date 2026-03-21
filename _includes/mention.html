@@ -26,7 +26,11 @@
       {% for file in mention.media %}
         {% if file.type == 'video' %}
           <div class="video-wrap">
-            <a href="https://www.youtube.com/watch?v=big4xZFQ7c0" target="_blank">
+            {% if file.t == null %}
+            <a href="https://www.youtube.com/watch?v={{file.name}}" target="_blank">
+            {% else %}
+            <a href="https://www.youtube.com/watch?v={{file.name}}&t={{file.t}}" target="_blank">
+            {% endif %}
               <div>
                 <img class="video-content" src="http://img.youtube.com/vi/{{file.name}}/0.jpg">
               </div>
