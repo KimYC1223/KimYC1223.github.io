@@ -62,6 +62,19 @@
 >
 > **Ruby 3.1 ~ 3.3 범위를 사용하시고, 그 중 GitHub Pages 실 빌드 환경과 같은 3.3.x를 권장합니다.**
 
+> ### ⚠️ `github-pages` 버전도 확인해주세요
+>
+> Ruby 버전을 3.3.x로 맞춰도, **`Gemfile.lock`이 없는 상태에서 `bundle install`을 하면 bundler가 `github-pages 223`(Jekyll 3.9.0 + Liquid 4.0.3)으로 해결합니다.**
+>
+> `Gemfile.lock`은 `.gitignore` 대상이라 새로 clone 받을 때마다 이 상황이 발생하며, 결국 Ruby 버전이 맞아도 `tainted?` 오류를 보게 됩니다.
+>
+> 정상 동작하는 조합은 **`github-pages 232`(Jekyll 3.10.0 + Liquid 4.0.4)** 입니다. 아래 중 하나로 맞춰주세요.
+>
+> - (권장) `Gemfile`에서 버전을 고정합니다. → `gem "github-pages", "~> 232", group: :jekyll_plugins`
+> - 또는 설치할 때마다 명시적으로 올려줍니다. → `bundle update github-pages`
+>
+> 설치 후 `grep "github-pages (" Gemfile.lock` 으로 `232`가 잡혔는지 확인할 수 있습니다.
+
 ### 프로젝트 clone
 
 터미널에서 `git clone git@github.com:KimYC1223/KimYC1223.github.io.git` 명령어를 입력하여
@@ -100,6 +113,14 @@ $ ruby -v
 ruby 3.3.6 ...
 ```
 
+> `rbenv init` 구문은 **새로 여는 셸부터** 적용됩니다.
+>
+> 이미 열어둔 터미널 탭에서는 `ruby -v`가 계속 예전 버전으로 나오고,
+>
+> Homebrew Ruby가 잡힌 채로 `bundle exec jekyll serve`를 실행하면 `cannot load such file -- csv` 오류가 납니다.
+>
+> `which ruby` 결과가 `~/.rbenv/shims/ruby`가 아니라면 **터미널을 새로 열고** 다시 시도해주세요.
+
 #### Windows
 
 1. [루비 공식 다운로드](https://rubyinstaller.org/downloads/)에서 **Ruby+Devkit 3.3.x (x64)** 버전을 다운로드 & 실행합니다.
@@ -126,6 +147,13 @@ $ gem install bundler
 
 # Gemfile 기준으로 의존성 설치
 $ bundle install
+
+# github-pages 가 232 로 잡혔는지 확인 (223 이면 빌드가 실패합니다)
+$ grep "github-pages (" Gemfile.lock
+    github-pages (232)
+
+# 223 으로 잡혔다면
+$ bundle update github-pages
 ```
 
 `bundle install`이 끝나면 `Gemfile.lock`이 생성됩니다.
@@ -299,8 +327,9 @@ draft : false                             # true 면 목록에 "Coming Soon" 으
 
 | 증상 | 원인 및 해결 |
 | --- | --- |
-| `undefined method 'tainted?' for an instance of String` | Ruby 3.2 이상에서 구버전 Liquid가 로드된 경우입니다. Ruby를 **3.3.x**로 맞춘 뒤 `Gemfile.lock`을 삭제하고 `bundle install`을 다시 실행합니다. |
-| `cannot load such file -- csv` | Ruby 3.4 이상에서 발생합니다. 위와 동일하게 Ruby 3.3.x를 사용해주세요. |
+| `undefined method 'tainted?' for an instance of String` | `github-pages 223`이 끌고 온 구버전 Liquid(4.0.3)가 Ruby 3.2에서 삭제된 API를 호출하는 경우입니다. `bundle update github-pages`로 **232**로 올려주세요. |
+| `cannot load such file -- csv` | Ruby 3.4 이상 / 4.x가 잡혀 있습니다. `which ruby`가 `~/.rbenv/shims/ruby`인지 확인하고, 아니라면 **터미널을 새로 열어** 다시 시도합니다. (rbenv 설정 전에 열어둔 탭에서 자주 발생합니다) |
+| `ruby -v`가 계속 예전 버전으로 나옴 | `~/.zshrc`에 `eval "$(rbenv init - zsh)"`가 있는지 확인하고, **새 터미널**에서 실행합니다. 기존 탭에서는 `exec zsh`로도 갱신할 수 있습니다. |
 | `Could not find compatible versions ... requires Ruby >= 2.6, < 4.0` | Ruby 4.x를 사용 중입니다. Ruby 3.3.x를 설치해주세요. |
 | `cannot load such file -- webrick` | `bundle exec` 없이 실행했을 가능성이 높습니다. `bundle exec jekyll serve`로 실행해주세요. |
 | `Address already in use - bind(2) for 127.0.0.1:4000` | 이미 다른 Jekyll 서버가 떠 있습니다. 해당 프로세스를 종료하거나 `bundle exec jekyll serve --port 4001`로 실행합니다. |
