@@ -32,14 +32,14 @@
             <a href="https://www.youtube.com/watch?v={{file.name}}&t={{file.t}}" target="_blank">
             {% endif %}
               <div>
-                <img class="video-content" src="http://img.youtube.com/vi/{{file.name}}/0.jpg">
+                <img class="video-content" src="http://img.youtube.com/vi/{{file.name}}/0.jpg" loading="lazy" decoding="async" width="270" height="150">
               </div>
             </a>
           </div>
         {% else %}
           {% assign item = site.static_files | where: 'basename', file.name | first %}
           <div class="image-wrap">
-            <img class="img-content" src="{{ item.path }}" onclick="return openModal('{{ item.path }}', '{{ mention.date }}','{{ forloop.index }}')">
+            <img class="img-content" src="{{ item.path }}" loading="lazy" decoding="async" onload="this.classList.add('loaded')" onclick="return openModal('{{ item.path }}', '{{ mention.date }}','{{ forloop.index }}')">
           </div>
         {% endif %}
       {% endfor %}

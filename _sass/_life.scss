@@ -203,6 +203,10 @@
               height: 150px;
             }
 
+            .image-wrap img.img-content:not(.loaded) {
+              width: 150px;
+            }
+
             .video-wrap img {
               width: 270px;
               height: 150px;
