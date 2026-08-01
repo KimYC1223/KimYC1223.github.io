@@ -29,6 +29,10 @@ main {
 	overflow: hidden;
 	padding-bottom: 20px;
 
+	> * {
+		min-width: 0;
+	}
+
 	@media (min-width: $break-large) {
 		padding: 30px 15px 20px 15px;
 	}

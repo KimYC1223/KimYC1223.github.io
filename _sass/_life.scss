@@ -1,265 +1,627 @@
 .life {
-  $pick-color: $primary;
-  $repo-color: $primary;
-  $commit-color: $primary;
-  $branch-color: $grey-2;
-  $commit-border: 2px;
+  --rail: 62px;          // 그래프 레일(1열) 폭
+  --node-x: 11px;        // 레일 안에서 트렁크 / 커밋 노드의 x 위치
+  --node: 13px;          // 커밋 노드 지름
+  --lane: 26px;          // 답글 레인 들여쓰기
+  --graph: #{$primary};
+  --graph-mute: #{rgba($primary, .38)};   // 갈라져 나가는 가지 (강조 아님)
+  --graph-soft: #{rgba($primary, .16)};   // 아직 그려지지 않은 트렁크
 
-  .pick_line {
+  position: relative;
+  font-family: $san-serif;
+
+  @media (max-width: $break-small) {
+    --rail: 34px;
+    --node-x: 8px;
+    --node: 11px;
+    --lane: 14px;
+  }
+}
+
+.life__head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 26px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid $grey-2;
+
+  @media (max-width: $break-small) {
+    margin-bottom: 18px;
+    gap: 6px;
+  }
+}
+
+.life__branch {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 13px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, $primary, $light-purple);
+  color: $white;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba($primary, .3);
+
+  i {
+    font-size: 12px;
+    opacity: .9;
+  }
+
+  @media (max-width: $break-small) {
+    font-size: 12px;
+    padding: 5px 11px;
+  }
+}
+
+.life__branch-name {
+  font-family: $monospaced-font;
+  letter-spacing: .2px;
+}
+
+.life__head-ref {
+  padding: 4px 9px;
+  border: 1px solid rgba($primary, .45);
+  border-radius: 999px;
+  color: $primary;
+  background: rgba($primary, .07);
+  font-family: $monospaced-font;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.life__count {
+  margin-left: auto;
+  color: $grey-1;
+  font-family: $monospaced-font;
+  font-size: 12px;
+
+  @media (max-width: $break-small) {
+    font-size: 11px;
+  }
+}
+
+.life__timeline {
+  position: relative;
+}
+
+.life__graph {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 0;
+
+  path {
+    fill: none;
+    stroke-linecap: round;
+  }
+}
+
+.life:not(.graph-ready) .life__timeline::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  bottom: 0;
+  left: var(--node-x);
+  width: 2px;
+  margin-left: -1px;
+  background: var(--graph-soft);
+}
+
+.life__trunk-bed {
+  stroke: var(--graph-soft);
+  stroke-width: 4;
+}
+
+.life__trunk {
+  stroke: var(--graph);
+  stroke-width: 3;
+  filter: drop-shadow(0 0 5px rgba($primary, .45));
+}
+
+.life__connector {
+  stroke: var(--graph-mute);
+  stroke-width: 2;
+  transition: stroke-dashoffset .75s cubic-bezier(.25, .8, .3, 1);
+}
+
+.life__connector--reply {
+  stroke: $grey-5;
+  opacity: 1;
+}
+
+.life__lane {
+  stroke: $grey-5;
+  stroke-width: 2;
+}
+
+.life__tick {
+  stroke: rgba($primary, .5);
+  stroke-width: 2;
+  stroke-dasharray: 3 3;
+}
+
+.life__tail {
+  stroke: var(--graph-soft);
+  stroke-width: 3;
+  stroke-dasharray: 2 7;
+}
+
+.life__head-dot {
+  fill: $white;
+  stroke: var(--graph);
+  stroke-width: 3;
+  opacity: 0;
+  filter: drop-shadow(0 0 6px rgba($primary, .7));
+  transition: opacity .3s ease;
+}
+
+.life__commits {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+}
+
+.life__tag {
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+  padding: 4px 0 22px;
+
+  @media (max-width: $break-small) {
+    padding-bottom: 16px;
+  }
+}
+
+.life__ref {
+  grid-column: 2;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 11px;
+  border: 1px dashed rgba($primary, .55);
+  border-radius: 999px;
+  background: $white;
+  color: $primary-dark;
+  font-family: $monospaced-font;
+  font-size: 11.5px;
+  font-weight: 700;
+
+  i {
+    font-size: 10px;
+    opacity: .75;
+  }
+
+  @media (max-width: $break-small) {
+    font-size: 10.5px;
+    padding: 2px 9px;
+  }
+}
+
+.commit {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+  align-items: start;
+  padding-bottom: 26px;
+
+  @media (max-width: $break-small) {
+    padding-bottom: 18px;
+  }
+}
+
+.commit__rail {
+  position: relative;
+  align-self: stretch;
+}
+
+.commit__node {
+  position: absolute;
+  top: 3px;                                  // JS 가 카드 최상단으로 보정
+  left: var(--node-x);
+  width: var(--node);
+  height: var(--node);
+  margin: calc(var(--node) / -2) 0 0 calc(var(--node) / -2);
+  border-radius: 50%;
+  background: $white;
+  border: 3px solid var(--graph);
+  box-shadow: 0 0 0 3px $white;
+  z-index: 2;
+
+  &::after {
+    content: '';
     position: absolute;
-    width: 200px;
-    border: dashed 1px $pick-color;
-    margin: 20px 0 0 22px;
+    inset: -7px;
+    border-radius: 50%;
+    border: 2px solid var(--graph);
+    opacity: 0;
+  }
+}
+
+.life-js {
+  .commit__node {
+    opacity: 0;
+    transform: scale(.3);
+    transition: transform .5s cubic-bezier(.2, .9, .3, 1.4), opacity .3s ease;
+  }
+
+  .commit__card {
+    opacity: 0;
+    transform: translate3d(-16px, 6px, 0);
+  }
+}
+
+.commit.is-live > .commit__rail > .commit__node {
+  opacity: 1;
+  transform: scale(1);
+
+  &::after {
+    animation: commit-ping .9s ease-out .15s 1;
+  }
+}
+
+@keyframes commit-ping {
+  from {
+    opacity: .5;
+    transform: scale(.5);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+
+.commit__card {
+  position: relative;
+  min-width: 0;
+  background: $white;
+  border: 1px solid $grey-2;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba($default-shade, .05);
+  transition: opacity .55s ease,
+              transform .6s cubic-bezier(.2, .8, .3, 1),
+              box-shadow .25s ease,
+              border-color .25s ease;
+}
+
+.commit.is-live > .commit__card {
+  opacity: 1;
+  transform: none;
+
+  &:hover {
+    border-color: rgba($primary, .5);
+    box-shadow: 0 12px 28px rgba($default-shade, .1);
+  }
+}
+
+.commit__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+
+  @media (max-width: $break-small) {
+    gap: 9px;
+    padding: 12px 12px;
+  }
+}
+
+.commit__avatar {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba($primary, .14), rgba($secondary, .32));
+  border: 1px solid rgba($primary, .3);
+  font-size: 19px;
+  line-height: 1;
+
+  @media (max-width: $break-small) {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+}
+
+.commit__heading {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.commit__title {
+  margin: 1px 0 0;
+  color: $grey-0;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+
+  @media (max-width: $break-small) {
+    font-size: 15px;
+  }
+}
+
+.commit__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px 7px;
+  margin-top: 7px;
+  color: $grey-1;
+  font-size: 12.5px;
+
+  @media (max-width: $break-small) {
+    font-size: 11.5px;
+    gap: 4px 6px;
+  }
+}
+
+.commit__hash {
+  padding: 1px 6px;
+  border: 1px solid $grey-2;
+  border-radius: 5px;
+  background: $grey-3;
+  color: $primary-dark;
+  font-family: $monospaced-font;
+  font-size: 11.5px;
+  font-weight: 700;
+
+  &:empty {
+    display: none;
+  }
+
+  @media (max-width: $break-small) {
+    font-size: 10.5px;
+  }
+}
+
+.commit__writer {
+  color: $grey-8;
+  font-weight: 600;
+}
+
+.commit__dot {
+  color: $grey-5;
+}
+
+.commit__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: rgba($primary, .09);
+  color: $primary-dark;
+  font-size: 11.5px;
+  font-weight: 600;
+
+  i {
+    font-size: 10px;
+  }
+
+  @media (max-width: $break-small) {
+    font-size: 10.5px;
+  }
+}
+
+.commit__body {
+  padding: 0 16px 16px;
+
+  @media (max-width: $break-small) {
+    padding: 0 12px 12px;
+  }
+}
+
+.mention {
+  .message {
+    color: $grey-0;
+    font-size: 15px;
+    line-height: 1.7;
 
     @media (max-width: $break-small) {
-      width: 100px;
-      margin-left: 12px;
-    }
-
-    &:before {
-      position: absolute;
-      background-color: $pick-color;
-      content: 'KimYC Main Branch';
-      margin: -11px 0 0 200px;
-      width: max-content;
-      padding: 2px 5px;
-      font-size: 12px;
-      color: #ffffff;
-
-      @media (max-width: $break-small) {
-        margin-left: 100px;
-      }
+      font-size: 13.5px;
+      line-height: 1.65;
     }
   }
 
-  .catalogue {
-    position: relative;
+  .hyperlink {
+    color: $primary;
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
 
-    &:before {
-      position: absolute;
-      width: 4px;
-      opacity: 0.35;
-      background-color: $repo-color;
-      content: '';
-      z-index: -1;
-      margin-left: 6px;
-      height: 100%;
-
-      @media (max-width: $break-small) {
-        display: none;
-        margin-left: 0;
-      }
+    &:hover {
+      color: $primary-dark;
     }
+  }
+}
 
-    .branch {
-      margin: -45px 0 0 15px;
-      position: relative;
-      overflow: hidden;
+// ── 미디어 ───────────────────────────────────────────────────────────
 
-      @media (max-width: $break-small) {
-        margin-left: 5px;
-      }
+.media {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
 
-      &:before {
-        position: absolute;
-        height: 100%;
-        width: $commit-border;
-        background-color: $branch-color;
-        content: '';
-        z-index: -1;
-        margin-left: 6px;
-      }
+  @media (max-width: $break-small) {
+    gap: 6px;
+    margin-top: 11px;
+  }
+}
 
-      &:first-child {
-        margin-top: 0;
+.image-wrap,
+.video-wrap {
+  position: relative;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid $grey-2;
+  line-height: 0;
 
-        .branch_line {
-          margin-top: 60px;
+  img {
+    height: 150px;
+    width: auto;
+    margin: 0;
+    background-color: $grey-4;
+    object-fit: cover;
+    transform: scale(1);
+    transition: transform .4s ease-in-out;
 
-          @media (max-width: $break-small) {
-            margin-top: 80px;
-          }
-        }
-      }
-
-      &:last-child {
-        &:before {
-          display: none;
-        }
-      }
-
-      &:only-child {
-        &:before {
-          display: inherit;
-          height: 60px;
-
-          @media (max-width: $break-small) {
-            height: 80px;
-          }
-        }
-      }
-
-      .branch_point {
-        width: 12px;
-        height: 12px;
-        border-radius: 6px;
-        margin: -28px 0 0 1.5px;
-        background-color: $commit-color;
-      }
-
-      .branch_line {
-        width: 30px;
-        height: 25px;
-        border-right: solid $commit-border $commit-color;
-        border-top: solid $commit-border $commit-color;
-        border-top-right-radius: 20px;
-        margin: 38px 0 0 5px;
-      }
-
-      .thumbnail {
-        position: relative;
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        margin: 15px 30px 0 15px;
-        background-color: $grey-3;
-        display: table;
-
-        .profile, .emoji {
-          position: absolute;
-        }
-
-        .emoji {
-          margin: 0;
-          float: left;
-          border-radius: 50%;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          border: solid $commit-border $commit-color;
-
-          span {
-            width: 100%;
-            text-align: center;
-            font-size: 20px;
-            line-height: 40px;
-            display: block;
-          }
-        }
-      }
-
-      .content_wrap {
-        .line {
-          width: 20px;
-          height: 25px;
-          margin: 0 0 0 30px;
-          border-left: solid $commit-border $commit-color;
-          border-bottom: solid $commit-border $commit-color;
-          border-bottom-left-radius: 20px;
-        }
-
-        .mention {
-          border-left: solid $commit-border $commit-color;
-          margin: -20px 0 0 50px;
-          padding: 0 0 0 15px;
-
-          @media (max-width: $break-small) {
-            padding-left: 12px;
-          }
-
-          .message {
-
-            @media (max-width: $break-small) {
-              font-size: 13px;
-            }
-          }
-
-          .message_title {
-            display: inline-block;
-            background-color: $secondary;
-            color:#3c3a58;
-            font-weight: bold;
-            padding:5px 30px;
-            border-radius: 4px;
-            width: auto;
-            margin-bottom: 10px;
-            margin-top: 10px;
-            @media (max-width: $break-small) {
-              font-size: 16px;
-            }
-          }
-
-          .media {
-            margin-top: 10px;
-
-            .image-wrap, .video-wrap {
-              overflow: hidden;
-              border-radius: 10px;
-              display: inline-table;
-              border: 1px solid $grey-2;
-            }
-
-            .image-wrap img {
-              height: 150px;
-            }
-
-            .image-wrap img.img-content:not(.loaded) {
-              width: 150px;
-            }
-
-            .video-wrap img {
-              width: 270px;
-              height: 150px;
-            }
-
-            img {
-              height: 150px;
-              background-color: $grey-9;
-              -webkit-transform: scale(1);
-              -webkit-transition: all 0.3s ease-in-out;
-              margin: 0;
-              object-fit: cover;
-
-              &:hover {
-                cursor: pointer;
-                -webkit-transform: scale(1.15);
-                -webkit-transition: all 0.3s ease-in-out;
-              }
-            }
-          }
-
-          .info {
-            margin: 10px 0 0 0;
-            color: $grey-1;
-
-            .split {
-              margin: 0 3px;
-            }
-
-            span {
-              font-size: 13px;
-
-              @media (max-width: $break-small) {
-                font-size: 12px;
-              }
-            }
-          }
-        }
-      }
+    @media (max-width: $break-small) {
+      height: 104px;
     }
   }
 
-  .comment {
-    margin-top: -30px;
-    padding-bottom: 10px;
+  &:hover img {
+    cursor: pointer;
+    transform: scale(1.12);
+  }
+}
 
-    .branch {
-      margin-left: 44px;
+// 아직 로딩되지 않은 이미지는 intrinsic width 가 0 이라 레이아웃이 무너지므로
+// 정사각형만큼 자리를 잡아둔다. (onload 에서 .loaded 가 붙으면 원래 비율로)
+.image-wrap img.img-content:not(.loaded) {
+  width: 150px;
 
-      &:before {
-        background-color: $commit-color;
-      }
+  @media (max-width: $break-small) {
+    width: 104px;
+  }
+}
+
+.video-wrap {
+  img {
+    width: 270px;
+    height: 150px;
+
+    @media (max-width: $break-small) {
+      width: 185px;
+      height: 104px;
     }
+  }
+
+  .video-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    margin: -21px 0 0 -21px;
+    border-radius: 50%;
+    background: rgba($default-shade, .55);
+    color: $white;
+    font-size: 14px;
+    pointer-events: none;
+    transition: background .25s ease, transform .25s ease;
+
+    @media (max-width: $break-small) {
+      width: 34px;
+      height: 34px;
+      margin: -17px 0 0 -17px;
+      font-size: 11px;
+    }
+  }
+
+  &:hover .video-play {
+    background: rgba($primary, .9);
+    transform: scale(1.1);
+  }
+}
+
+.commit__replies {
+  grid-column: 1 / -1;
+  list-style: none;
+  margin: 0 0 0 var(--lane);
+  padding: 14px 0 0;
+}
+
+.commit--reply {
+  padding-bottom: 14px;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+
+  .commit__title {
+    font-size: 15px;
+
+    @media (max-width: $break-small) {
+      font-size: 14px;
+    }
+  }
+
+  .commit__avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  > .commit__rail > .commit__node {
+    border-width: 2px;
+    border-color: $grey-5;
+  }
+}
+
+.life__root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: var(--node-x);
+  margin: 0;
+  color: $grey-1;
+  font-size: 12px;
+}
+
+.life__root-dot {
+  flex: 0 0 auto;
+  width: 9px;
+  height: 9px;
+  margin-left: -4.5px;
+  border-radius: 50%;
+  background: $grey-5;
+  box-shadow: 0 0 0 3px $white;
+}
+
+.life__root-text {
+  font-family: $monospaced-font;
+
+  @media (max-width: $break-small) {
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .commit__card,
+  .commit__node {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .commit__node::after {
+    animation: none !important;
+  }
+
+  .life__connector {
+    transition: none !important;
+  }
+
+  .image-wrap img,
+  .video-wrap img {
+    transition: none;
   }
 }
 

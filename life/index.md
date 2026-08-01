@@ -4,25 +4,59 @@ main: true
 title: 소소한 이야기
 ---
 
+document.documentElement.classList.add('life-js');
+</script>
+
 <div class="loading-animation">
-<div class="life">
-    <div class="pick_line"></div>
-    <div class="catalogue">
-        {% assign mentions = site.data.mention | sort: 'date' | reverse %}
-        {% for mention in mentions %}
-            <div class="branch">
-                {% include mention.html %}
-                {% if mention.comment != null %}
-                <div class="comment">
-                    {% for mention in mention.comment %}
-                    <div class="branch">
-                        {% include mention.html %}
-                    </div>
-                    {% endfor %}
-                </div>
+<div class="life" data-life-graph>
+
+    {% assign mentions = site.data.mention | sort: 'date' | reverse %}
+
+    <div class="life__head">
+        <span class="life__branch">
+            <i class="fa-solid fa-code-branch" aria-hidden="true"></i>
+            <span class="life__branch-name">KimYC/main</span>
+        </span>
+        <span class="life__head-ref">HEAD</span>
+        <span class="life__count">{{ mentions | size }} commits</span>
+    </div>
+
+    <div class="life__timeline">
+        <svg class="life__graph" aria-hidden="true" focusable="false" preserveAspectRatio="none"></svg>
+
+        <ol class="life__commits">
+            {% assign current_year = '' %}
+            {% for mention in mentions %}
+                {% assign year = mention.date | slice: 0, 4 %}
+                {% if year != current_year %}
+                <li class="life__tag" data-life-tag>
+                    <span class="life__ref">
+                        <i class="fa-solid fa-tag" aria-hidden="true"></i>
+                        <span>year/{{ year }}</span>
+                    </span>
+                </li>
+                {% assign current_year = year %}
                 {% endif %}
-            </div>
-        {% endfor %}
+
+                <li class="commit">
+                    {% include mention.html %}
+                    {% if mention.comment != null %}
+                    <ol class="commit__replies">
+                        {% for mention in mention.comment %}
+                        <li class="commit commit--reply">
+                            {% include mention.html %}
+                        </li>
+                        {% endfor %}
+                    </ol>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ol>
+
+        <p class="life__root">
+            <span class="life__root-dot"></span>
+            <span class="life__root-text">initial commit — 이야기는 계속됩니다</span>
+        </p>
     </div>
 </div>
 </div>
@@ -38,16 +72,19 @@ title: 소소한 이야기
     </div>
 </div>
 
+<script src="{{ site.baseurl }}/assets/js/life-graph.js" defer></script>
+
 <script>
     let imgArray = [];
     let slideIndex = 1;
 
     $(document).ready(function () {
-        $('.info .date').each(function () {
+        $('.js-relative-date').each(function () {
             let dateString = $(this).text()
                 , reggie = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})/
                 , [, year, month, day, hours, minutes] = reggie.exec(dateString)
                 , dateObject = new Date(year, month - 1, day, hours, minutes);
+            $(this).attr('title', dateString);
             $(this).text(timeForToday(dateObject));
         });
     });

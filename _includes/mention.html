@@ -1,54 +1,67 @@
 {% assign writer = site.data.members | where: 'id', mention.writer | first %}
-<style>
-  .hyperlink {
-    color : #9166fc;
-    font-weight: bold;
-    text-decoration : underline;
-  }
-</style>
-<div class="branch_line"></div>
-<div class="branch_point"></div>
-<div class="thumbnail">
-  {% assign thumbnail = site.static_files | where: 'basename', writer.id | first %}
-  <div class="emoji"><span>{{ mention.emoji }}</span></div>
-</div>
-<div class="content_wrap">
-  <div class="line"></div>
-  <div class="mention" upload="{{mention.date}}">
-    <div class="message_title">
-      {{ mention.title }}
-    </div>
-    <div class="message">
-      {{ mention.message }}
-    </div>
-    {% if mention.media != null %}
-    <div class="media">
-      {% for file in mention.media %}
-        {% if file.type == 'video' %}
-          <div class="video-wrap">
-            {% if file.t == null %}
-            <a href="https://www.youtube.com/watch?v={{file.name}}" target="_blank">
-            {% else %}
-            <a href="https://www.youtube.com/watch?v={{file.name}}&t={{file.t}}" target="_blank">
-            {% endif %}
-              <div>
-                <img class="video-content" src="http://img.youtube.com/vi/{{file.name}}/0.jpg" loading="lazy" decoding="async" width="270" height="150">
-              </div>
-            </a>
-          </div>
-        {% else %}
-          {% assign item = site.static_files | where: 'basename', file.name | first %}
-          <div class="image-wrap">
-            <img class="img-content" src="{{ item.path }}" loading="lazy" decoding="async" onload="this.classList.add('loaded')" onclick="return openModal('{{ item.path }}', '{{ mention.date }}','{{ forloop.index }}')">
-          </div>
-        {% endif %}
-      {% endfor %}
-    </div>
+{% assign photo_count = 0 %}
+{% assign video_count = 0 %}
+{% if mention.media != null %}
+  {% for file in mention.media %}
+    {% if file.type == 'video' %}
+      {% assign video_count = video_count | plus: 1 %}
+    {% else %}
+      {% assign photo_count = photo_count | plus: 1 %}
     {% endif %}
-    <div class="info">
-      <span class="writer">by {{ writer.name }}</span>
-      <span class="split">·</span>
-      <span class="date">{{ mention.date }}</span>
+  {% endfor %}
+{% endif %}
+
+<div class="commit__rail">
+  <span class="commit__node"></span>
+</div>
+
+<article class="commit__card">
+  <header class="commit__header">
+    <span class="commit__avatar" aria-hidden="true">{{ mention.emoji }}</span>
+    <div class="commit__heading">
+      <h2 class="commit__title">{{ mention.title }}</h2>
+      <div class="commit__meta">
+        <span class="commit__hash" data-hash-seed="{{ mention.date }}{{ mention.title }}"></span>
+        <span class="commit__writer">{{ writer.name }}</span>
+        <span class="commit__dot">·</span>
+        <span class="commit__date js-relative-date">{{ mention.date }}</span>
+        {% if photo_count > 0 %}
+        <span class="commit__badge"><i class="fa-regular fa-image"></i>{{ photo_count }}</span>
+        {% endif %}
+        {% if video_count > 0 %}
+        <span class="commit__badge"><i class="fa-brands fa-youtube"></i>{{ video_count }}</span>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <div class="commit__body">
+    <div class="mention" upload="{{ mention.date }}">
+      <p class="message">{{ mention.message }}</p>
+
+      {% if mention.media != null %}
+      <div class="media">
+        {% for file in mention.media %}
+          {% if file.type == 'video' %}
+            <div class="video-wrap">
+              {% if file.t == null %}
+              <a href="https://www.youtube.com/watch?v={{file.name}}" target="_blank" rel="noopener">
+              {% else %}
+              <a href="https://www.youtube.com/watch?v={{file.name}}&t={{file.t}}" target="_blank" rel="noopener">
+              {% endif %}
+                <img class="video-content" src="https://img.youtube.com/vi/{{file.name}}/0.jpg" alt="" loading="lazy" decoding="async" width="270" height="150">
+                <span class="video-play" aria-hidden="true"><i class="fa-solid fa-play"></i></span>
+              </a>
+            </div>
+          {% else %}
+            {% assign item = site.static_files | where: 'basename', file.name | first %}
+            <div class="image-wrap">
+              <img class="img-content" src="{{ item.path }}" alt="" loading="lazy" decoding="async" onload="this.classList.add('loaded')" onclick="return openModal('{{ item.path }}', '{{ mention.date }}','{{ forloop.index }}')">
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      {% endif %}
     </div>
   </div>
-</div>
+</article>

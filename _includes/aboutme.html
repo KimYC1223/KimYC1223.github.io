@@ -108,24 +108,28 @@
       <div class="aboutme_section_title">학력 및 경력 사항</div>
         <div class="aboutme_greeting_subdiv">
           <div class="aboutme_edu_subtitle">학력 사항</div>
-          <table class="aboutme_edu_table">
-            <tr class="aboutme_edu_table_head"> <td>기간</td> <td>학교</td> <td>전공</td> <td>학위</td> <td class="aboutme_edu_table_extra">비고</td>
-            </tr>
-            {% assign education = site.data.edu %}
-            {% for edu in education %}
-            <tr> <td>{{ edu.period }}</td> <td>{{ edu.school }}</td> <td>{{ edu.major }}</td> <td>{{ edu.degree }}</td>
-                 <td class="aboutme_edu_table_extra">{{ edu.remark }}</td> </tr>
-            {% endfor %}
-          </table>
+          <div class="aboutme_table_scroll">
+            <table class="aboutme_edu_table">
+              <tr class="aboutme_edu_table_head"> <td>기간</td> <td>학교</td> <td>전공</td> <td>학위</td> <td class="aboutme_edu_table_extra">비고</td>
+              </tr>
+              {% assign education = site.data.edu %}
+              {% for edu in education %}
+              <tr> <td>{{ edu.period }}</td> <td>{{ edu.school }}</td> <td>{{ edu.major }}</td> <td>{{ edu.degree }}</td>
+                   <td class="aboutme_edu_table_extra">{{ edu.remark }}</td> </tr>
+              {% endfor %}
+            </table>
+          </div>
 
           <div class="aboutme_edu_subtitle">경력 사항</div>
-          <table class="aboutme_edu_table">
-            <tr class="aboutme_edu_table_head"> <td>기간</td> <td>기관 명</td> <td>직책</td> </tr>
-            {% assign careers = site.data.career %}
-            {% for career in careers %}
-            <tr> <td>{{ career.period }}</td> <td>{{ career.com }}</td> <td>{{ career.position }}</td> </tr>
-            {% endfor %}
-          </table>
+          <div class="aboutme_table_scroll">
+            <table class="aboutme_edu_table">
+              <tr class="aboutme_edu_table_head"> <td>기간</td> <td>기관 명</td> <td>직책</td> </tr>
+              {% assign careers = site.data.career %}
+              {% for career in careers %}
+              <tr> <td>{{ career.period }}</td> <td>{{ career.com }}</td> <td>{{ career.position }}</td> </tr>
+              {% endfor %}
+            </table>
+          </div>
       </div>
     </div>
   </div>
@@ -140,7 +144,7 @@
 
       {% assign stacks = site.data.stack%}
       {% for stack in stacks %}
-      <div class="aboutme_stack_cards">
+      <div class="aboutme_stack_cards" tabindex="0">
         <img src="{{ stack.img }}">
         <span class="aboutme_badge_name">{{ stack.name }}</span>
         {{ stack.content }}
@@ -199,18 +203,20 @@
   <div class="aboutme_section">
     <div class = "aboutme_thesis_section">
       <div class="aboutme_section_title">국내 및 해외 논문</div>
-      <table class="aboutme_thesis_table">
-        <tr class="aboutme_thesis_table_head"> <td>제목</td> <td>기관명</td> <td>발행일</td> <td>분류</td> </tr>
-        {% assign thesis = site.data.thesis %}
-        {% for paper in thesis %}
-        <tr class="aboutme_thesis_table_tr">
-          {% if paper.url != "" %}
-          <td><a href="{{ paper.url }}">{{ paper.name }}</a></td>
-          {% else %} <td>{{ paper.name }}</td> {% endif %}
-          <td>{{ paper.org }}</td> <td>{{ paper.date }}</td> <td>{{ paper.type }}</td>
-        </tr>
-        {% endfor %}
-      </table>
+      <div class="aboutme_table_scroll">
+        <table class="aboutme_thesis_table">
+          <tr class="aboutme_thesis_table_head"> <td>제목</td> <td>기관명</td> <td>발행일</td> <td>분류</td> </tr>
+          {% assign thesis = site.data.thesis %}
+          {% for paper in thesis %}
+          <tr class="aboutme_thesis_table_tr">
+            {% if paper.url != "" %}
+            <td><a href="{{ paper.url }}">{{ paper.name }}</a></td>
+            {% else %} <td>{{ paper.name }}</td> {% endif %}
+            <td>{{ paper.org }}</td> <td>{{ paper.date }}</td> <td>{{ paper.type }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
     </div>
   </div>
 
