@@ -96,6 +96,9 @@
       if (el) sections.push({ link: links[i], el: el });
     }
 
+    // 오른쪽 고정 사이드바는 이 섹션(02 카테고리)에 도달하면 등장한다
+    var asideFrom = doc.getElementById('topics');
+
     var pending = false;
 
     function update() {
@@ -105,7 +108,7 @@
       var docked = y > heroBottom;
 
       bar.classList.toggle('is-docked', docked);
-      // 좌우 고정 사이드바도 섹션 바와 함께 등장한다 (_index.scss)
+      // 왼쪽 사이드바는 섹션 바와 같은 시점에 등장한다 (_index.scss)
       doc.body.classList.toggle('is-docked', docked);
       doc.body.classList.toggle('is-scrolled', y > 12);
 
@@ -119,6 +122,13 @@
 
       // 현재 섹션 : 화면 위쪽 40% 지점을 지난 마지막 섹션
       var anchor = y + Math.min(window.innerHeight * 0.4, 400);
+
+      // 오른쪽 사이드바 : 02 카테고리 섹션이 현재 섹션이 되는 순간 등장 (_index.scss)
+      doc.body.classList.toggle(
+        'is-aside',
+        asideFrom ? asideFrom.offsetTop <= anchor : docked
+      );
+
       var active = -1;
       for (var i = 0; i < sections.length; i++) {
         if (sections[i].el.offsetTop <= anchor) active = i;

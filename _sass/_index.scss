@@ -586,8 +586,10 @@ body.is-scrolled .nav {
 
 // ──────────────────────────────────────────────────────────────
 //  좌우 고정 사이드바
-//   히어로 구간에서는 히어로에 가려 잘려 보이므로 숨겨 두고,
-//   섹션 바가 도킹되는 순간(body.is-docked) 좌우에서 밀려 들어온다.
+//   히어로 구간에서는 히어로에 가려 잘려 보이므로 숨겨 두고, 각각 다른 시점에
+//   좌우에서 밀려 들어온다.
+//    · 왼쪽  : 히어로를 지나 섹션 바가 도킹될 때 (body.is-docked)
+//    · 오른쪽 : 02 카테고리 섹션에 도달할 때     (body.is-aside)
 //   (JS 가 붙지 않으면 숨기지 않는다 — .ix-js 가 없으면 그냥 보인다)
 // ──────────────────────────────────────────────────────────────
 .ix-js body.is-home {
@@ -604,16 +606,14 @@ body.is-scrolled .nav {
   }
 
   .side_bar_left  { transform: translateX(calc(-50% - 26px)); }
-  .side_bar_right { transform: translateX(calc(-50% + 26px)); transition-delay: .06s; }
+  .side_bar_right { transform: translateX(calc(-50% + 26px)); }
 
-  &.is-docked {
-    .side_bar_left,
-    .side_bar_right {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      transform: translateX(-50%);
-    }
+  &.is-docked .side_bar_left,
+  &.is-aside  .side_bar_right {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%);
   }
 
   @media (prefers-reduced-motion: reduce) {
