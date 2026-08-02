@@ -1,137 +1,306 @@
+{%- assign tech_posts = site.posts | where: 'type', 'tech' -%}
+{%- assign recent_posts = tech_posts | sort: 'date' | reverse -%}
+{%- assign featured = recent_posts | first -%}
+{%- assign mentions = site.data.mention | sort: 'date' | reverse -%}
+{%- assign works = site.data.recent_project_detail | sort: 'index' -%}
+
+{%- comment -%} 카테고리 정의 : id|한글명|영문명|아이콘 {%- endcomment -%}
+{%- capture cat_defs -%}
+Unity|유니티|Unity|fa-brands fa-unity;C_Sharp|C#|C Sharp|fa-solid fa-hashtag;MixedReality|증강 현실|Mixed Reality|fa-solid fa-vr-cardboard;Web|웹 CSS / JS|Web|fa-solid fa-code;ToyProject|토이 프로젝트|Toy Project|fa-solid fa-flask;JobPreparation|취업 인터뷰|Job Preparation|fa-solid fa-briefcase
+{%- endcapture -%}
+{%- assign cats = cat_defs | strip | split: ';' -%}
+
+<script>document.documentElement.classList.add('ix-js');</script>
+
+<nav class="hx" data-hx aria-label="섹션 바로가기">
+  <div class="hx__inner">
+    <span class="hx__brand"><i class="fa-solid fa-terminal" aria-hidden="true"></i> index</span>
+    <ul class="hx__links">
+      <li><a href="#recent" data-hx-link>최근 글</a></li>
+      <li><a href="#topics" data-hx-link>카테고리</a></li>
+      <li><a href="#activity" data-hx-link>활동</a></li>
+      <li><a href="#works" data-hx-link>프로젝트</a></li>
+      <li><a href="#story" data-hx-link>이야기</a></li>
+    </ul>
+    <span class="hx__pct" data-hx-pct>0%</span>
+  </div>
+  <span class="hx__progress"><i data-hx-progress></i></span>
+</nav>
+
 <div class="loading-animation">
-  <section class="home">
-    <div class="section">
-      <span class="title"><span class="label-emoji">✍️</span>&nbsp;최근 게시물</span>
-      <div class="content">
-        <table class="catalogue">
-          <tr>
-            {% assign sorted = site.posts | sort: 'date' | reverse | where: 'type', 'tech' %}
-            {% for page in sorted limit:4 %}
-            {% include post-card.html %}
-            {% endfor %}
-          </tr>
-        </table>
+  <div class="ix">
+
+    <!-- ─────────── 01. 최근 게시물 ─────────── -->
+    <section class="ix__sec" id="recent">
+      <header class="sec" data-reveal>
+        <span class="sec__index">01</span>
+        <div class="sec__text">
+          <h2 class="sec__title">최근 게시물</h2>
+          <p class="sec__sub">가장 최근에 정리한 기록들</p>
+        </div>
+        <a class="sec__more" href="{{ site.baseurl }}/tech">
+          전체 {{ tech_posts | size }}개 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </header>
+
+      {%- if featured -%}
+      <a class="feat" href="{{ featured.url | prepend: site.baseurl }}" data-reveal>
+        <div class="feat__thumb">
+          <img src="/assets/blog/{{ featured.date | date: '%Y-%m-%d' }}-TechPost/{{ featured.image }}"
+               alt="" loading="lazy" decoding="async" />
+        </div>
+        <div class="feat__body">
+          <div class="feat__tags">
+            <span class="feat__latest">LATEST</span>
+            {%- for tag in featured.tags -%}
+            <span class="chip">#{{ tag }}</span>
+            {%- endfor -%}
+          </div>
+          <h3 class="feat__title">{{ featured.title }}</h3>
+          <p class="feat__sub">{{ featured.subtitle }}</p>
+          <div class="feat__foot">
+            <span class="feat__date">{{ featured.date | date: '%Y.%m.%d' }}</span>
+            <span class="feat__read">읽어보기 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+          </div>
+        </div>
+      </a>
+      {%- endif -%}
+
+      <div class="pgrid">
+        {%- for post in recent_posts limit: 3 offset: 1 -%}
+        <a class="pcard" href="{{ post.url | prepend: site.baseurl }}" data-reveal style="--d: {{ forloop.index0 }}">
+          <div class="pcard__thumb">
+            <img src="/assets/blog/{{ post.date | date: '%Y-%m-%d' }}-TechPost/{{ post.image }}"
+                 alt="" loading="lazy" decoding="async" />
+          </div>
+          <div class="pcard__body">
+            <div class="pcard__tags">
+              {%- for tag in post.tags -%}<span class="chip chip--sm">#{{ tag }}</span>{%- endfor -%}
+            </div>
+            <h3 class="pcard__title">{{ post.title }}</h3>
+            <p class="pcard__sub">{{ post.subtitle }}</p>
+            <span class="pcard__date">{{ post.date | date: '%Y.%m.%d' }}</span>
+          </div>
+        </a>
+        {%- endfor -%}
       </div>
-    </div>
+    </section>
 
-    <div class="section">
-      <span class="title"><span class="label-emoji">📚</span>&nbsp;메인 카테고리 게시물</span>
-      <div class="home_post_table">
-        <div class="home_post_table_category">
-          <div class="home_post_table_title">  증강 현실 <english>Mixed Reality</english></div>
-          <div class="home_post_table_contents">
-            <table>
-              <tr class="home_post_table_head">
-                <td>제목</td><td>작성일</td>
-              </tr>
-              {% assign sorted = site.posts | sort: 'date' | reverse | where: 'type', 'tech' | where: 'tags', 'MixedReality' %}
-              {% if sorted.size == 0 %}
-                  <td colspan="2" rowspan="4"><span class="home_post_table_no_post">글 없음</span></td>
-              {% else %}
-                {% for page in sorted limit:4 %}
-                <tr> <td><a href="{{ page.url | prepend: site.baseurl }}">{{page.title}}</a></td><td>{{page.date | date: "%Y-%m-%d"}}</td> </tr>
-                {% endfor %}
-              {% endif %}
-            </table>
+    <!-- ─────────── 02. 카테고리 ─────────── -->
+    <section class="ix__sec" id="topics">
+      <header class="sec" data-reveal>
+        <span class="sec__index">02</span>
+        <div class="sec__text">
+          <h2 class="sec__title">카테고리</h2>
+          <p class="sec__sub">관심 있는 주제부터 골라 보세요</p>
+        </div>
+        <a class="sec__more" href="{{ site.baseurl }}/tags">
+          태그 전체 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </header>
+
+      <div class="cats">
+        {%- for cat in cats -%}
+        {%- assign f = cat | split: '|' -%}
+        {%- assign cposts = tech_posts | where: 'tags', f[0] | sort: 'date' | reverse -%}
+        <a class="cat" href="{{ site.baseurl }}/tags/?tag={{ f[0] }}" data-reveal style="--d: {{ forloop.index0 }}">
+          <div class="cat__head">
+            <span class="cat__icon"><i class="{{ f[3] }}" aria-hidden="true"></i></span>
+            <div class="cat__naming">
+              <b class="cat__ko">{{ f[1] }}</b>
+              <span class="cat__en">{{ f[2] }}</span>
+            </div>
+            <span class="cat__count">{{ cposts | size }}</span>
           </div>
+          <ul class="cat__list">
+            {%- if cposts.size == 0 -%}
+            <li class="cat__empty">아직 글이 없어요</li>
+            {%- else -%}
+            {%- for p in cposts limit: 3 -%}
+            <li>
+              <span class="cat__dot" aria-hidden="true"></span>
+              <span class="cat__post">{{ p.title }}</span>
+              <span class="cat__date">{{ p.date | date: '%y.%m.%d' }}</span>
+            </li>
+            {%- endfor -%}
+            {%- endif -%}
+          </ul>
+          <span class="cat__go">모두 보기 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+        </a>
+        {%- endfor -%}
+      </div>
+    </section>
+
+    <!-- ─────────── 03. 활동 그래프 ─────────── -->
+    {%- assign oldest_post = tech_posts | sort: 'date' | first -%}
+    {%- assign start_year = oldest_post.date | date: '%Y' | plus: 0 -%}
+    {%- assign end_year = site.time | date: '%Y' | plus: 0 -%}
+    {%- assign month_keys = "01,02,03,04,05,06,07,08,09,10,11,12" | split: ',' -%}
+    {%- assign month_labels = "1,2,3,4,5,6,7,8,9,10,11,12" | split: ',' -%}
+    {%- comment -%} 끝에 종결자를 붙여 마지막 항목이 split 에서 잘리지 않게 한다 {%- endcomment -%}
+    {%- capture blob -%}{%- for p in tech_posts -%}{{ p.date | date: '%Y-%m' }},{%- endfor -%}end{%- endcapture -%}
+    {%- assign year_ago = site.time | date: '%s' | minus: 31536000 -%}
+    {%- assign last12 = 0 -%}
+    {%- for p in tech_posts -%}
+      {%- assign ts = p.date | date: '%s' | plus: 0 -%}
+      {%- if ts > year_ago -%}{%- assign last12 = last12 | plus: 1 -%}{%- endif -%}
+    {%- endfor -%}
+
+    <section class="ix__sec" id="activity">
+      <header class="sec" data-reveal>
+        <span class="sec__index">03</span>
+        <div class="sec__text">
+          <h2 class="sec__title">기록의 흔적</h2>
+          <p class="sec__sub">{{ start_year }}년부터 쌓아 온 글쓰기 활동</p>
+        </div>
+      </header>
+
+      <div class="con" data-reveal>
+        <div class="con__bar">
+          <span class="con__lights" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="con__file">blog-activity.log</span>
+          <span class="con__badge">{{ tech_posts | size }} posts</span>
         </div>
 
-        <div class="home_post_table_category">
-          <div class="home_post_table_title">  유니티 <english>Unity</english></div>
-          <div class="home_post_table_contents">
-            <table>
-              <tr class="home_post_table_head">
-                <td>제목</td><td>작성일</td>
-              </tr>
-              {% assign sorted = site.posts | sort: 'date' | reverse | where: 'type', 'tech' | where: 'tags', 'Unity' %}
-              {% if sorted.size == 0 %}
-                  <td colspan="2" rowspan="4"><span class="home_post_table_no_post">글 없음</span></td>
-              {% else %}
-                {% for page in sorted limit:4 %}
-                <tr> <td><a href="{{ page.url | prepend: site.baseurl }}">{{page.title}}</a></td><td>{{page.date | date: "%Y-%m-%d"}}</td> </tr>
-                {% endfor %}
-              {% endif %}
-            </table>
-          </div>
-        </div>
+        <div class="con__body">
+          <ul class="con__stats">
+            <li>
+              <span class="con__k">total</span>
+              <b class="con__v">{{ tech_posts | size }}<em>편</em></b>
+            </li>
+            <li>
+              <span class="con__k">last 12 months</span>
+              <b class="con__v">{{ last12 }}<em>편</em></b>
+            </li>
+            <li>
+              <span class="con__k">first commit</span>
+              <b class="con__v">{{ oldest_post.date | date: '%Y.%m.%d' }}</b>
+            </li>
+          </ul>
 
-        <div class="home_post_table_category">
-          <div class="home_post_table_title">  웹 CSS / JS <english>Web</english></div>
-          <div class="home_post_table_contents">
-            <table>
-              <tr class="home_post_table_head">
-                <td>제목</td><td>작성일</td>
-              </tr>
-              {% assign sorted = site.posts | sort: 'date' | reverse | where: 'type', 'tech' | where: 'tags', 'Web' %}
-              {% if sorted.size == 0 %}
-                  <td colspan="2" rowspan="4"><span class="home_post_table_no_post">글 없음</span></td>
-              {% else %}
-                {% for page in sorted limit:4 %}
-                <tr> <td><a href="{{ page.url | prepend: site.baseurl }}">{{page.title}}</a></td><td>{{page.date | date: "%Y-%m-%d"}}</td> </tr>
-                {% endfor %}
-              {% endif %}
-            </table>
-          </div>
-        </div>
+          <div class="hm" data-hm>
+            <div class="hm__scroll">
+              <div class="hm__months" aria-hidden="true">
+                <span class="hm__year-pad"></span>
+                {%- for m in month_labels -%}<span class="hm__month">{{ m }}</span>{%- endfor -%}
+              </div>
 
-        <div class="home_post_table_category">
-          <div class="home_post_table_title"> C# <english>C Sharp</english></div>
-          <div class="home_post_table_contents">
-            <table>
-              <tr class="home_post_table_head">
-                <td>제목</td><td>작성일</td>
-              </tr>
-              {% assign sorted = site.posts | sort: 'date' | reverse | where: 'type', 'tech' | where: 'tags', 'C_Sharp' %}
-              {% if sorted.size == 0 %}
-                  <td colspan="2" rowspan="4"><span class="home_post_table_no_post">글 없음</span></td>
-              {% else %}
-                {% for page in sorted limit:4 %}
-                <tr> <td><a href="{{ page.url | prepend: site.baseurl }}">{{page.title}}</a></td><td>{{page.date | date: "%Y-%m-%d"}}</td> </tr>
-                {% endfor %}
-              {% endif %}
-            </table>
-          </div>
-        </div>
+              {%- for y in (start_year..end_year) -%}
+              {%- assign row_total = 0 -%}
+              <div class="hm__row">
+                <span class="hm__year">{{ y }}</span>
+                {%- for m in month_keys -%}
+                  {%- capture key -%}{{ y }}-{{ m }},{%- endcapture -%}
+                  {%- assign c = blob | split: key | size | minus: 1 -%}
+                  {%- if c < 0 -%}{%- assign c = 0 -%}{%- endif -%}
+                  {%- assign row_total = row_total | plus: c -%}
+                  {%- if c == 0 -%}{%- assign lv = 0 -%}
+                  {%- elsif c == 1 -%}{%- assign lv = 1 -%}
+                  {%- elsif c == 2 -%}{%- assign lv = 2 -%}
+                  {%- elsif c == 3 -%}{%- assign lv = 3 -%}
+                  {%- else -%}{%- assign lv = 4 -%}{%- endif -%}
+                  <span class="hm__cell" data-lv="{{ lv }}"
+                        data-tip="{{ y }}년 {{ m | plus: 0 }}월 · {{ c }}편"
+                        style="--d: {{ forloop.index0 }}"></span>
+                {%- endfor -%}
+                <span class="hm__total">{{ row_total }}</span>
+              </div>
+              {%- endfor -%}
+            </div>
 
-        <div class="home_post_table_category">
-          <div class="home_post_table_title">  토이 프로젝트 <english>ToyProject</english></div>
-          <div class="home_post_table_contents">
-            <table>
-              <tr class="home_post_table_head">
-                <td>제목</td><td>작성일</td>
-              </tr>
-              {% assign sorted = site.posts | sort: 'date' | reverse | where: 'type', 'tech' | where: 'tags', 'ToyProject' %}
-              {% if sorted.size == 0 %}
-                  <td colspan="2" rowspan="4"><span class="home_post_table_no_post">글 없음</span></td>
-              {% else %}
-              {% for page in sorted limit:4 %}
-              <tr> <td><a href="{{ page.url | prepend: site.baseurl }}">{{page.title}}</a></td><td>{{page.date | date: "%Y-%m-%d"}}</td> </tr>
-              {% endfor %}
-              {% endif %}
-            </table>
-          </div>
-        </div>
+            <div class="hm__legend">
+              <span>적음</span>
+              <i data-lv="0"></i><i data-lv="1"></i><i data-lv="2"></i><i data-lv="3"></i><i data-lv="4"></i>
+              <span>많음</span>
+            </div>
 
-        <div class="home_post_table_category">
-          <div class="home_post_table_title"> 취업 인터뷰 대비 <english>JobPreparation</english></div>
-          <div class="home_post_table_contents">
-            <table>
-              <tr class="home_post_table_head">
-                <td>제목</td><td>작성일</td>
-              </tr>
-              {% assign sorted = site.posts | sort: 'date' | reverse | where: 'type', 'tech' | where: 'tags', 'JobPreparation' %}
-              {% if sorted.size == 0 %}
-                  <td colspan="2" rowspan="4"><span class="home_post_table_no_post">글 없음</span></td>
-              {% else %}
-                {% for page in sorted limit:4 %}
-                <tr> <td><a href="{{ page.url | prepend: site.baseurl }}">{{page.title}}</a></td><td>{{page.date | date: "%Y-%m-%d"}}</td> </tr>
-                {% endfor %}
-              {% endif %}
-            </table>
+            <span class="hm__tip" data-hm-tip aria-hidden="true"></span>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
+    <!-- ─────────── 04. 프로젝트 ─────────── -->
+    <section class="ix__sec" id="works">
+      <header class="sec" data-reveal>
+        <span class="sec__index">04</span>
+        <div class="sec__text">
+          <h2 class="sec__title">만들어 온 것들</h2>
+          <p class="sec__sub">최근 참여한 게임 프로젝트</p>
+        </div>
+        <a class="sec__more" href="{{ site.baseurl }}/profile">
+          경력 전체 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </header>
+
+      <div class="works">
+        {%- for w in works -%}
+        <a class="work" href="{{ site.baseurl }}/profile" data-reveal style="--d: {{ forloop.index0 }}">
+          <span class="work__icon">
+            <img src="{{ w.url }}{{ w.icon }}" alt="" loading="lazy" decoding="async" />
+          </span>
+          <div class="work__text">
+            <b class="work__name">{{ w.name }}</b>
+            <span class="work__en">{{ w.engName }}</span>
+            <p class="work__desc">{{ w.desc | truncate: 96 }}</p>
+          </div>
+          <i class="work__arrow fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
+        {%- endfor -%}
+      </div>
+    </section>
+
+    <!-- ─────────── 05. 소소한 이야기 ─────────── -->
+    <section class="ix__sec" id="story">
+      <header class="sec" data-reveal>
+        <span class="sec__index">05</span>
+        <div class="sec__text">
+          <h2 class="sec__title">소소한 이야기</h2>
+          <p class="sec__sub">개발 밖의 기록도 조금씩</p>
+        </div>
+        <a class="sec__more" href="{{ site.baseurl }}/life">
+          {{ mentions | size }} commits <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </header>
+
+      <ol class="story">
+        {%- for m in mentions limit: 3 -%}
+        <li class="story__item" data-reveal style="--d: {{ forloop.index0 }}">
+          <span class="story__rail" aria-hidden="true"><span class="story__node"></span></span>
+          <a class="story__card" href="{{ site.baseurl }}/life">
+            <span class="story__emoji" aria-hidden="true">{{ m.emoji }}</span>
+            <span class="story__body">
+              <b class="story__title">{{ m.title }}</b>
+              <span class="story__msg">{{ m.message | strip_html | truncate: 82 }}</span>
+            </span>
+            <span class="story__date">{{ m.date | date: '%Y.%m.%d' }}</span>
+          </a>
+        </li>
+        {%- endfor -%}
+      </ol>
+    </section>
+
+    <!-- ─────────── CTA ─────────── -->
+    <section class="cta" data-reveal>
+      <div class="cta__art" aria-hidden="true"></div>
+      <div class="cta__text">
+        <span class="cta__eyebrow">ABOUT ME</span>
+        <h2 class="cta__title">오늘보다 더 뛰어난<br />개발자가 되기 위해</h2>
+        <p class="cta__desc">
+          경력, 프로젝트, 그리고 사용하는 기술들을<br />프로필 페이지에 정리해 두었습니다.
+        </p>
+        <div class="cta__links">
+          <a class="cta__btn cta__btn--primary" href="{{ site.baseurl }}/profile">
+            프로필 보러 가기 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </a>
+          <a class="cta__btn" href="https://github.com/KimYC1223" target="_blank" rel="noopener">
+            <i class="fa-brands fa-github" aria-hidden="true"></i> GitHub
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div>
 </div>
+
+<script src="{{ site.baseurl }}/assets/js/home.js" defer></script>

@@ -1,27 +1,91 @@
-<div class="main">
-    <div class="main-banner">
-        <div class="content">
-            <div class="overlay"></div>
-            <div class="text-wrapper">
-                <div class="sub-title">
-                    <span class="no-wrap">
-                        내일을 꿈꾸는 개발자,
-                    </span>
-                </div>
-                <div class="main-title">
-                    <span class="no-wrap">
-                        <a href="https://github.com/KimYC1223/" target="_blank">KimYC1223</a>의
-                    </span>
-                    <span class="no-wrap">
-                        개발 블로그입니다.
-                    </span>
-                </div>
-                <br/>
-                <div class="description">
-                      하루하루 배워가는 내용들을 정리하고 공유합니다.<br />
-                      오늘보다 더 뛰어난 개발자가 되기 위해 노력하고 있습니다!
-                </div>
-            </div>
-        </div>
+{%- assign tech_posts = site.posts | where: 'type', 'tech' -%}
+{%- assign oldest_post = tech_posts | sort: 'date' | first -%}
+{%- assign first_year = oldest_post.date | date: '%Y' | plus: 0 -%}
+{%- assign this_year = site.time | date: '%Y' | plus: 0 -%}
+{%- assign years_running = this_year | minus: first_year | plus: 1 -%}
+
+<header class="hero" data-hero>
+  <div class="hero__bg" aria-hidden="true">
+    <span class="hero__grid"></span>
+    <span class="hero__glow hero__glow--a"></span>
+    <span class="hero__glow hero__glow--b"></span>
+  </div>
+
+  <div class="hero__inner">
+    <div class="hero__copy">
+      <div class="hero__eyebrow">
+        <span class="hero__chip hero__chip--live">
+          <span class="hero__pulse" aria-hidden="true"></span>Unity Client Developer
+        </span>
+        <span class="hero__chip">DEVSISTERS · 쿠키런: 크럼블</span>
+      </div>
+
+      <h1 class="hero__title">
+        <span class="hero__title-sub">내일을 꿈꾸는 개발자,</span>
+        <span class="hero__title-main">
+          <a href="https://github.com/KimYC1223/" target="_blank" rel="noopener">KimYC1223</a>의<br />
+          개발 블로그입니다.
+        </span>
+      </h1>
+
+      <p class="hero__desc">
+        게임 클라이언트, 그래픽스, 그리고 만들면서 배운 것들.<br />
+        하루하루 배워가는 내용들을 정리하고 공유합니다.
+      </p>
+
+      <ul class="hero__stats">
+        <li class="hero__stat">
+          <b class="hero__stat-num" data-count="{{ tech_posts | size }}">{{ tech_posts | size }}</b>
+          <span class="hero__stat-label">테크노트</span>
+        </li>
+        <li class="hero__stat">
+          <b class="hero__stat-num" data-count="{{ site.data.main_project | size }}">{{ site.data.main_project | size }}</b>
+          <span class="hero__stat-label">프로젝트</span>
+        </li>
+        <li class="hero__stat">
+          <b class="hero__stat-num" data-count="{{ site.data.mention | size }}">{{ site.data.mention | size }}</b>
+          <span class="hero__stat-label">소소한 이야기</span>
+        </li>
+        <li class="hero__stat">
+          <b class="hero__stat-num" data-count="{{ years_running }}">{{ years_running }}</b>
+          <span class="hero__stat-label">년째 기록 중</span>
+        </li>
+      </ul>
+
+      <div class="hero__actions">
+        <a class="hero__btn hero__btn--primary" href="{{ site.baseurl }}/tech">
+          테크노트 읽기 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
+        <a class="hero__btn" href="{{ site.baseurl }}/profile">프로필</a>
+        <a class="hero__btn" href="{{ site.baseurl }}/life">소소한 이야기</a>
+      </div>
     </div>
-</div>
+
+    <div class="hero__scene">
+      <div class="scene">
+        <div class="scene__bar">
+          <span class="scene__lights" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="scene__file">KimYC1223.unity</span>
+          <span class="scene__tab">Scene</span>
+        </div>
+        <div class="scene__stage">
+          <canvas class="scene__canvas" data-gizmo>
+            보라색 와이어프레임 오브젝트가 회전하는 장식용 캔버스입니다.
+          </canvas>
+        </div>
+        <div class="scene__hud">
+          <span class="scene__hint">
+            <i class="fa-solid fa-arrows-up-down-left-right" aria-hidden="true"></i>
+            드래그해서 돌려보세요
+          </span>
+          <span class="scene__rot" data-gizmo-rot>x 0 · y 0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a class="hero__cue" href="#recent">
+    <span>SCROLL</span>
+    <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+  </a>
+</header>

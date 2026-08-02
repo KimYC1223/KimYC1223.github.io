@@ -4,7 +4,7 @@
   --node: 13px;          // 커밋 노드 지름
   --lane: 26px;          // 답글 레인 들여쓰기
   --graph: #{$primary};
-  --graph-mute: #{rgba($primary, .38)};   // 갈라져 나가는 가지 (강조 아님)
+  --graph-mute: #{rgba($primary, .38)};   // 아직 그려지는 중인 가지
   --graph-soft: #{rgba($primary, .16)};   // 아직 그려지지 않은 트렁크
 
   position: relative;
@@ -128,12 +128,33 @@
 .life__connector {
   stroke: var(--graph-mute);
   stroke-width: 2;
-  transition: stroke-dashoffset .75s cubic-bezier(.25, .8, .3, 1);
+  transition: stroke-dashoffset .75s cubic-bezier(.25, .8, .3, 1),
+              stroke .45s ease,
+              stroke-width .45s ease;
+
+  // 드로잉 헤드보다 위에 있는 동안만 트렁크와 같은 톤으로 강조된다
+  &.is-lit {
+    stroke: var(--graph);
+    stroke-width: 2.75;
+
+    @media (max-width: $break-small) {
+      stroke-width: 2.25;
+    }
+  }
 }
 
 .life__connector--reply {
   stroke: $grey-5;
   opacity: 1;
+
+  &.is-lit {
+    stroke: $grey-1;
+    stroke-width: 2.5;
+
+    @media (max-width: $break-small) {
+      stroke-width: 2;
+    }
+  }
 }
 
 .life__lane {
