@@ -10,6 +10,10 @@
     - DAG 기반의 레드닷 알림 시스템을 직접 설계하여, 컴파일 타임에 안전한 경로와 우선순위 정책, 컨텐츠 해금 연동을 지원하는 전사 공통 시스템으로 구축함
     - Cinemachine과 Timeline 커스텀 트랙, 스킬 엔티티 그래프 뷰어 등 10여 종의 에디터 확장 도구를 개발하여, 기획자가 직접 연출과 데이터를 편집하고 검증할 수 있는 환경을 구축함
     - Unity Profiler로 네이티브 메모리 누수와 핫 루프의 불필요한 할당을 추적해 제거하고, 렌더 텍스처 blit 횟수를 줄여 모바일 실기기 성능을 개선함
+  playstore: https://play.google.com/store/apps/details?id=com.devsisters.cc&pcampaignid=web_share
+  appstore: https://apps.apple.com/kr/app/%EC%BF%A0%ED%82%A4%EB%9F%B0-%ED%82%A4%EC%9A%B0%EA%B8%B0-%EC%BF%A0%ED%82%A4%EB%9F%B0-%ED%81%AC%EB%9F%BC%EB%B8%94/id6749251466
+  onestore: https://m.onestore.co.kr/v2/ko-kr/app/0001005869
+  galaxystore: https://galaxystore.samsung.com/detail/com.devsisters.cc.galaxystore?cntyCd=KOR
 
 - name : 드래곤 플라이트 리부트
   engName : Dragon Flight Reboot
