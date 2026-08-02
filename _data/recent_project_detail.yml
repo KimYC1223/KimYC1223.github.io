@@ -1,6 +1,19 @@
+- name: "쿠키런: 크럼블"
+  engName: "CookieRun: Crumble"
+  index: 1
+  video: video/CRUMBLE.webm
+  icon: icon/CRUMBLE.webp
+  url: /profile/
+  desc: 데브시스터즈에서, 쿠키런 IP를 활용한 방치형 RPG 모바일 게임의 클라이언트 개발에 참여함. Unity ECS 기반의 전투 시스템과 스킬 및 상태 이상 메커니즘, 카메라 연출 시스템 등 인게임 전반을 개발하였으며, 오븐과 슈가룬, 펫 쉼터, 쟁탈전, 시즌 이벤트 등 다수의 아웃 게임 컨텐츠를 데이터 테이블부터 서버 통신과 UI까지 단독으로 구현함.
+  task:
+    - Unity ECS(DOTS)로 광역 효과, 타겟 탐색, 상태 이상, 나선 및 궤도 투사체 등 전투 메커니즘을 IJobEntity와 Burst 기반으로 구현하고, 서버와 정합성을 맞춘 전투력 및 대미지 공식을 적용함
+    - DAG 기반의 레드닷 알림 시스템을 직접 설계하여, 컴파일 타임에 안전한 경로와 우선순위 정책, 컨텐츠 해금 연동을 지원하는 전사 공통 시스템으로 구축함
+    - Cinemachine과 Timeline 커스텀 트랙, 스킬 엔티티 그래프 뷰어 등 10여 종의 에디터 확장 도구를 개발하여, 기획자가 직접 연출과 데이터를 편집하고 검증할 수 있는 환경을 구축함
+    - Unity Profiler로 네이티브 메모리 누수와 핫 루프의 불필요한 할당을 추적해 제거하고, 렌더 텍스처 blit 횟수를 줄여 모바일 실기기 성능을 개선함
+
 - name : 드래곤 플라이트 리부트
   engName : Dragon Flight Reboot
-  index : 1
+  index : 2
   video : video/DFR.webm
   icon : icon/DFR.png
   url : /profile/
@@ -13,7 +26,7 @@
 
 - name : 엄마 찾아 탕탕탕!
   engName : Where is mom? bang bang bang!
-  index : 2
+  index : 3
   video : video/TT3D.webm
   icon : icon/TT3D.png
   url : /profile/
@@ -26,7 +39,7 @@
 
 - name : 캣잼
   engName : Cat Jam
-  index : 3
+  index : 4
   video : video/CatJam.webm
   icon : icon/CatJam.png
   url : /profile/
