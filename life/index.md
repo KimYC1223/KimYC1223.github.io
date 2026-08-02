@@ -4,6 +4,7 @@ main: true
 title: 소소한 이야기
 ---
 
+<script>
 document.documentElement.classList.add('life-js');
 </script>
 
