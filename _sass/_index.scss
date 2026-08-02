@@ -866,6 +866,11 @@ body.is-scrolled .nav {
 
     .pcard__thumb img { transform: scale(1.08); }
   }
+
+  // 2열로 떨어지는 모바일에서만 쓰는 네 번째 카드 (마지막 줄의 빈칸 채우기)
+  &--mobile {
+    @media (min-width: $break-small + 1) { display: none; }
+  }
 }
 
 .pcard__thumb {
