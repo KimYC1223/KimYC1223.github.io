@@ -3,7 +3,7 @@
 
 {% include head.html %}
 
-<body>
+<body{% if page.home == true %} class="is-home"{% endif %}>
 {% assign current = page.url | downcase | split: '/' %}
 
 {% include nav.html %}

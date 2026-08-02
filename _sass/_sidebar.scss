@@ -4,7 +4,8 @@
   }
 
   width: 220px;
-  height: 500px;
+  // 내용이 500px 를 넘으면 흰 배경 밖으로 삐져나오므로 내용 높이에 맞춘다
+  height: auto;
   position: fixed;
   top:100px;
   transform:translateX(-50%);

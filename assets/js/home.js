@@ -102,7 +102,11 @@
       var y = window.pageYOffset || doc.documentElement.scrollTop;
       var heroBottom = hero ? hero.offsetTop + hero.offsetHeight - 120 : 240;
 
-      bar.classList.toggle('is-docked', y > heroBottom);
+      var docked = y > heroBottom;
+
+      bar.classList.toggle('is-docked', docked);
+      // 좌우 고정 사이드바도 섹션 바와 함께 등장한다 (_index.scss)
+      doc.body.classList.toggle('is-docked', docked);
       doc.body.classList.toggle('is-scrolled', y > 12);
 
       // 진행률 : 히어로 끝 ~ 문서 끝
