@@ -45,8 +45,8 @@ kramdown:
   syntax_highlighter_opts:
     css_class   : 'syntax'
 
-paginate : 6
-paginate_path: "/tech/page:num/"
+# 테크노트 목록은 스크롤 배치 로딩(assets/js/tech.js)으로 대체했기 때문에
+# jekyll-paginate 로 /tech/page:num/ 을 만들지 않는다.
 sort_reverse: true
 future: false
 

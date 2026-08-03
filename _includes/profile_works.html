@@ -1,0 +1,115 @@
+{%- comment -%}
+  최근 프로젝트 쇼케이스
+   · 영상(webm)은 용량이 커서 마크업에 src 를 넣지 않는다.
+     assets/js/profile.js 가 페이지 시작 직후 data-src 를 읽어 백그라운드에서 순차 로딩한다.
+   · 로딩 전/중에도 아이콘 포스터 + 진행률이 보이도록 구성했다.
+{%- endcomment -%}
+
+{%- assign works = site.data.recent_project_detail | sort: 'index' -%}
+
+<div class="wk" data-pf-works data-reveal>
+
+  <div class="wk__tabs" role="tablist" aria-label="최근 프로젝트 선택">
+    {%- for w in works -%}
+    <button class="wk__tab{% if forloop.first %} is-on{% endif %}" type="button"
+            role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            data-wk-tab="{{ forloop.index0 }}">
+      <span class="wk__tab-icon"><img src="{{ w.url }}{{ w.icon }}" alt="" loading="lazy" decoding="async" /></span>
+      <span class="wk__tab-text">
+        <b>{{ w.name }}</b>
+        <em>{{ w.engName }}</em>
+      </span>
+      <span class="wk__tab-dot" data-wk-tab-dot aria-hidden="true"></span>
+    </button>
+    {%- endfor -%}
+  </div>
+
+  <div class="wk__panels">
+    {%- for w in works -%}
+    {%- comment -%}
+      패널은 그리드 한 칸에 겹쳐 쌓는다.
+       · 컨테이너 높이가 가장 큰 패널에 맞춰져 전환할 때 높이가 흔들리지 않는다.
+       · 두 패널이 동시에 존재하므로 깜빡임 없이 크로스페이드할 수 있다.
+    {%- endcomment -%}
+    <article class="wk__panel{% if forloop.first %} is-on{% endif %}"
+             role="tabpanel" data-wk-panel="{{ forloop.index0 }}"
+             aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}">
+
+      <div class="wk__media" data-wk-media>
+        <span class="wk__poster" style="background-image: url('{{ w.url }}{{ w.icon }}')" aria-hidden="true"></span>
+        <span class="wk__noise" aria-hidden="true"></span>
+
+        <video class="wk__video" data-wk-video
+               data-src="{{ w.url }}{{ w.video }}"
+               muted loop playsinline preload="none"
+               aria-hidden="true" tabindex="-1"></video>
+
+        <span class="wk__scrim" aria-hidden="true"></span>
+
+        <span class="wk__pan-hint" aria-hidden="true">
+          <i class="fa-solid fa-up-down-left-right"></i> 드래그해서 화면 이동
+        </span>
+
+        <div class="wk__load" data-wk-load>
+          <span class="wk__load-ring" aria-hidden="true"><i></i></span>
+          <span class="wk__load-text">영상 불러오는 중 <b data-wk-pct>0%</b></span>
+        </div>
+
+        <div class="wk__head">
+          <span class="wk__icon"><img src="{{ w.url }}{{ w.icon }}" alt="" loading="lazy" decoding="async" /></span>
+          <span class="wk__naming">
+            <b class="wk__name">{{ w.name }}</b>
+            <span class="wk__en">{{ w.engName }}</span>
+          </span>
+        </div>
+
+        <button class="wk__nav wk__nav--prev" type="button" data-wk-prev aria-label="이전 프로젝트">
+          <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+        </button>
+        <button class="wk__nav wk__nav--next" type="button" data-wk-next aria-label="다음 프로젝트">
+          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div class="wk__body">
+        <p class="wk__desc">{{ w.desc }}</p>
+
+        <ul class="wk__tasks">
+          {%- for t in w.task -%}
+          <li style="--d: {{ forloop.index0 }}">
+            <i class="fa-solid fa-diamond" aria-hidden="true"></i>
+            <span>{{ t }}</span>
+          </li>
+          {%- endfor -%}
+        </ul>
+
+        {%- if w.playstore or w.appstore or w.onestore or w.galaxystore -%}
+        <div class="wk__stores">
+          <span class="wk__stores-label"><i class="fa-solid fa-download" aria-hidden="true"></i> 다운로드</span>
+          {%- if w.playstore -%}
+          <a class="wk__store" href="{{ w.playstore }}" target="_blank" rel="noopener">
+            <i class="fa-brands fa-google-play" aria-hidden="true"></i> Google Play
+          </a>
+          {%- endif -%}
+          {%- if w.appstore -%}
+          <a class="wk__store" href="{{ w.appstore }}" target="_blank" rel="noopener">
+            <i class="fa-brands fa-app-store-ios" aria-hidden="true"></i> App Store
+          </a>
+          {%- endif -%}
+          {%- if w.onestore -%}
+          <a class="wk__store" href="{{ w.onestore }}" target="_blank" rel="noopener">
+            <i class="fa-solid fa-store" aria-hidden="true"></i> ONE store
+          </a>
+          {%- endif -%}
+          {%- if w.galaxystore -%}
+          <a class="wk__store" href="{{ w.galaxystore }}" target="_blank" rel="noopener">
+            <i class="fa-solid fa-mobile-screen" aria-hidden="true"></i> Galaxy Store
+          </a>
+          {%- endif -%}
+        </div>
+        {%- endif -%}
+      </div>
+    </article>
+    {%- endfor -%}
+  </div>
+</div>

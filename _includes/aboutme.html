@@ -1,377 +1,535 @@
+{%- assign edus     = site.data.edu -%}
+{%- assign careers  = site.data.career -%}
+{%- assign stacks   = site.data.stack -%}
+{%- assign works    = site.data.recent_project_detail | sort: 'index' -%}
+{%- assign mains    = site.data.main_project -%}
+{%- assign others   = site.data.other_project -%}
+{%- assign papers   = site.data.thesis -%}
+{%- assign clips    = site.data.extra_activity -%}
 
+{%- comment -%} 경력 연차 : 2018.09 첫 입사 기준으로 계산한다 {%- endcomment -%}
+{%- assign now_y = site.time | date: '%Y' | plus: 0 -%}
+{%- assign now_m = site.time | date: '%m' | plus: 0 -%}
+{%- assign exp_years = now_y | minus: 2018 -%}
+{%- if now_m < 9 -%}{%- assign exp_years = exp_years | minus: 1 -%}{%- endif -%}
 
-<div class="aboutme">
-  <div class = "aboutme_picture">
-    <img src="https://avatars.githubusercontent.com/u/40852277">
+{%- assign main_count = mains | size -%}
+
+<nav class="hx" data-hx aria-label="섹션 바로가기">
+  <div class="hx__inner">
+    <span class="hx__brand"><i class="fa-solid fa-id-badge" aria-hidden="true"></i> profile</span>
+    <ul class="hx__links">
+      <li><a href="#career" data-hx-link>경력</a></li>
+      <li><a href="#stack" data-hx-link>스택</a></li>
+      <li><a href="#works" data-hx-link>최근 프로젝트</a></li>
+      <li><a href="#projects" data-hx-link>주요 작업</a></li>
+      <li><a href="#others" data-hx-link>아카이브</a></li>
+      <li><a href="#papers" data-hx-link>논문</a></li>
+      <li><a href="#extra" data-hx-link>활동</a></li>
+    </ul>
+    <span class="hx__pct" data-hx-pct>0%</span>
   </div>
-  <div class="aboutme_title">
-    <span class="aboutme_title_ko">김영찬</span> <span class="aboutme_title_en">Kim Young Chan</span>
-    <span class="aboutme_subtitle">Unity 클라이언트 & SDK 개발자</span>
-  </div >
+  <span class="hx__progress"><i data-hx-progress></i></span>
+</nav>
 
-  <div class="aboutme_section">
-    <div class="aboutme_greeting">
-      안녕하세요, 어제보다 더 성장할 나를 위해 노력하는 김영찬 입니다.
-      <div class="aboutme_greeting_subdiv">
-        <div class="aboutme_greeting_subtitle">SNS</div>
-        <div class="text_badge" id="aboutme_badge_github">
-          <span class="text_badge_head"><i class="fab fa-github-alt"></i></span>
-          <span class = "text_badge_content">github</span>
+<div class="pf">
+
+  <!-- ─────────── HERO ─────────── -->
+  <header class="pfh" data-pf-hero>
+    <span class="pfh__grid" aria-hidden="true"></span>
+    <span class="pfh__glow pfh__glow--a" aria-hidden="true"></span>
+    <span class="pfh__glow pfh__glow--b" aria-hidden="true"></span>
+
+    <!-- Unity 인스펙터 컨셉 카드 (포인터를 따라 기울어진다) -->
+    <div class="pfh__side">
+      <div class="insp" data-pf-tilt>
+        <div class="insp__bar">
+          <span class="scene__lights" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="scene__file">Inspector</span>
+          <span class="scene__tab">Prefab</span>
         </div>
-        <div class="text_badge" id="aboutme_badge_facebook">
-          <span class="text_badge_head"><i class="fab fa-facebook-f"></i></span>
-          <span class = "text_badge_content">facebook</span>
+
+        <div class="insp__body">
+          <div class="insp__avatar">
+            <img src="https://avatars.githubusercontent.com/u/40852277" alt="김영찬 프로필 사진"
+                 width="240" height="240" loading="lazy" decoding="async" />
+            <span class="insp__avatar-tag">KimYC1223</span>
+          </div>
+
+          <div class="insp__component">
+            <span class="insp__comp-head">
+              <i class="fa-solid fa-caret-down" aria-hidden="true"></i>
+              <i class="fa-brands fa-unity" aria-hidden="true"></i>
+              Developer <em>(Script)</em>
+            </span>
+            <dl class="insp__rows">
+              <div><dt>Name</dt><dd>Kim Young Chan</dd></div>
+              <div><dt>Role</dt><dd>Client / SDK</dd></div>
+              <div><dt>Company</dt><dd>Devsisters</dd></div>
+              <div><dt>Project</dt><dd>CookieRun: Crumble</dd></div>
+              <div><dt>Since</dt><dd>2018.09</dd></div>
+            </dl>
+          </div>
         </div>
-        <div class="text_badge" id="aboutme_badge_linkedin">
-          <span class="text_badge_head"><i class="fab fa-linkedin-in"></i></span>
-          <span class = "text_badge_content">linked-in</span>
+      </div>
+
+      <a class="pfh__bookmark" href="https://assetstore.unity.com/publishers/73611" target="_blank" rel="noopener">
+        <span class="pfh__bookmark-thumb">
+          <img src="./img/AssetStoreProfile.png" alt="" loading="lazy" decoding="async" />
+        </span>
+        <span class="pfh__bookmark-text">
+          <b>Unity Asset Store Publisher</b>
+          <span>간단하지만 코딩하기 번거로운 패키지를 개발하고 업로드합니다.</span>
+        </span>
+        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+      </a>
+    </div>
+
+    <div class="pfh__copy">
+      <div class="pfh__eyebrow">
+        <span class="hero__chip hero__chip--live">
+          <span class="hero__pulse" aria-hidden="true"></span> DEVSISTERS
+        </span>
+        <span class="hero__chip"><i class="fa-brands fa-unity" aria-hidden="true"></i> Unity Client</span>
+        <span class="hero__chip"><i class="fa-solid fa-code-branch" aria-hidden="true"></i> since 2018</span>
+      </div>
+
+      <h1 class="pfh__title">
+        <span class="pfh__name">김영찬</span>
+        <span class="pfh__en">Kim Young Chan</span>
+      </h1>
+
+      <p class="pfh__role">
+        <span class="pfh__role-type" data-pf-type
+              data-words="Unity 클라이언트 개발자|Unity SDK 개발자|게임 인게임 시스템 개발자|어제보다 더 성장할 개발자">Unity 클라이언트 개발자</span><span class="pfh__caret" aria-hidden="true"></span>
+      </p>
+
+      <p class="pfh__desc">
+        안녕하세요, 어제보다 더 성장할 나를 위해 노력하는 김영찬 입니다.<br />
+        컴퓨터 공학을 전공하고, 지금은 게임 클라이언트와 SDK를 만들고 있습니다.
+      </p>
+
+      <ul class="pfh__points">
+        <li><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i><span>컴퓨터 공학을 전공하고 Unity 클라이언트 및 SDK 개발을 하고 있는 개발자입니다.</span></li>
+        <li><i class="fa-solid fa-seedling" aria-hidden="true"></i><span>새로운 걸 배우는 것을 좋아하고, 직접 부딪히고 다뤄보며 공부합니다.</span></li>
+        <li><i class="fa-solid fa-puzzle-piece" aria-hidden="true"></i><span>다양한 프로젝트와 실무 경험을 통한 문제 해결 능력을 가지고 있습니다.</span></li>
+      </ul>
+
+      <div class="pfh__links">
+        <a class="hero__btn hero__btn--primary" href="https://github.com/KimYC1223" target="_blank" rel="noopener">
+          <i class="fa-brands fa-github" aria-hidden="true"></i> GitHub
+        </a>
+        <a class="hero__btn" href="https://assetstore.unity.com/publishers/73611" target="_blank" rel="noopener">
+          <i class="fa-brands fa-unity" aria-hidden="true"></i> Asset Store
+        </a>
+        <a class="hero__btn" href="https://www.linkedin.com/in/%EC%98%81%EC%B0%AC-%EA%B9%80-2b9aa9209/" target="_blank" rel="noopener">
+          <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i> LinkedIn
+        </a>
+        <a class="hero__btn" href="https://solved.ac/profile/kimyc1223" target="_blank" rel="noopener">
+          <i class="fa-solid fa-code" aria-hidden="true"></i> solved.ac
+        </a>
+        <a class="hero__btn" href="https://steamcommunity.com/id/kimyc1223?l=korean" target="_blank" rel="noopener">
+          <i class="fa-brands fa-steam-symbol" aria-hidden="true"></i> Steam
+        </a>
+        <a class="hero__btn" href="https://www.facebook.com/profile.php?id=100000498178589" target="_blank" rel="noopener">
+          <i class="fa-brands fa-facebook-f" aria-hidden="true"></i> Facebook
+        </a>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- ─────────── 01. 경력 & 학력 ─────────── -->
+  <section class="pf__sec" id="career">
+    <header class="sec" data-reveal>
+      <span class="sec__index">01</span>
+      <div class="sec__text">
+        <h2 class="sec__title">걸어온 길</h2>
+        <p class="sec__sub">{{ exp_years }}년 동안 쌓아 온 경력과 학력</p>
+      </div>
+    </header>
+
+    <div class="tl" data-pf-timeline data-reveal>
+      <div class="tl__tabs" role="tablist" aria-label="경력 · 학력 보기">
+        <button class="tl__tab is-on" type="button" role="tab" aria-selected="true" data-tl-tab="all">
+          전체 <span>{{ careers.size | plus: edus.size }}</span>
+        </button>
+        <button class="tl__tab" type="button" role="tab" aria-selected="false" data-tl-tab="career">
+          <i class="fa-solid fa-briefcase" aria-hidden="true"></i> 경력 <span>{{ careers | size }}</span>
+        </button>
+        <button class="tl__tab" type="button" role="tab" aria-selected="false" data-tl-tab="edu">
+          <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> 학력 <span>{{ edus | size }}</span>
+        </button>
+      </div>
+
+      <ol class="tl__list" data-tl-list>
+        <span class="tl__rail" aria-hidden="true"><i data-tl-rail></i></span>
+
+        {%- comment -%}
+          경력 · 학력을 하나의 타임라인에 섞는다.
+          "시작연월§종류§기간§이름§역할§비고" 형태로 만든 뒤 문자열 정렬로 최신순을 얻는다.
+        {%- endcomment -%}
+        {%- capture tl_blob -%}
+        {%- for c in careers -%}
+        {{ c.period | split: '~' | first | strip }}§career§{{ c.period }}§{{ c.com }}§{{ c.position }}§ ¶
+        {%- endfor -%}
+        {%- for e in edus -%}
+        {{ e.period | split: '~' | first | strip }}§edu§{{ e.period }}§{{ e.school }}§{{ e.major }} · {{ e.degree }}§{{ e.remark }}¶
+        {%- endfor -%}
+        {%- endcapture -%}
+        {%- assign rows = tl_blob | split: '¶' | sort | reverse -%}
+
+        {%- for row in rows -%}
+        {%- assign f = row | strip | split: '§' -%}
+        {%- assign remark = f[5] | strip -%}
+        <li class="tl__item" data-tl-kind="{{ f[1] }}" data-reveal style="--d: {{ forloop.index0 }}">
+          <span class="tl__node{% if f[2] contains '현재' %} is-live{% endif %}" aria-hidden="true"></span>
+          <div class="tl__card">
+            <div class="tl__meta">
+              <span class="tl__period">{{ f[2] }}</span>
+              {%- if f[1] == 'career' -%}
+              <span class="chip chip--sm">경력</span>
+              {%- else -%}
+              <span class="chip chip--sm">학력</span>
+              {%- endif -%}
+              {%- if f[2] contains '현재' -%}<span class="tl__now">진행 중</span>{%- endif -%}
+            </div>
+            <b class="tl__name">{{ f[3] }}</b>
+            <span class="tl__role">{{ f[4] }}</span>
+            {%- if remark != '' -%}<span class="tl__remark">{{ remark }}</span>{%- endif -%}
+          </div>
+        </li>
+        {%- endfor -%}
+      </ol>
+    </div>
+  </section>
+
+
+  <!-- ─────────── 02. 기술 스택 ─────────── -->
+  <section class="pf__sec" id="stack">
+    <header class="sec" data-reveal>
+      <span class="sec__index">02</span>
+      <div class="sec__text">
+        <h2 class="sec__title">다루는 기술</h2>
+        <p class="sec__sub">카드를 눌러 보면 자세한 이야기가 나옵니다</p>
+      </div>
+    </header>
+
+    <div class="st" data-pf-stack data-reveal>
+      <div class="st__chart">
+        <div class="con__bar">
+          <span class="con__lights" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="con__file">skill-radar.cs</span>
+          <span class="con__badge">{{ stacks | size }} skills</span>
         </div>
-        <div class="text_badge" id="aboutme_badge_solvedac">
-          <span class="text_badge_head"><i class="fas fa-code"></i></span>
-          <span class = "text_badge_content">solved.ac</span>
+        <div class="st__canvas-wrap">
+          <canvas class="st__canvas" data-st-canvas
+                  aria-label="기술 스택 레이더 차트"
+                  role="img"></canvas>
         </div>
-        <div class="text_badge" id="aboutme_badge_steam">
-          <span class="text_badge_head"><i class="fab fa-steam-symbol"></i></span>
-          <span class = "text_badge_content">steam</span>
+      </div>
+
+      <div class="st__panel">
+        <div class="st__cards">
+          {%- for s in stacks -%}
+          <button class="st__card{% if forloop.first %} is-on{% endif %}" type="button"
+                  data-st-card="{{ forloop.index0 }}" style="--d: {{ forloop.index0 }}">
+            <span class="st__card-icon">
+              {%- if s.img -%}
+              <img src="{{ s.img }}" alt="" loading="lazy" decoding="async" />
+              {%- else -%}
+              <i class="{{ s.icon }}" aria-hidden="true"></i>
+              {%- endif -%}
+            </span>
+            <span class="st__card-name">{{ s.name }}</span>
+            <span class="st__card-bar" aria-hidden="true"><i style="--lv: {{ s.level }}%"></i></span>
+            <span class="st__card-lv">{{ s.level }}</span>
+          </button>
+          {%- endfor -%}
+        </div>
+
+        <div class="st__details">
+          {%- for s in stacks -%}
+          <div class="st__detail{% if forloop.first %} is-on{% endif %}" data-st-detail="{{ forloop.index0 }}">
+            <b class="st__detail-title">
+              <i class="{{ s.icon }}" aria-hidden="true"></i> {{ s.label }}
+              <em>{{ s.level }} / 100</em>
+            </b>
+            <ul class="st__detail-list">
+              {%- for d in s.desc -%}<li>{{ d }}</li>{%- endfor -%}
+            </ul>
+            {%- if s.link -%}
+            <a class="st__detail-link" href="{{ s.link }}" target="_blank" rel="noopener">
+              {{ s.linkName }} <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+            </a>
+            {%- endif -%}
+          </div>
+          {%- endfor -%}
         </div>
       </div>
     </div>
+  </section>
 
-    <div class="aboutme_bookmark_div" id="aboutme_bookmark_assetstore">
-      <div class="aboutme_bookmark_thumbnail">
-        <img src="./img/AssetStoreProfile.png">
+
+  <!-- ─────────── 03. 최근 프로젝트 ─────────── -->
+  <section class="pf__sec" id="works">
+    <header class="sec" data-reveal>
+      <span class="sec__index">03</span>
+      <div class="sec__text">
+        <h2 class="sec__title">최근 프로젝트</h2>
+        <p class="sec__sub">직접 참여한 게임들</p>
       </div>
-      <div class="aboutme_bookmark_description">
-        <span class="aboutme_bookmark_title">Unity Asset Store Publisher Profile</span>
-        <span class="aboutme_bookmark_address">https://assetstore.unity.com/publishers/73611</span>
-        <span class="aboutme_bookmark_subtitle">간단하지만 코딩하기 번거로운 패키지를 개발하고 업로드합니다.</span>
+    </header>
+
+    {%- include profile_works.html -%}
+  </section>
+
+
+  <!-- ─────────── 04. 주요 프로젝트 ─────────── -->
+  <section class="pf__sec" id="projects">
+    <header class="sec" data-reveal>
+      <span class="sec__index">04</span>
+      <div class="sec__text">
+        <h2 class="sec__title">주요 작업</h2>
+        <p class="sec__sub">실무와 연구에서 맡았던 {{ main_count }}개의 작업</p>
+      </div>
+    </header>
+
+    <div class="mp" data-pf-main data-reveal>
+      <div class="mp__grid" data-mp-grid>
+        {%- for p in mains -%}
+        <article class="mp__card" data-mp-card style="--d: {{ forloop.index0 }}">
+          <div class="mp__thumb">
+            <img src="{{ p.img }}" alt="" loading="lazy" decoding="async" />
+            <span class="mp__thumb-veil" aria-hidden="true"></span>
+          </div>
+          <div class="mp__body">
+            <b class="mp__name">{{ p.name }}</b>
+            <p class="mp__desc">{{ p.desc }}</p>
+            <div class="mp__chips">
+              {%- for k in p.keyword -%}<span class="chip chip--sm">{{ k }}</span>{%- endfor -%}
+            </div>
+            <button class="mp__toggle" type="button" data-mp-toggle aria-expanded="false">
+              <span class="mp__toggle-on">담당 업무 보기</span>
+              <span class="mp__toggle-off">접기</span>
+              <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+            </button>
+            <div class="mp__tasks" data-mp-tasks>
+              <ul>
+                {%- for t in p.task -%}<li>{{ t }}</li>{%- endfor -%}
+              </ul>
+            </div>
+          </div>
+        </article>
+        {%- endfor -%}
       </div>
     </div>
+  </section>
 
-    
 
-    <script>
-      aboutme_badge_github = document.getElementById('aboutme_badge_github')
-      aboutme_badge_github.addEventListener('click', () => {
-        location.href = "https://github.com/KimYC1223"
-      })
+  <!-- ─────────── 05. 다른 프로젝트 ─────────── -->
+  <section class="pf__sec" id="others">
+    <header class="sec" data-reveal>
+      <span class="sec__index">05</span>
+      <div class="sec__text">
+        <h2 class="sec__title">아카이브</h2>
+        <p class="sec__sub">게임 밖에서 만들어 온 것들 · 항목을 눌러 펼쳐 보세요</p>
+      </div>
+    </header>
 
-      aboutme_badge_facebook = document.getElementById('aboutme_badge_facebook')
-      aboutme_badge_facebook.addEventListener('click', () => {
-        location.href = "https://www.facebook.com/profile.php?id=100000498178589"
-      })
+    <div class="op" data-pf-acc>
+      {%- for p in others -%}
+      <article class="op__item{% if forloop.first %} is-open{% endif %}" data-op-item data-reveal style="--d: {{ forloop.index0 }}">
+        <button class="op__head" type="button" data-op-head aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+          <span class="op__thumb"><img src="{{ p.img }}" alt="" loading="lazy" decoding="async" /></span>
+          <span class="op__heading">
+            <span class="op__title-row">
+              <b class="op__name">{{ p.name }}</b>
+              <span class="op__state op__state--{{ p.state }}">{{ p.state }}</span>
+            </span>
+            <span class="op__short">{{ p.short-desc }}</span>
+          </span>
+          <i class="op__chev fa-solid fa-chevron-down" aria-hidden="true"></i>
+        </button>
 
-      aboutme_badge_linkedin = document.getElementById('aboutme_badge_linkedin')
-      aboutme_badge_linkedin.addEventListener('click', () => {
-        location.href = "https://www.linkedin.com/in/%EC%98%81%EC%B0%AC-%EA%B9%80-2b9aa9209/"
-      })
+        <div class="op__panel" data-op-panel>
+          <div class="op__inner">
+            <div class="op__tags">
+              {%- for l in p.language -%}<span class="op__tag op__tag--lang"><i class="fa-solid fa-code" aria-hidden="true"></i>{{ l }}</span>{%- endfor -%}
+              {%- for pl in p.platform -%}<span class="op__tag op__tag--plat"><i class="fa-solid fa-layer-group" aria-hidden="true"></i>{{ pl }}</span>{%- endfor -%}
+            </div>
 
-      aboutme_badge_solvedac = document.getElementById('aboutme_badge_solvedac')
-      aboutme_badge_solvedac.addEventListener('click', () => {
-        location.href = "https://solved.ac/profile/kimyc1223"
-      })
+            <p class="op__desc">{{ p.long-desc }}</p>
 
-      aboutme_badge_steam = document.getElementById('aboutme_badge_steam')
-      aboutme_badge_steam.addEventListener('click', () => {
-        location.href = "https://steamcommunity.com/id/kimyc1223?l=korean"
-      })
+            {%- if p.warning != '' -%}
+            <p class="op__warn"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> {{ p.warning }}</p>
+            {%- endif -%}
 
-      aboutme_bookmark_assetstore = document.getElementById('aboutme_bookmark_assetstore')
-      aboutme_bookmark_assetstore.addEventListener('click', () => {
-        location.href = "https://assetstore.unity.com/publishers/73611"
-      })
-    </script>
-  </div>
+            {%- if p.git-url != '' -%}
+            <a class="op__git" href="{{ p.git-url }}" target="_blank" rel="noopener">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> {{ p.git-name }}
+            </a>
+            {%- endif -%}
 
-  <div class="aboutme_section">
-    <div class = "aboutme_introduce_section">
-      <div class="aboutme_section_title">자기 소개</div>
-      <ul>
-        <li>
-          <table><tr><td><i class="fas fa-chevron-right"></i></td>
-          <td><span>컴퓨터 공학을 전공하고 Unity 클라이언트 및 SDK개발을 하고 있는 개발자입니다.</span></td></tr></table>
+            {%- if p.reference -%}
+            <div class="op__refs">
+              {%- for ref in p.reference -%}
+              <a class="op__ref" href="{{ ref.url }}" target="_blank" rel="noopener" title="{{ ref.name }}">
+                <img src="{{ ref.img }}" alt="{{ ref.name }}" loading="lazy" decoding="async" />
+                <span class="op__ref-name">{{ ref.name }}</span>
+              </a>
+              {%- endfor -%}
+            </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </article>
+      {%- endfor -%}
+    </div>
+  </section>
+
+
+  <!-- ─────────── 06. 논문 ─────────── -->
+  <section class="pf__sec" id="papers">
+    <header class="sec" data-reveal>
+      <span class="sec__index">06</span>
+      <div class="sec__text">
+        <h2 class="sec__title">국내 및 해외 논문</h2>
+      </div>
+    </header>
+
+    <div class="pp" data-pf-papers data-reveal>
+      <ol class="pp__list" data-pp-list>
+        {%- for p in papers -%}
+        <li class="pp__item" data-pp-item data-type="{{ p.type }}" style="--d: {{ forloop.index0 }}">
+          {%- if p.url != '' -%}
+          <a class="pp__card" href="{{ p.url }}" target="_blank" rel="noopener">
+          {%- else -%}
+          <div class="pp__card pp__card--flat">
+          {%- endif -%}
+            <span class="pp__no">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+            <span class="pp__text">
+              <b class="pp__name">{{ p.name }}</b>
+              <span class="pp__meta">
+                <span class="pp__org">{{ p.org }}</span>
+                <span class="pp__dot">·</span>
+                <span class="pp__date">{{ p.date }}</span>
+              </span>
+            </span>
+            <span class="pp__type pp__type--{% if p.type contains '국제' %}intl{% elsif p.type contains '국내' %}dom{% else %}grad{% endif %}">{{ p.type }}</span>
+            {%- comment -%} 링크가 없는 항목도 같은 폭을 차지하게 두어 오른쪽 열을 맞춘다 {%- endcomment -%}
+            <i class="pp__go fa-solid fa-arrow-up-right-from-square{% if p.url == '' %} pp__go--none{% endif %}" aria-hidden="true"></i>
+          {%- if p.url != '' -%}</a>{%- else -%}</div>{%- endif -%}
         </li>
-        <li>
-          <table><tr><td><i class="fas fa-chevron-right"></i></td>
-          <td><span>새로운 걸 배우는 것을 좋아하고, 직접 부딪히고 다뤄보며 공부합니다.</span></td></tr></table>
+        {%- endfor -%}
+      </ol>
+    </div>
+  </section>
+
+
+  <!-- ─────────── 07. 대외 활동 ─────────── -->
+  <section class="pf__sec" id="extra">
+    <header class="sec" data-reveal>
+      <span class="sec__index">07</span>
+      <div class="sec__text">
+        <h2 class="sec__title">대외 활동</h2>
+        <p class="sec__sub">개발 밖에서 사람들과 함께한 기록</p>
+      </div>
+    </header>
+
+    <div class="ea__grid">
+      <a class="ea__card" data-reveal style="--d: 0"
+         href="https://www.facebook.com/permalink.php?story_fbid=885174618175802&id=100000498178589"
+         target="_blank" rel="noopener">
+        <span class="ea__photo"><img src="./img/ESC.jpg" alt="" loading="lazy" decoding="async" /></span>
+        <span class="ea__text">
+          <b class="ea__name">E.S.C.</b>
+          <span class="ea__sub">전자회로연구회</span>
+          <span class="ea__role">35기 회장</span>
+          <span class="ea__period">2013.03 – 2020.02</span>
+          <span class="ea__desc">교내 중앙 학술동아리 전자회로 연구회 (Electronic-circuit Study Circle) 35기수 운영</span>
+        </span>
+      </a>
+
+      <a class="ea__card" data-reveal style="--d: 1"
+         href="https://www.facebook.com/permalink.php?story_fbid=2205752936117957&id=100000498178589"
+         target="_blank" rel="noopener">
+        <span class="ea__photo"><img src="./img/Realizer.jpg" alt="" loading="lazy" decoding="async" /></span>
+        <span class="ea__text">
+          <b class="ea__name">Realizer</b>
+          <span class="ea__sub">컨텐츠 제작 동호회</span>
+          <span class="ea__role">테크니션</span>
+          <span class="ea__period">2018.01 – 2018.06</span>
+          <span class="ea__desc">"추리게임 : 폴리스라인 안으로"의 기술 소품 및 백그라운드 서버 담당</span>
+        </span>
+      </a>
+
+      <a class="ea__card" data-reveal style="--d: 2"
+         href="https://cargold.notion.site/cargold/5c1b5c784cfd40bbba0f762fb2dcbee9"
+         target="_blank" rel="noopener">
+        <span class="ea__photo"><img src="./img/CargoldMember.jpg" alt="" loading="lazy" decoding="async" /></span>
+        <span class="ea__text">
+          <b class="ea__name">Cargold의 거실</b>
+          <span class="ea__sub">게임 개발자 커뮤니티</span>
+          <span class="ea__role">시즌 2 거실 멤버</span>
+          <span class="ea__period">2023.11 – 진행중</span>
+          <span class="ea__desc">카골드의 거실 Unity 개발자-프로그래밍 멤버 (시즌2 부터 참여 중)</span>
+        </span>
+      </a>
+    </div>
+
+    <div class="ea__clips-head" data-reveal>
+      <i class="fa-solid fa-film" aria-hidden="true"></i> 활동 기록 영상
+    </div>
+
+    <div class="ea__clips">
+      {%- for a in clips -%}
+      <a class="ea__clip" href="{{ a.url }}" target="_blank" rel="noopener" data-reveal style="--d: {{ forloop.index0 }}">
+        <img class="ea__clip-thumb" src="{{ a.img }}" alt="" loading="lazy" decoding="async" />
+        <span class="ea__clip-veil" aria-hidden="true"></span>
+        <span class="ea__clip-play" aria-hidden="true"><i class="fa-solid fa-play"></i></span>
+        <span class="ea__clip-name">{{ a.name }}</span>
+      </a>
+      {%- endfor -%}
+    </div>
+  </section>
+
+
+  <!-- ─────────── CTA / 연락처 ─────────── -->
+  <section class="cta pfc" data-reveal>
+    <div class="cta__art" aria-hidden="true"></div>
+    <div class="cta__text">
+      <span class="cta__eyebrow">CONTACT</span>
+      <h2 class="cta__title">함께 만들 이야기가<br />있다면 알려 주세요</h2>
+      <p class="cta__desc">
+        아래 항목을 누르면 바로 연결되고,<br />복사 버튼을 누르면 클립보드에 담깁니다.
+      </p>
+
+      <ul class="pfc__list" data-pf-contact>
+        <li class="pfc__row">
+          <a class="pfc__link" href="mailto:kau_esc@naver.com">
+            <i class="far fa-envelope" aria-hidden="true"></i>
+            <span>kau_esc@naver.com</span>
+          </a>
+          <button class="pfc__copy" type="button" data-pf-copy="kau_esc@naver.com" aria-label="이메일 주소 복사">
+            <i class="fa-regular fa-copy" aria-hidden="true"></i>
+          </button>
         </li>
-        <li>
-          <table><tr><td><i class="fas fa-chevron-right"></i></td>
-          <td><span>다양한 프로젝트와 실무 경험을 통한 문제 해결 능력을 가지고 있습니다.</span></td></tr></table>
+        <li class="pfc__row">
+          <a class="pfc__link" href="mailto:youngchan.kim@devsisters.com">
+            <i class="far fa-envelope" aria-hidden="true"></i>
+            <span>youngchan.kim@devsisters.com</span>
+          </a>
+          <button class="pfc__copy" type="button" data-pf-copy="youngchan.kim@devsisters.com" aria-label="이메일 주소 복사">
+            <i class="fa-regular fa-copy" aria-hidden="true"></i>
+          </button>
         </li>
       </ul>
     </div>
-  </div>
 
-  <div class="aboutme_section">
-    <div class = "aboutme_edu">
-      <div class="aboutme_section_title">학력 및 경력 사항</div>
-        <div class="aboutme_greeting_subdiv">
-          <div class="aboutme_edu_subtitle">학력 사항</div>
-          <div class="aboutme_table_scroll">
-            <table class="aboutme_edu_table">
-              <tr class="aboutme_edu_table_head"> <td>기간</td> <td>학교</td> <td>전공</td> <td>학위</td> <td class="aboutme_edu_table_extra">비고</td>
-              </tr>
-              {% assign education = site.data.edu %}
-              {% for edu in education %}
-              <tr> <td>{{ edu.period }}</td> <td>{{ edu.school }}</td> <td>{{ edu.major }}</td> <td>{{ edu.degree }}</td>
-                   <td class="aboutme_edu_table_extra">{{ edu.remark }}</td> </tr>
-              {% endfor %}
-            </table>
-          </div>
+    <span class="pfc__toast" data-pf-toast aria-live="polite">복사했습니다</span>
+  </section>
 
-          <div class="aboutme_edu_subtitle">경력 사항</div>
-          <div class="aboutme_table_scroll">
-            <table class="aboutme_edu_table">
-              <tr class="aboutme_edu_table_head"> <td>기간</td> <td>기관 명</td> <td>직책</td> </tr>
-              {% assign careers = site.data.career %}
-              {% for career in careers %}
-              <tr> <td>{{ career.period }}</td> <td>{{ career.com }}</td> <td>{{ career.position }}</td> </tr>
-              {% endfor %}
-            </table>
-          </div>
-      </div>
-    </div>
-  </div>
-
-  <Br>
-
-  <div class="aboutme_section">
-    <div class = "aboutme_edu">
-      <div class="aboutme_section_title">기술 스택</div>
-
-      {% include stack_graph.html %}
-
-      {% assign stacks = site.data.stack%}
-      {% for stack in stacks %}
-      <div class="aboutme_stack_cards" tabindex="0">
-        <img src="{{ stack.img }}">
-        <span class="aboutme_badge_name">{{ stack.name }}</span>
-        {{ stack.content }}
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-
-  <Br>
-
-  <div class="aboutme_section">
-    <div class = "aboutme_recent_section">
-      <div class="aboutme_section_title">최근 프로젝트</div>
-        {%- include projects.html %}
-      </div>
-    </div>
-  </div>
-
-  <Br><Br>
-
-  <div class="aboutme_section">
-    <div class = "aboutme_project_section">
-      <div class="aboutme_section_title">메인 프로젝트</div>
-      <div class="aboutme_project_center_div">
-      {% assign main_p = site.data.main_project %}
-      {% for p in main_p %}
-      
-      <div class = "aboutme_project_card">
-        <div class="aboutme_project_card_main">
-          <div class="aboutme_project_card_img">
-            <div class="aboutme_project_card_img_dark"></div>
-            <div class="aboutme_proejct_card_real_img" style="background:url({{ p.img }});background-position: center center; background-size: cover;"></div>
-          </div>
-          <div class="aboutme_project_card_text">
-            <span class="aboutme_project_card_title">{{ p.name }}</span>
-            <span class="aboutme_project_card_desc">{{ p.desc }}</span>
-            <table style="width:95%;margin:10px 0px;">
-            {% for t in p.task %}
-            <tr><td class="aboutme_project_card_task" style="width:10px; text-align:center;">◾</td><td style="padding-left:5px;">
-            <span class="aboutme_project_card_task">{{ t }}</span></td></tr>
-            {% endfor %}
-            </table>
-          </div>
-        </div>
-        <div class="aboutme_project_card_keyword_wrap">
-        {% for k in p.keyword %}
-        <span class="aboutme_project_card_keyword">{{ k }}</span>
-        {% endfor %}
-        </div>
-      </div>
-      {% endfor %}
-      </div>
-    </div>
-  </div>
-
-  <div class="aboutme_section">
-    <div class = "aboutme_thesis_section">
-      <div class="aboutme_section_title">국내 및 해외 논문</div>
-      <div class="aboutme_table_scroll">
-        <table class="aboutme_thesis_table">
-          <tr class="aboutme_thesis_table_head"> <td>제목</td> <td>기관명</td> <td>발행일</td> <td>분류</td> </tr>
-          {% assign thesis = site.data.thesis %}
-          {% for paper in thesis %}
-          <tr class="aboutme_thesis_table_tr">
-            {% if paper.url != "" %}
-            <td><a href="{{ paper.url }}">{{ paper.name }}</a></td>
-            {% else %} <td>{{ paper.name }}</td> {% endif %}
-            <td>{{ paper.org }}</td> <td>{{ paper.date }}</td> <td>{{ paper.type }}</td>
-          </tr>
-          {% endfor %}
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="aboutme_section">
-    <div class = "aboutme_extra_section">
-      <div class="aboutme_section_title">다른 프로젝트</div>
-      {% assign projects = site.data.other_project %}
-      {% for p in projects %}
-      <div class="aboutme_other_project_div">
-        <div class="aboutme_other_project_img_td">
-          <img src= "{{ p.img }}" class="aboutme_other_project_img">
-        </div>
-        <div class="aboutme_other_project_text_td">
-          <span class="aboutme_other_project_{{ p.state }}">{{ p.state }}</span>
-          <span class="aboutme_other_project_title">{{ p.name }}</span>
-          <span class="aboutme_other_project_short_desc">{{ p.short-desc }}</span>
-          <div class="aboutme_other_project_language_platform_div">
-          {% for l in p.language%}
-            <span class="aboutme_other_project_language">{{ l }}</span>
-          {% endfor %} {% for pl in p.platform%}
-            <span class="aboutme_other_project_platform">{{ pl }}</span>
-          {% endfor %} </div>
-
-          {% if p.git-url != "" %}
-          <a href="{{ p.git-url }}" class= "aboutme_other_project_git_a">
-            <div class="text_badge text_badge2">
-              <span class="text_badge_head"><i class="fab fa-github-alt"></i></span>
-              <span class = "text_badge_content text_badge_content2">{{ p.git-name }}</span>
-            </div>
-          </a>
-          {% endif %}
-
-          <span class="aboutme_other_project_desc">{{ p.long-desc }}</span>
-          {% if p.warning != "" %}
-          <span class="aboutme_other_project_warning">{{ p.warning }}</span>
-          {% endif%}
-
-          <div class="aboutme_other_project_ref_wrap_div">{% for ref in p.reference %}
-          <a href="{{ref.url}}"><div class="aboutme_other_project_ref_div">
-            <img src="{{ref.img}}">
-          </div></a>
-          {% endfor %}</div>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
-
-<!--
-  <div class="aboutme_section">
-    <div class = "aboutme_toy_section">
-      <div class="aboutme_section_title">토이 프로젝트</div>
-      작성중
-    </div>
-  </div>
--->
-  <div class="aboutme_section">
-    <div class = "aboutme_extra_section">
-      <div class="aboutme_section_title">대외 활동</div>
-      <div class="aboutme_extra_card">
-        <table>
-          <tr>
-            <td class="aboutme_extra_card_img_td">
-              <a href="https://www.facebook.com/permalink.php?story_fbid=885174618175802&id=100000498178589"><img src="./img/ESC.jpg" class="aboutme_extra_card_img"></a>
-            </td>
-            <td class="aboutme_extra_card_img_td2">
-              <span class="aboutme_extra_card_name">E.S.C.</span>
-              <span class="aboutme_extra_card_sub">전자회로연구회</span>
-              <span class="aboutme_extra_card_role">35기 회장</span>
-              <span class="aboutme_extra_card_period">2013.03 - 2020.02</span>
-              <span class="aboutme_extra_card_desc">교내 중앙 학술동아리 전자회로 연구회 (Electronic-circuit Study Circle) 35기수 운영</span>
-            </td>
-          </tr>
-        </table>
-      </div>
-
-      <div class="aboutme_extra_card">
-        <table>
-          <tr>
-            <td class="aboutme_extra_card_img_td">
-              <a href="https://www.facebook.com/permalink.php?story_fbid=2205752936117957&id=100000498178589"><img src="./img/Realizer.jpg"></a>
-            </td>
-            <td class="aboutme_extra_card_img_td2">
-              <span class="aboutme_extra_card_name">Realizer</span>
-              <span class="aboutme_extra_card_sub">컨텐츠 제작 동호회</span>
-              <span class="aboutme_extra_card_role">테크니션</span>
-              <span class="aboutme_extra_card_period">2018.01 - 2018.06</span>
-              <span class="aboutme_extra_card_desc">"추리게임 : 폴리스라인 안으로"의 기술 소품 및 백그라운드 서버담당</span>
-            </td>
-          </tr>
-        </table>
-      </div>
-
-      <div class="aboutme_extra_card">
-        <table>
-          <tr>
-            <td class="aboutme_extra_card_img_td">
-              <a href="https://cargold.notion.site/cargold/5c1b5c784cfd40bbba0f762fb2dcbee9"><img src="./img/CargoldMember.jpg"></a>
-            </td>
-            <td class="aboutme_extra_card_img_td2">
-              <span class="aboutme_extra_card_name">Cargold의 거실</span>
-              <span class="aboutme_extra_card_sub">게임 개발자 커뮤니티</span>
-              <span class="aboutme_extra_card_role">시즌 2 거실 멤버</span>
-              <span class="aboutme_extra_card_period">2023.11 - 진행중</span>
-              <span class="aboutme_extra_card_desc">카골드의 거실 Unity 개발자-프로그래밍 멤버 (시즌2 부터 참여 중)</span>
-            </td>
-          </tr>
-        </table>
-      </div>
-    </div>
-
-    <div class="aboutme_edu_subtitle">활동 기록</div>
-    {% assign activity = site.data.extra_activity %}
-    {% for a in activity %}
-    <a href="{{ a.url }}" target="blank"><div class="aboutme_activity_video">
-      <img src="{{ a.img }}" alt="" class="aboutme_activity_video_thumbnail">
-      <div class="aboutme_activity_video_black"></div>
-      <span class="aboutme_activity_video_name">{{ a.name }}</span>
-      <img src="./img/Play.png" alt="" class="aboutme_activity_video_play_button">
-    </div></a>
-    {% endfor %}
-  </div>
-
-  <div class="aboutme_section">
-    <div class="aboutme_greeting">
-      <div class="aboutme_section_title">연락처</div>
-      <div class="aboutme_greeting_subdiv">
-        <div class="text_badge" id="aboutme_badge_email1">
-          <span class="text_badge_head"><i class="far fa-envelope"></i></span>
-          <span class = "text_badge_content">kau_esc@naver.com</span>
-        </div>
-        <div class="text_badge" id="aboutme_badge_email2">
-          <span class="text_badge_head"><i class="far fa-envelope"></i></span>
-          <span class = "text_badge_content">kim.youngchan@yonsei.com</span>
-        </div>
-        <div class="text_badge" id="aboutme_telegram">
-          <span class="text_badge_head"><i class="fab fa-telegram-plane"></i></span>
-          <span class = "text_badge_content">kim_youngchan</span>
-        </div>
-      </div>
-      <script>
-        aboutme_badge_email1 = document.getElementById('aboutme_badge_email1')
-        aboutme_badge_email1.addEventListener('click', () => {
-          location.href = "mailto:kau_esc@naver.com"
-        })
-
-        aboutme_badge_email2 = document.getElementById('aboutme_badge_email2')
-        aboutme_badge_email2.addEventListener('click', () => {
-          location.href = "mailto:kim.youngchan@yonsei.ac.kr"
-        })
-
-        aboutme_telegram = document.getElementById('aboutme_telegram')
-        aboutme_telegram.addEventListener('click', () => {
-          location.href = "https://t.me/kim_youngchan"
-        })
-      </script>
-  </div>
 </div>
+
+<script src="{{ site.baseurl }}/assets/js/profile.js" defer></script>

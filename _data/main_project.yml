@@ -47,7 +47,7 @@
   keyword :
     - Android
     - iOS
-    - Addressable을
+    - Addressable
 
 - name : 혼합 현실 협업 솔루션
   img : ./img/mp_08.png
@@ -69,7 +69,7 @@
     - 서버 기반의 Digital Twin 직접 구현
   keyword :
     - Digital Twin
-    - WegGL
+    - WebGL
 
 - name : Smart Deployment
   img : ./img/mp_10.png

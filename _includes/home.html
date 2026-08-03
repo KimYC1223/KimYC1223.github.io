@@ -95,8 +95,8 @@ Unity|유니티|Unity|fa-brands fa-unity;C_Sharp|C#|C Sharp|fa-solid fa-hashtag;
           <h2 class="sec__title">카테고리</h2>
           <p class="sec__sub">관심 있는 주제부터 골라 보세요</p>
         </div>
-        <a class="sec__more" href="{{ site.baseurl }}/tags">
-          태그 전체 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        <a class="sec__more" href="{{ site.baseurl }}/tech">
+          카테고리 전체 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
         </a>
       </header>
 
@@ -104,7 +104,7 @@ Unity|유니티|Unity|fa-brands fa-unity;C_Sharp|C#|C Sharp|fa-solid fa-hashtag;
         {%- for cat in cats -%}
         {%- assign f = cat | split: '|' -%}
         {%- assign cposts = tech_posts | where: 'tags', f[0] | sort: 'date' | reverse -%}
-        <a class="cat" href="{{ site.baseurl }}/tags/?tag={{ f[0] }}" data-reveal style="--d: {{ forloop.index0 }}">
+        <a class="cat" href="{{ site.baseurl }}/tech/?tag={{ f[0] }}" data-reveal style="--d: {{ forloop.index0 }}">
           <div class="cat__head">
             <span class="cat__icon"><i class="{{ f[3] }}" aria-hidden="true"></i></span>
             <div class="cat__naming">

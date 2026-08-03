@@ -1,19 +1,23 @@
 ---
-layout: main
-title: 테크노트
-main: true
+layout: null
+sitemap: false
 ---
-
-<div class="loading-animation2">
-
-{% include hashtag.html %}
-
-<ul class="catalogue">
-{% assign sorted = site.posts | sort: 'date' | reverse | where: 'type', 'tech' %}
-{% for page in sorted %}
-{% include post-list.html %}
-{% endfor %}
-{% include post-list-empty.html %}
-
-</ul>
-</div>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>테크노트로 이동합니다</title>
+  <meta name="robots" content="noindex">
+  <!-- 태그별 목록은 /tech/ 의 카테고리 필터로 통합되었습니다. 예전 링크를 살려 두기 위한 리다이렉트입니다. -->
+  <script>
+    (function () {
+      var tag = new URLSearchParams(location.search).get('tag');
+      location.replace('/tech/' + (tag ? '?tag=' + encodeURIComponent(tag) : ''));
+    })();
+  </script>
+  <noscript><meta http-equiv="refresh" content="0; url=/tech/"></noscript>
+</head>
+<body>
+  <p>테크노트 목록으로 이동합니다. 이동되지 않으면 <a href="/tech/">여기</a>를 눌러 주세요.</p>
+</body>
+</html>

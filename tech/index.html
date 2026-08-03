@@ -1,22 +1,229 @@
 ---
 layout: main
-paginate: true
 title: 테크노트
 main: true
 ---
 
-<div class="loading-animation2">
+{%- assign tech_posts = site.posts | where: 'type', 'tech' -%}
+{%- assign posts = tech_posts | sort: 'date' | reverse -%}
 
-{% include hashtag.html %}
+{%- comment -%} 카테고리 정의 : id|한글명|영문명|아이콘|악센트 색 (메인 페이지와 동일한 규칙) {%- endcomment -%}
+{%- capture cat_defs -%}
+Unity|유니티|Unity|fa-brands fa-unity|#4f7cf7;C_Sharp|C#|C Sharp|fa-solid fa-hashtag|#a259f7;MixedReality|증강 현실|Mixed Reality|fa-solid fa-vr-cardboard|#e0609c;Web|웹 CSS / JS|Web|fa-solid fa-code|#0fab9f;ToyProject|토이 프로젝트|Toy Project|fa-solid fa-flask|#e5921f;JobPreparation|취업 인터뷰|Job Preparation|fa-solid fa-briefcase|#6b7a99
+{%- endcapture -%}
+{%- assign cats = cat_defs | strip | split: ';' -%}
 
+<script>document.documentElement.classList.add('tx-js');</script>
 
-<ul class="catalogue">
-{% assign sorted = paginator.posts | sort: 'date' | reverse | where: 'type', 'tech' %}
-{% for page in sorted %}
-{% include post-list.html %}
-{% endfor %}
-{% include post-list-empty.html %}
+<!-- ═══════════ 스크롤 시 도킹되는 툴바 ═══════════ -->
+<nav class="tx" data-tx aria-label="테크노트 도구 모음">
+  <div class="tx__inner">
+    <a class="tx__brand" href="#tech-top">
+      <i class="fa-solid fa-terminal" aria-hidden="true"></i> tech
+    </a>
 
-{% include pagination.html %}
-</ul>
+    <label class="tx__search">
+      <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+      <input type="search" data-search placeholder="포스트 검색" aria-label="포스트 검색" autocomplete="off" />
+    </label>
+
+    <button type="button" class="tx__filter" data-jump-filter>
+      <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+      <span data-filter-label>전체</span>
+    </button>
+
+    <span class="tx__count">
+      <b data-count-now>{{ posts | size }}</b><em>/{{ posts | size }}</em>
+    </span>
+  </div>
+  <span class="tx__progress"><i data-tx-progress></i></span>
+</nav>
+
+<div class="loading-animation">
+<div class="tn" data-tech id="tech-top">
+
+  <!-- ═══════════ 헤더 ═══════════ -->
+  <header class="tn__head">
+    <span class="tn__grid" aria-hidden="true"></span>
+    <span class="tn__glow" aria-hidden="true"></span>
+
+    <div class="tn__head-inner">
+      <span class="tn__eyebrow">
+        <i class="fa-solid fa-book-open" aria-hidden="true"></i> TECH NOTE · {{ posts | size }} POSTS
+      </span>
+
+      <h1 class="tn__title">테크노트</h1>
+
+      <p class="tn__desc">
+        작업하면서 정리해 둔 개발 기록입니다.
+      </p>
+
+      <!-- 메인 검색 -->
+      <div class="tsearch">
+        <i class="tsearch__icon fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <input type="search" class="tsearch__input" data-search
+               placeholder="제목 · 부제목 · 카테고리로 검색해 보세요"
+               aria-label="포스트 검색" autocomplete="off" />
+        <button type="button" class="tsearch__clear" data-clear aria-label="검색어 지우기">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+        <span class="tsearch__hint" aria-hidden="true"><b>/</b> 키로 검색</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════ 카테고리 레일 ═══════════ -->
+  <div class="crail" data-rail>
+    <div class="crail__scroll">
+      <button type="button" class="cpill is-active" data-pill="all" style="--c: #9166fc">
+        <span class="cpill__icon"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></span>
+        <span class="cpill__text">
+          <b class="cpill__ko">전체</b>
+          <span class="cpill__en">All posts</span>
+        </span>
+        <span class="cpill__num">{{ posts | size }}</span>
+      </button>
+
+      {%- for cat in cats -%}
+      {%- assign f = cat | split: '|' -%}
+      {%- assign cposts = tech_posts | where: 'tags', f[0] -%}
+      <button type="button" class="cpill" data-pill="{{ f[0] }}" data-pill-ko="{{ f[1] }}"
+              data-pill-icon="{{ f[3] }}" style="--c: {{ f[4] }}">
+        <span class="cpill__icon"><i class="{{ f[3] }}" aria-hidden="true"></i></span>
+        <span class="cpill__text">
+          <b class="cpill__ko">{{ f[1] }}</b>
+          <span class="cpill__en">{{ f[2] }}</span>
+        </span>
+        <span class="cpill__num">{{ cposts | size }}</span>
+      </button>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <!-- ═══════════ 목록 ═══════════ -->
+  <div class="tn__meta">
+    <span class="tn__meta-count">
+      <i class="fa-solid fa-list-ul" aria-hidden="true"></i>
+      <span><b data-count-now>{{ posts | size }}</b>편의 글</span>
+    </span>
+    <span class="tn__meta-sort">최신순</span>
+  </div>
+
+  <ol class="plist" id="tech-list">
+    {%- assign current_year = '' -%}
+    {%- for post in posts -%}
+      {%- assign year = post.date | date: '%Y' -%}
+      {%- if year != current_year -%}
+      <li class="pyear" data-year-head="{{ year }}">
+        <span class="pyear__num">{{ year }}</span>
+        <span class="pyear__line" aria-hidden="true"></span>
+      </li>
+      {%- assign current_year = year -%}
+      {%- endif -%}
+
+      {%- comment -%} 첫 태그를 대표 카테고리로 삼아 색 · 아이콘을 결정한다 {%- endcomment -%}
+      {%- assign primary = post.tags | first -%}
+      {%- assign accent = '#9166fc' -%}
+      {%- assign p_icon = 'fa-solid fa-tag' -%}
+      {%- assign ko_names = '' -%}
+      {%- for cat in cats -%}
+        {%- assign f = cat | split: '|' -%}
+        {%- if f[0] == primary -%}
+          {%- assign accent = f[4] -%}
+          {%- assign p_icon = f[3] -%}
+        {%- endif -%}
+        {%- for tag in post.tags -%}
+          {%- if f[0] == tag -%}{%- assign ko_names = ko_names | append: ' ' | append: f[1] | append: ' ' | append: f[2] -%}{%- endif -%}
+        {%- endfor -%}
+      {%- endfor -%}
+
+      {%- assign tag_str = post.tags | join: ' ' -%}
+      {%- capture search_blob -%}{{ post.title }} {{ post.subtitle }} {{ tag_str }}{{ ko_names }} {{ year }}{%- endcapture -%}
+
+      <li class="prow" data-row
+          data-tags="{{ tag_str }}"
+          data-year="{{ year }}"
+          data-search="{{ search_blob | strip_html | downcase | escape }}"
+          style="--c: {{ accent }}">
+        <a class="prow__link" href="{{ post.url | prepend: site.baseurl }}">
+          <span class="prow__thumb">
+            <img src="/assets/blog/{{ post.date | date: '%Y-%m-%d' }}-TechPost/{{ post.image }}"
+                 alt="" loading="lazy" decoding="async" />
+            <span class="prow__cat" aria-hidden="true"><i class="{{ p_icon }}"></i></span>
+          </span>
+
+          <span class="prow__body">
+            <span class="prow__tags">
+              {%- if post.draft == true -%}
+              <span class="prow__soon">COMING SOON</span>
+              {%- endif -%}
+              {%- for tag in post.tags -%}
+                {%- assign tcolor = '#9166fc' -%}
+                {%- assign ticon = 'fa-solid fa-tag' -%}
+                {%- assign tko = tag -%}
+                {%- for cat in cats -%}
+                  {%- assign f = cat | split: '|' -%}
+                  {%- if f[0] == tag -%}
+                    {%- assign tcolor = f[4] -%}
+                    {%- assign ticon = f[3] -%}
+                    {%- assign tko = f[1] -%}
+                  {%- endif -%}
+                {%- endfor -%}
+                <span class="tchip" style="--c: {{ tcolor }}"><i class="{{ ticon }}" aria-hidden="true"></i>{{ tko }}</span>
+              {%- endfor -%}
+            </span>
+
+            <b class="prow__title" data-title>{{ post.title }}</b>
+            <span class="prow__sub" data-sub>{{ post.subtitle }}</span>
+
+            <span class="prow__foot">
+              <time class="prow__date" datetime="{{ post.date | date_to_xmlschema }}">
+                {{ post.date | date: '%Y.%m.%d' }}
+              </time>
+              <span class="prow__read">읽어보기 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+            </span>
+          </span>
+        </a>
+      </li>
+    {%- endfor -%}
+  </ol>
+
+  <!-- ═══════════ 로딩 인디케이터 (스크롤 감지 지점) ═══════════ -->
+  <div class="tload" data-sentinel>
+    <div class="tload__inner" data-loader hidden>
+      <span class="tload__ring" aria-hidden="true"></span>
+      <span class="tload__text">
+        <b data-loader-now>0</b> / {{ posts | size }} · 다음 글을 불러오는 중
+      </span>
+      <div class="tload__skeleton" aria-hidden="true">
+        <span class="tload__sk-thumb"></span>
+        <span class="tload__sk-lines">
+          <i style="width: 34%"></i><i style="width: 82%"></i><i style="width: 58%"></i>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ 끝 표시 ═══════════ -->
+  <div class="tend" data-end hidden>
+    <span class="tend__dot" aria-hidden="true"></span>
+    <span class="tend__text">여기까지가 마지막 기록입니다</span>
+    <button type="button" class="tend__top" data-top>
+      <i class="fa-solid fa-arrow-up" aria-hidden="true"></i> 처음으로
+    </button>
+  </div>
+
+  <!-- ═══════════ 검색 결과 없음 ═══════════ -->
+  <div class="tempty" data-empty hidden>
+    <span class="tempty__icon" aria-hidden="true"><i class="fa-solid fa-ghost"></i></span>
+    <b class="tempty__title"><span data-empty-q></span>에 대한 글이 없어요</b>
+    <p class="tempty__desc">다른 키워드로 검색하거나 카테고리를 바꿔 보세요.</p>
+    <button type="button" class="tempty__btn" data-reset>
+      <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> 조건 초기화
+    </button>
+  </div>
+
 </div>
+</div>
+
+<script src="{{ site.baseurl }}/assets/js/tech.js" defer></script>
