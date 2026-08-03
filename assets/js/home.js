@@ -1,11 +1,3 @@
-/* ────────────────────────────────────────────────────────────────
- *  메인 페이지 인터랙션
- *   1) 스크롤 등장 (IntersectionObserver)
- *   2) 스탯 카운트업
- *   3) 섹션 바 도킹 · 진행률 · 현재 섹션 표시
- *   4) Unity Scene 뷰 컨셉의 드래그 가능한 와이어프레임 지오메트리
- *   5) 활동 히트맵 툴팁
- * ──────────────────────────────────────────────────────────────── */
 (function () {
   'use strict';
 
@@ -16,7 +8,6 @@
     return v < min ? min : v > max ? max : v;
   }
 
-  // ── 1. 스크롤 등장 ────────────────────────────────────────────
   function initReveal() {
     var items = doc.querySelectorAll('[data-reveal]');
     if (!items.length) return;
@@ -37,7 +28,6 @@
     for (var j = 0; j < items.length; j++) io.observe(items[j]);
   }
 
-  // ── 2. 스탯 카운트업 ──────────────────────────────────────────
   function countUp(el) {
     var target = parseInt(el.getAttribute('data-count'), 10);
     if (isNaN(target)) return;
@@ -79,7 +69,6 @@
     for (var j = 0; j < nums.length; j++) io.observe(nums[j]);
   }
 
-  // ── 3. 섹션 바 ────────────────────────────────────────────────
   function initSectionBar() {
     var bar = doc.querySelector('[data-hx]');
     var hero = doc.querySelector('[data-hero]');
@@ -96,7 +85,6 @@
       if (el) sections.push({ link: links[i], el: el });
     }
 
-    // 오른쪽 고정 사이드바는 이 섹션(02 카테고리)에 도달하면 등장한다
     var asideFrom = doc.getElementById('topics');
 
     var pending = false;
@@ -108,11 +96,9 @@
       var docked = y > heroBottom;
 
       bar.classList.toggle('is-docked', docked);
-      // 왼쪽 사이드바는 섹션 바와 같은 시점에 등장한다 (_index.scss)
       doc.body.classList.toggle('is-docked', docked);
       doc.body.classList.toggle('is-scrolled', y > 12);
 
-      // 진행률 : 히어로 끝 ~ 문서 끝
       var docH = doc.documentElement.scrollHeight - window.innerHeight;
       var span = Math.max(docH - heroBottom, 1);
       var p = clamp((y - heroBottom) / span, 0, 1);
@@ -120,10 +106,8 @@
       if (progress) progress.style.width = (p * 100).toFixed(1) + '%';
       if (pct) pct.textContent = Math.round(p * 100) + '%';
 
-      // 현재 섹션 : 화면 위쪽 40% 지점을 지난 마지막 섹션
       var anchor = y + Math.min(window.innerHeight * 0.4, 400);
 
-      // 오른쪽 사이드바 : 02 카테고리 섹션이 현재 섹션이 되는 순간 등장 (_index.scss)
       doc.body.classList.toggle(
         'is-aside',
         asideFrom ? asideFrom.offsetTop <= anchor : docked
@@ -152,7 +136,6 @@
     update();
   }
 
-  // ── 4. 와이어프레임 지오메트리 ────────────────────────────────
   function initGizmo() {
     var canvas = doc.querySelector('[data-gizmo]');
     if (!canvas || !canvas.getContext) return;
@@ -160,7 +143,6 @@
     var ctx = canvas.getContext('2d');
     var readout = doc.querySelector('[data-gizmo-rot]');
 
-    // 정이십면체 정점
     var phi = (1 + Math.sqrt(5)) / 2;
     var verts = [];
     var raw = [
@@ -173,7 +155,6 @@
       verts.push([raw[i][0] / len, raw[i][1] / len, raw[i][2] / len]);
     }
 
-    // 최단 거리인 정점 쌍 = 모서리
     var minDist = Infinity;
     for (var a = 0; a < verts.length; a++) {
       for (var b = a + 1; b < verts.length; b++) {
@@ -193,7 +174,6 @@
       return Math.sqrt(dx * dx + dy * dy + dz * dz);
     }
 
-    // 바운딩 박스 (Unity 선택 기즈모 느낌)
     var boxS = 0.95;
     var box = [
       [-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1],
@@ -253,7 +233,6 @@
         { v: [0, -1, 0], c: '#8ee2a0', n: 'Y' },
         { v: [0, 0, 1], c: '#7fb2ff', n: 'Z' }
       ];
-      // 뒤쪽 축부터 그린다
       axes.sort(function (p, q) { return rotate(p.v)[2] - rotate(q.v)[2]; });
 
       for (var i = 0; i < axes.length; i++) {
@@ -284,7 +263,6 @@
 
       var radius = Math.min(w, h) * 0.30;
 
-      // 바닥 그리드
       ctx.strokeStyle = 'rgba(145, 102, 252, 0.14)';
       ctx.lineWidth = 1;
       for (var g = -2; g <= 2; g++) {
@@ -298,7 +276,6 @@
         ctx.stroke();
       }
 
-      // 바운딩 박스
       ctx.strokeStyle = 'rgba(173, 167, 255, 0.3)';
       ctx.lineWidth = 1;
       ctx.setLineDash([3, 4]);
@@ -312,7 +289,6 @@
       }
       ctx.setLineDash([]);
 
-      // 와이어프레임 (뒤 → 앞 순서로 그려 깊이감을 준다)
       var lines = [];
       for (var k = 0; k < edges.length; k++) {
         var a = project(verts[edges[k][0]], radius);
@@ -331,7 +307,6 @@
         ctx.stroke();
       }
 
-      // 정점
       var pts = [];
       for (var v = 0; v < verts.length; v++) pts.push(project(verts[v], radius));
       pts.sort(function (p, q) { return p.z - q.z; });
@@ -365,7 +340,7 @@
         vy *= 0.94;
         if (Math.abs(vx) < 0.00005) vx = 0;
         if (Math.abs(vy) < 0.00005) vy = 0;
-        rx += (-0.42 - rx) * 0.012;     // 서서히 기본 각도로 복귀
+        rx += (-0.42 - rx) * 0.012;
       }
 
       rx = clamp(rx, -1.2, 1.2);
@@ -383,7 +358,6 @@
       running = false;
     }
 
-    // 드래그
     function onDown(e) {
       dragging = true;
       lastX = e.clientX;
@@ -411,7 +385,7 @@
       if (!dragging) return;
       dragging = false;
       if (canvas.releasePointerCapture && e.pointerId !== undefined) {
-        try { canvas.releasePointerCapture(e.pointerId); } catch (err) { /* noop */ }
+        try { canvas.releasePointerCapture(e.pointerId); } catch (err) {}
       }
     }
 
@@ -448,7 +422,6 @@
     });
   }
 
-  // ── 5. 히트맵 툴팁 ────────────────────────────────────────────
   function initHeatmap() {
     var hm = doc.querySelector('[data-hm]');
     if (!hm) return;
@@ -483,7 +456,6 @@
     }, { passive: true });
   }
 
-  // ── 부드러운 앵커 이동 ────────────────────────────────────────
   function initAnchors() {
     var links = doc.querySelectorAll('.hx__links a, .hero__cue');
 

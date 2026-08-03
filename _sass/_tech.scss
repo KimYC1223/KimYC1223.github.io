@@ -1,18 +1,9 @@
-// ══════════════════════════════════════════════════════════════
-//  테크노트 목록 (/tech/) — 2026 renewal
-//  · 헤더    : 메인 히어로와 같은 라벤더 그라데이션 + 그리드
-//  · 툴바    : 스크롤 시 도킹 (검색 · 필터 · 진행률)
-//  · 카테고리 : 카테고리별 악센트 색을 아이콘/점에만 최소한으로 사용
-//  · 목록    : 스크롤에 따라 배치 단위로 로딩 (인디케이터 포함)
-// ══════════════════════════════════════════════════════════════
-
 $tx-ink:     #1b1235;
 $tx-panel:   #191030;
 $tx-panel-2: #241844;
 $tx-lav-0:   #fbf9ff;
 $tx-lav-1:   #f4efff;
 
-// main 과 동일한 폭 규칙 (좌우 고정 사이드바와 충돌하지 않도록)
 @mixin tx-column {
   margin: 0 auto;
   width: 50%;
@@ -40,9 +31,6 @@ $tx-lav-1:   #f4efff;
   scroll-margin-top: 100px;
 }
 
-// ══════════════════════════════════════════════════════════════
-//  헤더
-// ══════════════════════════════════════════════════════════════
 .tn__head {
   position: relative;
   overflow: hidden;
@@ -143,7 +131,6 @@ $tx-lav-1:   #f4efff;
   @media (max-width: $break-small) { font-size: 13px; margin-bottom: 16px; }
 }
 
-// ── 메인 검색창 ───────────────────────────────────────────────
 .tsearch {
   position: relative;
   display: flex;
@@ -237,17 +224,11 @@ $tx-lav-1:   #f4efff;
   @media (max-width: $break-medium) { display: none; }
 }
 
-// ══════════════════════════════════════════════════════════════
-//  카테고리 레일
-//  악센트 색(--c)은 아이콘 · 점 · 선택 상태에만 아주 얕게 쓴다
-// ══════════════════════════════════════════════════════════════
 .crail {
   position: relative;
-  // 아래 .crail__scroll 의 여백(hover 시 떠오르는 만큼 확보)을 상쇄한다
   margin: -8px 0 10px;
   scroll-margin-top: 148px;
 
-  // 좁은 화면에서 오른쪽이 잘렸다는 힌트
   &::after {
     content: '';
     position: absolute;
@@ -266,11 +247,8 @@ $tx-lav-1:   #f4efff;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  // hover 로 떠오르는 만큼(+그림자) 위아래 여백을 미리 확보한다
   padding: 8px 1px 12px;
 
-  // 좁은 화면에서는 줄바꿈 대신 옆으로 스크롤한다
-  // (overflow-x: auto 는 세로도 함께 자르므로 위 여백이 반드시 필요하다)
   @media (max-width: $break-medium) {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -371,9 +349,6 @@ $tx-lav-1:   #f4efff;
   transition: background .25s ease, color .25s ease;
 }
 
-// ══════════════════════════════════════════════════════════════
-//  목록 헤더 (건수 · 정렬)
-// ══════════════════════════════════════════════════════════════
 .tn__meta {
   display: flex;
   align-items: center;
@@ -400,9 +375,6 @@ $tx-lav-1:   #f4efff;
   font-size: 11.5px;
 }
 
-// ══════════════════════════════════════════════════════════════
-//  연도 구분선
-// ══════════════════════════════════════════════════════════════
 .plist {
   margin: 0;
   padding: 0;
@@ -434,9 +406,6 @@ $tx-lav-1:   #f4efff;
   background: linear-gradient(to right, rgba($primary, .25), rgba($primary, 0));
 }
 
-// ══════════════════════════════════════════════════════════════
-//  포스트 행
-// ══════════════════════════════════════════════════════════════
 .prow {
   @include tx-card;
 
@@ -444,7 +413,6 @@ $tx-lav-1:   #f4efff;
   overflow: hidden;
   margin-bottom: 12px;
 
-  // 카테고리 악센트 : 왼쪽 3px 바 — 평소엔 숨어 있고 hover 시에만 드러난다
   &::before {
     content: '';
     position: absolute;
@@ -478,7 +446,6 @@ $tx-lav-1:   #f4efff;
   display: grid;
   grid-template-columns: 210px minmax(0, 1fr);
   align-items: stretch;
-  // 행 높이는 본문이 결정한다 (썸네일 원본 비율에 끌려가지 않도록)
   min-height: 152px;
 
   @media (max-width: $break-medium) { grid-template-columns: 168px minmax(0, 1fr); min-height: 132px; }
@@ -490,7 +457,6 @@ $tx-lav-1:   #f4efff;
   overflow: hidden;
   background: $grey-4;
 
-  // 원본 비율에 관계없이 항상 행 높이를 꽉 채운다
   img {
     position: absolute;
     inset: 0;
@@ -510,7 +476,6 @@ $tx-lav-1:   #f4efff;
   }
 }
 
-// 카테고리 아이콘 배지 (hover 시 살짝 등장)
 .prow__cat {
   position: absolute;
   top: 9px;
@@ -674,9 +639,6 @@ $tx-lav-1:   #f4efff;
   @media (max-width: $break-small)  { display: none; }
 }
 
-// ══════════════════════════════════════════════════════════════
-//  배치 로딩 (JS 가 붙은 경우에만 감춘다)
-// ══════════════════════════════════════════════════════════════
 .tx-js .plist > .prow,
 .tx-js .plist > .pyear {
   display: none;
@@ -695,7 +657,6 @@ $tx-lav-1:   #f4efff;
   to   { opacity: 1; transform: none; }
 }
 
-// ── 로딩 인디케이터 ───────────────────────────────────────────
 .tload {
   padding: 6px 0 0;
 }
@@ -777,7 +738,6 @@ $tx-lav-1:   #f4efff;
   to   { background-position: -130% 0; }
 }
 
-// ── 목록 끝 ───────────────────────────────────────────────────
 .tend {
   display: flex;
   align-items: center;
@@ -829,7 +789,6 @@ $tx-lav-1:   #f4efff;
   }
 }
 
-// ── 검색 결과 없음 ────────────────────────────────────────────
 .tempty {
   display: flex;
   flex-direction: column;
@@ -906,9 +865,6 @@ $tx-lav-1:   #f4efff;
   }
 }
 
-// ══════════════════════════════════════════════════════════════
-//  도킹 툴바
-// ══════════════════════════════════════════════════════════════
 .tx {
   position: fixed;
   top: 80px;
@@ -1072,15 +1028,10 @@ $tx-lav-1:   #f4efff;
   }
 }
 
-// 스크롤이 시작되면 상단 내비게이션에 그림자를 얹는다 (메인과 동일)
 body.is-scrolled .nav {
   box-shadow: 0 2px 16px rgba($tx-ink, .08);
 }
 
-// ──────────────────────────────────────────────────────────────
-//  좌우 고정 사이드바
-//   도킹된 툴바(80px + 46px)와 겹치지 않도록 스크롤 후에는 살짝 내려 준다.
-// ──────────────────────────────────────────────────────────────
 body.is-tech {
   .side_bar_left,
   .side_bar_right {
@@ -1098,9 +1049,6 @@ body.is-tech {
   }
 }
 
-// ══════════════════════════════════════════════════════════════
-//  모션 최소화
-// ══════════════════════════════════════════════════════════════
 @media (prefers-reduced-motion: reduce) {
   .tn__head-inner > *,
   .tx-js .plist > .prow.is-shown {

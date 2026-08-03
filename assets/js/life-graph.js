@@ -12,14 +12,14 @@
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  var rows = [];         // 커밋 측정값 (y 오름차순)
-  var revealIndex = 0;   // rows 중 여기까지 등장 처리됨 (한 번 등장하면 유지)
-  var litIndex = 0;      // rows 중 여기까지 헤드 뒤에 있음 (되감으면 되돌아감)
-  var trunk = null;      // 메인 트렁크 path
+  var rows = [];
+  var revealIndex = 0;
+  var litIndex = 0;
+  var trunk = null;
   var trunkLength = 0;
-  var headDot = null;    // 드로잉 헤드(선이 그려지는 지점을 따라가는 점)
-  var pending = false;   // rAF 중복 방지
-  var measuring = false; // ResizeObserver 자기호출 방지
+  var headDot = null;
+  var pending = false;
+  var measuring = false;
 
   function make(name, attrs) {
     var node = document.createElementNS(NS, name);
@@ -196,7 +196,6 @@
       }));
     }
 
-    // 다시 그릴 때 path가 새로 만들어지므로, 현재 헤드 기준 상태를 그대로 얹어 깜빡임을 막는다
     var seedY = reduceMotion.matches ? Infinity : headY();
     litIndex = 0;
 
@@ -263,7 +262,6 @@
     }
   }
 
-  // 트렁크가 그려지는 기준선을 타임라인 좌표계로 환산
   function anchorFrom(box) {
     return window.innerHeight * 0.72 - box.top;
   }
@@ -273,7 +271,6 @@
            document.documentElement.scrollHeight - 4;
   }
 
-  // 드로잉 헤드 위치. 바닥에 닿으면 남은 커밋을 전부 지나간 것으로 본다
   function headY() {
     return atBottom() ? Infinity : anchorFrom(timeline.getBoundingClientRect());
   }
@@ -304,7 +301,6 @@
     relight(bottom ? Infinity : anchorY);
   }
 
-  // SVG 요소의 classList는 지원 폭이 좁아 class 속성을 직접 다룬다
   function setLit(path, on) {
     if (!path) return;
     var cls = path.getAttribute('class') || '';
@@ -312,7 +308,6 @@
     path.setAttribute('class', on ? cls + ' is-lit' : cls.replace(' is-lit', ''));
   }
 
-  // 등장(가지가 그려지는 것)은 되돌리지 않는다
   function reveal(limitY) {
     while (revealIndex < rows.length && rows[revealIndex].y <= limitY) {
       var row = rows[revealIndex];
@@ -322,7 +317,6 @@
     }
   }
 
-  // 하이라이트는 헤드 위치를 그대로 따라간다 (되감으면 꺼짐)
   function relight(headY) {
     while (litIndex < rows.length && rows[litIndex].y <= headY) {
       setLit(rows[litIndex].connector, true);
@@ -352,8 +346,6 @@
       draw();
     });
   }
-
-  // ── 재계산 ───────────────────────────────────────────────────
 
   var rebuildPending = false;
 

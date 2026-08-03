@@ -1,11 +1,3 @@
-/* ────────────────────────────────────────────────────────────────
- *  테크노트 목록 인터랙션
- *   1) 검색 (제목 · 부제목 · 카테고리) + 일치 부분 하이라이트
- *   2) 카테고리 필터 (레일 / URL ?tag= 연동)
- *   3) 스크롤 배치 로딩 + 로딩 인디케이터
- *   4) 툴바 도킹 · 목록 진행률
- *   5) 헤더 스탯 카운트업, '/' 검색 단축키
- * ──────────────────────────────────────────────────────────────── */
 (function () {
   'use strict';
 
@@ -15,8 +7,8 @@
   var root = doc.querySelector('[data-tech]');
   if (!root) return;
 
-  var BATCH = 8;          // 한 번에 불러오는 글 수
-  var DELAY = 380;        // 로딩 인디케이터를 보여 주는 시간 (ms)
+  var BATCH = 8;
+  var DELAY = 380;
 
   var list      = root.querySelector('.plist');
   var rows      = toArray(root.querySelectorAll('[data-row]'));
@@ -38,7 +30,6 @@
   var filterBtn    = doc.querySelector('[data-jump-filter]');
   var filterLabel  = doc.querySelector('[data-filter-label]');
 
-  // 원본 텍스트 (하이라이트를 되돌릴 때 쓴다)
   var texts = rows.map(function (row) {
     var t = row.querySelector('[data-title]');
     var s = row.querySelector('[data-sub]');
@@ -59,7 +50,7 @@
   var query = '';
   var tag = 'all';
   var searchTimer = null;
-  var gen = 0;            // 필터가 바뀌면 진행 중이던 로딩을 버린다
+  var gen = 0;
 
   function toArray(nodes) {
     return Array.prototype.slice.call(nodes);
@@ -73,7 +64,6 @@
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
-  // ── 1. 필터링 ─────────────────────────────────────────────────
   function computeMatched() {
     var q = query.toLowerCase();
 
@@ -85,7 +75,6 @@
     });
   }
 
-  // 검색어와 일치하는 부분을 <mark> 로 감싼다 (텍스트만 다루므로 안전하다)
   function paintHighlight() {
     var q = query.trim();
 
@@ -118,7 +107,6 @@
     return out + escapeHtml(text.slice(from));
   }
 
-  // ── 2. 표시 ───────────────────────────────────────────────────
   function syncYearHeads() {
     var years = {};
     for (var i = 0; i < shown; i++) {
@@ -149,12 +137,10 @@
   }
 
   function applyFilter(resetShown) {
-    // 진행 중이던 배치 로딩은 무효로 만든다
     gen++;
     loading = false;
     if (loader) loader.hidden = true;
 
-    // 이전에 보이던 행을 모두 접는다
     for (var i = 0; i < rows.length; i++) rows[i].classList.remove('is-shown');
 
     computeMatched();
@@ -179,7 +165,6 @@
     return pill ? (pill.getAttribute('data-pill-ko') || '전체') : '전체';
   }
 
-  // ── 3. 배치 로딩 ──────────────────────────────────────────────
   function loadMore() {
     if (loading || shown >= matched.length) return;
     loading = true;
@@ -190,14 +175,13 @@
     var mine = gen;
 
     window.setTimeout(function () {
-      if (mine !== gen) return;           // 그 사이 검색 · 필터가 바뀌었다
+      if (mine !== gen) return;
 
       var next = Math.min(shown + BATCH, matched.length);
       revealUpTo(next, true);
       if (loader) loader.hidden = shown >= matched.length;
       loading = false;
 
-      // 화면이 크면 한 번의 로딩으로 센티넬을 벗어나지 못할 수 있다
       if (sentinel && shown < matched.length) {
         var r = sentinel.getBoundingClientRect();
         if (r.top < window.innerHeight) loadMore();
@@ -218,7 +202,6 @@
     }, { rootMargin: '0px 0px 320px 0px' }).observe(sentinel);
   }
 
-  // ── 4. 툴바 도킹 · 진행률 ─────────────────────────────────────
   function updateBar() {
     var y = window.pageYOffset || doc.documentElement.scrollTop;
     var head = root.querySelector('.tn__head');
@@ -231,7 +214,6 @@
 
     if (!progress || !list) return;
 
-    // 진행률 : 목록의 시작 ~ 끝을 기준으로 한다
     var start = list.offsetTop - 160;
     var end = list.offsetTop + list.offsetHeight - window.innerHeight * 0.7;
     var p = clamp((y - start) / Math.max(end - start, 1), 0, 1);
@@ -255,7 +237,6 @@
     updateBar();
   }
 
-  // ── 5. 검색 · 필터 입력 ───────────────────────────────────────
   function setQuery(v, from) {
     query = v;
 
@@ -347,7 +328,6 @@
     for (var p = 0; p < pills.length; p++) {
       pills[p].addEventListener('click', function () {
         var next = this.getAttribute('data-pill');
-        // 같은 카테고리를 한 번 더 누르면 해제한다
         setTag(next === tag ? 'all' : next);
       });
     }
@@ -405,7 +385,6 @@
       });
     }
 
-    // '/' 로 검색창 포커스
     doc.addEventListener('keydown', function (e) {
       if (e.key !== '/' || e.metaKey || e.ctrlKey || e.altKey) return;
       var t = e.target;
@@ -420,7 +399,6 @@
     });
   }
 
-  // ── 6. 스탯 카운트업 ──────────────────────────────────────────
   function initCounters() {
     var nums = root.querySelectorAll('[data-count]');
     if (!nums.length) return;

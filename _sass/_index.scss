@@ -1,19 +1,11 @@
-// ══════════════════════════════════════════════════════════════
-//  Index (메인) — 2026 renewal
-//  · 히어로 : Unity Scene 뷰 컨셉 + 드래그 가능한 와이어프레임
-//  · 스크롤 : 섹션 바 도킹 / 진행률 / 순차 등장
-//  · 다크 콘솔 : 글쓰기 활동 히트맵
-// ══════════════════════════════════════════════════════════════
-
-$ix-ink:      #1b1235;                 // 진한 보라 잉크
-$ix-panel:    #191030;                 // 콘솔 / 씬뷰 바닥
-$ix-panel-2:  #241844;                 // 콘솔 위쪽 톤
-$ix-line:     rgba(#fff, .09);         // 다크 위 구분선
+$ix-ink:      #1b1235;
+$ix-panel:    #191030;
+$ix-panel-2:  #241844;
+$ix-line:     rgba(#fff, .09);
 $ix-lav-0:    #fbf9ff;
 $ix-lav-1:    #f4efff;
 $ix-lav-2:    #e8dfff;
 
-// main 과 동일한 폭 규칙 (좌우 고정 사이드바와 충돌하지 않도록)
 @mixin ix-column {
   margin: 0 auto;
   width: 50%;
@@ -35,9 +27,6 @@ $ix-lav-2:    #e8dfff;
               border-color .25s ease;
 }
 
-// ──────────────────────────────────────────────────────────────
-//  스크롤 등장 (JS 가 붙지 않으면 그냥 보인다)
-// ──────────────────────────────────────────────────────────────
 .ix-js [data-reveal] {
   opacity: 0;
   transform: translate3d(0, 20px, 0);
@@ -50,9 +39,6 @@ $ix-lav-2:    #e8dfff;
   }
 }
 
-// ══════════════════════════════════════════════════════════════
-//  HERO
-// ══════════════════════════════════════════════════════════════
 .hero {
   position: relative;
   overflow: hidden;
@@ -60,7 +46,6 @@ $ix-lav-2:    #e8dfff;
   background: linear-gradient(175deg, $ix-lav-1 0%, $ix-lav-0 58%, $white 100%);
   font-family: 'Noto Sans KR', $san-serif;
 
-  // 고정 내비게이션(80px) 아래로 내용이 들어가지 않도록 위쪽 여백을 확보한다
   @media (max-width: $break-medium) { padding: 54px 0 42px; }
   @media (max-width: $break-small)  { padding: 48px 0 34px; }
 }
@@ -119,7 +104,6 @@ $ix-lav-2:    #e8dfff;
   @media (max-width: $break-small)  { grid-template-columns: minmax(0, 1fr); gap: 22px; }
 }
 
-// ── 카피 ──────────────────────────────────────────────────────
 @keyframes ix-rise {
   from { opacity: 0; transform: translate3d(0, 14px, 0); }
   to   { opacity: 1; transform: none; }
@@ -246,7 +230,6 @@ $ix-lav-2:    #e8dfff;
   @media (max-width: $break-small) { font-size: 14px; margin-bottom: 18px; }
 }
 
-// ── 스탯 ──────────────────────────────────────────────────────
 .hero__stats {
   display: flex;
   flex-wrap: wrap;
@@ -297,7 +280,6 @@ $ix-lav-2:    #e8dfff;
   @media (max-width: $break-small) { font-size: 11px; }
 }
 
-// ── 버튼 ──────────────────────────────────────────────────────
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
@@ -341,7 +323,6 @@ $ix-lav-2:    #e8dfff;
   @media (max-width: $break-small) { padding: 10px 16px; font-size: 13px; }
 }
 
-// ── 씬 뷰 (인터랙티브) ────────────────────────────────────────
 .hero__scene {
   animation: ix-rise .8s cubic-bezier(.2, .8, .3, 1) .3s both;
 
@@ -442,7 +423,6 @@ $ix-lav-2:    #e8dfff;
   white-space: nowrap;
 }
 
-// ── 스크롤 유도 ───────────────────────────────────────────────
 .hero__cue {
   position: absolute;
   left: 50%;
@@ -470,9 +450,6 @@ $ix-lav-2:    #e8dfff;
   50%      { transform: translate(-50%, 5px); opacity: 1; }
 }
 
-// ══════════════════════════════════════════════════════════════
-//  섹션 바 (스크롤 시 도킹) + 진행률
-// ══════════════════════════════════════════════════════════════
 .hx {
   position: fixed;
   top: 80px;
@@ -579,23 +556,13 @@ $ix-lav-2:    #e8dfff;
   }
 }
 
-// 스크롤이 시작되면 상단 내비게이션에 그림자를 얹는다
 body.is-scrolled .nav {
   box-shadow: 0 2px 16px rgba($ix-ink, .08);
 }
 
-// ──────────────────────────────────────────────────────────────
-//  좌우 고정 사이드바
-//   히어로 구간에서는 히어로에 가려 잘려 보이므로 숨겨 두고, 각각 다른 시점에
-//   좌우에서 밀려 들어온다.
-//    · 왼쪽  : 히어로를 지나 섹션 바가 도킹될 때 (body.is-docked)
-//    · 오른쪽 : 02 카테고리 섹션에 도달할 때     (body.is-aside)
-//   (JS 가 붙지 않으면 숨기지 않는다 — .ix-js 가 없으면 그냥 보인다)
-// ──────────────────────────────────────────────────────────────
 .ix-js body.is-home {
   .side_bar_left,
   .side_bar_right {
-    // 도킹된 섹션 바(80px + 44px) 아래로 내려 준다
     top: 140px;
     opacity: 0;
     visibility: hidden;
@@ -625,9 +592,6 @@ body.is-scrolled .nav {
   }
 }
 
-// ══════════════════════════════════════════════════════════════
-//  본문 공통
-// ══════════════════════════════════════════════════════════════
 .ix {
   width: 100%;
   font-family: 'Noto Sans KR', $san-serif;
@@ -720,9 +684,6 @@ body.is-scrolled .nav {
   &--sm { font-size: 10px; padding: 1px 7px; }
 }
 
-// ══════════════════════════════════════════════════════════════
-//  01. 최근 게시물
-// ══════════════════════════════════════════════════════════════
 .feat {
   @include ix-card;
 
@@ -867,7 +828,6 @@ body.is-scrolled .nav {
     .pcard__thumb img { transform: scale(1.08); }
   }
 
-  // 2열로 떨어지는 모바일에서만 쓰는 네 번째 카드 (마지막 줄의 빈칸 채우기)
   &--mobile {
     @media (min-width: $break-small + 1) { display: none; }
   }
@@ -938,9 +898,6 @@ body.is-scrolled .nav {
   font-size: 11px;
 }
 
-// ══════════════════════════════════════════════════════════════
-//  02. 카테고리
-// ══════════════════════════════════════════════════════════════
 .cats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1100,9 +1057,6 @@ body.is-scrolled .nav {
   @media (max-width: $break-small) { opacity: 1; transform: none; }
 }
 
-// ══════════════════════════════════════════════════════════════
-//  03. 활동 콘솔 + 히트맵
-// ══════════════════════════════════════════════════════════════
 .con {
   overflow: hidden;
   border-radius: 18px;
@@ -1190,7 +1144,6 @@ body.is-scrolled .nav {
   @media (max-width: $break-small) { font-size: 17px; }
 }
 
-// ── 히트맵 ────────────────────────────────────────────────────
 .hm {
   position: relative;
 }
@@ -1198,8 +1151,8 @@ body.is-scrolled .nav {
 .hm__scroll {
   display: flex;
   flex-direction: column;
-  align-items: center;           // 남는 폭에서 그리드를 가운데로
-  align-items: safe center;      // 좁은 화면에서 왼쪽이 잘리지 않도록
+  align-items: center;
+  align-items: safe center;
   overflow-x: auto;
   padding-bottom: 4px;
   scrollbar-width: thin;
@@ -1272,7 +1225,6 @@ body.is-scrolled .nav {
   @media (max-width: $break-small) { min-height: 15px; border-radius: 4px; }
 }
 
-// 히트맵이 화면에 들어오면 왼쪽부터 차오른다
 .ix-js .hm__cell {
   opacity: 0;
   transform: scale(.55);
@@ -1333,9 +1285,6 @@ body.is-scrolled .nav {
   &.is-on { opacity: 1; }
 }
 
-// ══════════════════════════════════════════════════════════════
-//  04. 프로젝트
-// ══════════════════════════════════════════════════════════════
 .works {
   display: grid;
   gap: 10px;
@@ -1429,9 +1378,6 @@ body.is-scrolled .nav {
   @media (max-width: $break-small) { display: none; }
 }
 
-// ══════════════════════════════════════════════════════════════
-//  05. 소소한 이야기
-// ══════════════════════════════════════════════════════════════
 .story {
   margin: 0;
   padding: 0;
@@ -1545,9 +1491,6 @@ body.is-scrolled .nav {
   @media (max-width: $break-small) { display: none; }
 }
 
-// ══════════════════════════════════════════════════════════════
-//  CTA
-// ══════════════════════════════════════════════════════════════
 .cta {
   position: relative;
   overflow: hidden;
@@ -1569,7 +1512,7 @@ body.is-scrolled .nav {
   height: 190px;
   background: url('/meta/page_bg.png') no-repeat left center;
   background-size: auto 190px;
-  mix-blend-mode: multiply;   // 일러스트의 흰 배경을 카드 색에 녹인다
+  mix-blend-mode: multiply;
 
   @media (max-width: $break-medium) { height: 150px; background-size: auto 150px; }
   @media (max-width: $break-small)  { height: 118px; background-position: center; background-size: auto 118px; }
@@ -1644,9 +1587,6 @@ body.is-scrolled .nav {
   }
 }
 
-// ══════════════════════════════════════════════════════════════
-//  모션 최소화
-// ══════════════════════════════════════════════════════════════
 @media (prefers-reduced-motion: reduce) {
   .ix-js [data-reveal],
   .ix-js .hm__cell,

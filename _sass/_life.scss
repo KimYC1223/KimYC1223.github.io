@@ -1,11 +1,11 @@
 .life {
-  --rail: 62px;          // 그래프 레일(1열) 폭
-  --node-x: 11px;        // 레일 안에서 트렁크 / 커밋 노드의 x 위치
-  --node: 13px;          // 커밋 노드 지름
-  --lane: 26px;          // 답글 레인 들여쓰기
+  --rail: 62px;
+  --node-x: 11px;
+  --node: 13px;
+  --lane: 26px;
   --graph: #{$primary};
-  --graph-mute: #{rgba($primary, .38)};   // 아직 그려지는 중인 가지
-  --graph-soft: #{rgba($primary, .16)};   // 아직 그려지지 않은 트렁크
+  --graph-mute: #{rgba($primary, .38)};
+  --graph-soft: #{rgba($primary, .16)};
 
   position: relative;
   font-family: $san-serif;
@@ -132,7 +132,6 @@
               stroke .45s ease,
               stroke-width .45s ease;
 
-  // 드로잉 헤드보다 위에 있는 동안만 트렁크와 같은 톤으로 강조된다
   &.is-lit {
     stroke: var(--graph);
     stroke-width: 2.75;
@@ -246,7 +245,7 @@
 
 .commit__node {
   position: absolute;
-  top: 3px;                                  // JS 가 카드 최상단으로 보정
+  top: 3px;
   left: var(--node-x);
   width: var(--node);
   height: var(--node);
@@ -467,8 +466,6 @@
   }
 }
 
-// ── 미디어 ───────────────────────────────────────────────────────────
-
 .media {
   display: flex;
   flex-wrap: wrap;
@@ -510,8 +507,6 @@
   }
 }
 
-// 아직 로딩되지 않은 이미지는 intrinsic width 가 0 이라 레이아웃이 무너지므로
-// 정사각형만큼 자리를 잡아둔다. (onload 에서 .loaded 가 붙으면 원래 비율로)
 .image-wrap img.img-content:not(.loaded) {
   width: 150px;
 
